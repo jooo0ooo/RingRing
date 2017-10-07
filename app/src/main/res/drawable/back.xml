@@ -1,0 +1,6 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+    <solid android:color="#ffffff" />
+    <stroke android:width="1dip" android:color="#000000"/>
+</shape>
+
+    <!-- 테두리를 만들기위해 만든 파일 -->
