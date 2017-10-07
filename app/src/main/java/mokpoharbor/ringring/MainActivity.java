@@ -11,16 +11,16 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity {
 
     //list 테스트 해보는 겁니당.
-    String [] data = { "asdf : asdf : asdf",
-            "asdf : asdf : asdf",
-            "asdf : asdf : asdf",
-            "asdf : asdf : asdf",
-            "asdf : asdf : asdf",
-            "asdf : asdf : asdf",
-            "asdf : asdf : asdf",
-            "asdf : asdf : asdf",
-            "asdf : asdf : asdf",
-            "asdf : asdf : asdf"};
+    String [] data = { "☞ 콜로키움 : 감상문 작성 : 1시간",
+            "☞ 알고리즘 : 보고서 작성 : 2시간",
+            "☞ 영어2 : 영어단어 암기 : 3시간",
+            "☞ 고급객체 : 유투브 시청 : 4시간",
+            "☞ 공개SW실무 : 우분투 설치 : 5시간",
+            "☞ 교양골프 : 연습하기 : 6시간",
+            "☞ 팀프로젝트 : 치맥하기 : 7시간",
+            "☞ 직무역량어쩌고 : 출튀하기 : 8시간",
+            "☞ 피온3 : 접속보상 받기 : 9시간",
+            "☞ 집 : 화장실청소하기 : 10시간"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
