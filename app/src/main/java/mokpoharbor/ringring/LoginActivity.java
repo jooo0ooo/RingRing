@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(LoginResult loginResult) {
                                 Log.e("onSuccess", "onSuccess");
-                                Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT);
+                                Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -53,13 +53,13 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onCancel() {
                                 Log.e("onCancel", "onCancel");
-                                Toast.makeText(LoginActivity.this, "Cancel", Toast.LENGTH_SHORT);
+                                Toast.makeText(LoginActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onError(FacebookException exception) {
                                 Log.e("onError", "onError " + exception.getLocalizedMessage());
-                                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT);
+                                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
-                //finish();
+                finish();
             }
         });
     }
