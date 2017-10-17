@@ -18,6 +18,7 @@ public class RegisterActivity extends AppCompatActivity{
         setTitle("Register");
 
         //내가 잘 선택했나 이미지 클릭시 이미지를 바꿔주는 효과를 주었습니다.
+        
         final Button student = (Button)findViewById(R.id.register_student);
         student.setOnTouchListener(new View.OnTouchListener() {
             @Override
