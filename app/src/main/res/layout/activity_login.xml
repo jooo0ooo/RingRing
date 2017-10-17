@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_weight="30"
+        android:layout_width="fill_parent"
+        android:src="@drawable/ring_logo"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/login_with_facebook"
+        android:layout_weight="80"
+        android:layout_width="fill_parent"
+        android:src="@drawable/login_with_facebook"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/register"
+        android:layout_weight="80"
+        android:layout_width="fill_parent"
+        android:src="@drawable/register_button"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

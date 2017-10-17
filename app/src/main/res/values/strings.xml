@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RingRing</string>
+    <string name="facebook_app_id">122047635131495</string>
+    <string name="fb_login_protocol_scheme">fb122047635131495</string>
 </resources>

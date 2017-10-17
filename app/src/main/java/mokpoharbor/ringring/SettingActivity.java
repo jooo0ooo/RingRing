@@ -32,8 +32,8 @@ public class SettingActivity extends AppCompatActivity {
         back_pressed = new BackPressClose(this);
 
         //setting 이미지 아이콘을 터치할때 화면전환 되는 부분
-        ImageView setting = (ImageView)findViewById(R.id.home_image);
-        setting.setOnClickListener(new View.OnClickListener(){
+        ImageView home = (ImageView)findViewById(R.id.home_image);
+        home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(SettingActivity.this, MainActivity.class);
