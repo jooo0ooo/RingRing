@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //액티비티 타이틀바 내용 설정
+        setTitle("HOME");
+
         //리스트뷰를 이용하기위해 어댑터 사용
         ArrayAdapter adapter = new ArrayAdapter(
                 getApplicationContext(),

@@ -17,6 +17,9 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        //액티비티 타이틀바 내용 설정
+        setTitle("SETTING");
+
         //setting 이미지 아이콘을 터치할때 화면전환 되는 부분
         ImageView setting = (ImageView)findViewById(R.id.home_image);
         setting.setOnClickListener(new View.OnClickListener(){
