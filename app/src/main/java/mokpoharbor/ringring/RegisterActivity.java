@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity{
                                     public void onSuccess(LoginResult loginResult) {
                                         Log.e("onSuccess", "onSuccess");
                                         Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        Intent intent = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
