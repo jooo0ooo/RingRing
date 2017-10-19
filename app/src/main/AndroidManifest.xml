@@ -32,6 +32,7 @@
         <activity android:name=".ProfessorMainActivity"></activity>
         <activity android:name=".ProfessorSettingActivity"></activity>
         <activity android:name=".PersonalSettingStudentActivity"></activity>
+        <activity android:name=".PersonalSettingProfessorActivity"></activity>
 
         <activity android:name=".MainActivity">
 
