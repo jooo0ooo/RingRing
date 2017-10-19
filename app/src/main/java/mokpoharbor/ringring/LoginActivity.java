@@ -25,13 +25,10 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
+    //페이스북으로부터 받을 정보를 저장할 변수
     private String user_name;
-    private String user_email = "user_email";
     private String user_id = "user_id";
-    private String user_gender = "user_gender";
-
     private URL user_picture_url;
-
 
     //아래 코드 짧고 존나 쉬워보이죠? ㅋ 이리저리 삽질하면서 수 많은 시행착오를 거치느라 5시간 걸림
 
@@ -65,12 +62,14 @@ public class LoginActivity extends AppCompatActivity {
                                         try{
                                             Log.e("user profile",object.toString());
 
+                                            //페이스북에게 받은 객체에서 원하는 정보 뽑아내기
                                             user_name = response.getJSONObject().getString("name").toString();
                                             user_id = response.getJSONObject().getString("id").toString();
                                             user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
                                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
 
+                                            //인텐트 할때 얻은 정보도 같이 넘겨주기
                                             i.putExtra("name", user_name);
                                             i.putExtra("id", user_id);
                                             i.putExtra("image_url", user_picture_url.toString());

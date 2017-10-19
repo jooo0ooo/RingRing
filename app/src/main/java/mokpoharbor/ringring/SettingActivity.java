@@ -45,6 +45,7 @@ public class SettingActivity extends AppCompatActivity {
 
         user_image_url= i.getString("image_url");
 
+        //Thread에서 웹의 이미지를 받아온다.
         Thread t =new Thread(new Runnable() {
             @Override
             public void run() {
