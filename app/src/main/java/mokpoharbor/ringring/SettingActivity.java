@@ -43,7 +43,9 @@ public class SettingActivity extends AppCompatActivity {
 
         Bundle i = getIntent().getExtras();
 
-        user_image_url= i.getString("image_url");
+        user_image_url = i.getString("image_url");
+        user_name = i.getString("name");
+        user_id = i.getString("id");
 
         //Thread에서 웹의 이미지를 받아온다.
         Thread t =new Thread(new Runnable() {
@@ -89,6 +91,19 @@ public class SettingActivity extends AppCompatActivity {
 
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        ImageView personal_setting = (ImageView)findViewById(R.id.personal_setting);
+        personal_setting.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(SettingActivity.this, PersonalSettingStudentActivity.class);
+
+                intent.putExtra("name", user_name);
+                intent.putExtra("id", user_id);
+
+                startActivity(intent);
             }
         });
 

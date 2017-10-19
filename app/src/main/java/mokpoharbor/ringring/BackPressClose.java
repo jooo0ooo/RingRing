@@ -31,6 +31,7 @@ public class BackPressClose {
 
         //뒤로가기 버튼 눌르고 2초 이내 또 눌렀따? 굿바이~
         if(System.currentTimeMillis() <= backkey_pressed_time + 2000){
+
             activity.finish();
             toast.cancel();
         }
@@ -40,4 +41,7 @@ public class BackPressClose {
         toast = Toast.makeText(activity, "버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
         toast.show();
     }
+
 }
+
+

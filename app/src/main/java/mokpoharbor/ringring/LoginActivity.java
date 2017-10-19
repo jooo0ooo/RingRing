@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
                             public void onSuccess(final LoginResult loginResult) {
                                 Log.e("onSuccess", "onSuccess");
 
-
                                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
                                     public void onCompleted(JSONObject object, GraphResponse response) {
