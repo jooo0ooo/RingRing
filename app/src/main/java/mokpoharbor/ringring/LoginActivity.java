@@ -12,8 +12,12 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -42,9 +46,51 @@ public class LoginActivity extends AppCompatActivity {
                 LoginManager.getInstance().registerCallback(callbackManager,
                         new FacebookCallback<LoginResult>() {
                             @Override
-                            public void onSuccess(LoginResult loginResult) {
+                            public void onSuccess(final LoginResult loginResult) {
                                 Log.e("onSuccess", "onSuccess");
-                                Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+
+
+
+                                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        try{
+                                            Log.e("user profile",object.toString());
+
+                                            PropertyManager.getInstance().set_user_id("");
+                                            PropertyManager.getInstance().set_user_email("");
+                                            PropertyManager.getInstance().set_user_facebookid("");
+                                            PropertyManager.getInstance().set_user_fcmtoken("");
+                                            PropertyManager.getInstance().set_user_gender("");
+                                            PropertyManager.getInstance().set_user_profileimageurl("");
+                                            PropertyManager.getInstance().set_user_name("");
+
+                                            Toast.makeText(getApplicationContext(), object.toString(), Toast.LENGTH_SHORT).show();
+
+
+                                            //해당 파싱된 정보를 공유 저장소에 저장//
+                                            PropertyManager.getInstance().set_user_id(object.getJSONObject("id").toString());
+                                            PropertyManager.getInstance().set_user_email(object.getJSONObject("email").toString());
+                                            //PropertyManager.getInstance().set_user_facebookid(object.getJSONObject("acces").toString());
+                                            //PropertyManager.getInstance().set_user_fcmtoken(object.getJSONObject("id").toString());
+                                            PropertyManager.getInstance().set_user_gender(object.getJSONObject("gender").toString());
+                                            PropertyManager.getInstance().set_user_profileimageurl(object.getJSONObject("id").toString());
+                                            //PropertyManager.getInstance().set_user_name(object.optString("name"));
+
+
+                                        }catch(Exception e){
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+
+                                Bundle parameters = new Bundle();
+                                parameters.putString("fields", "id, name, email, gender, birthday, picture");
+                                request.setParameters(parameters);
+                                request.executeAsync();
+
+
+                                //Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
