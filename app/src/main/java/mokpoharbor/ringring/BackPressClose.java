@@ -1,6 +1,7 @@
 package mokpoharbor.ringring;
 
 import android.app.Activity;
+import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 /**
@@ -32,7 +33,8 @@ public class BackPressClose {
         //뒤로가기 버튼 눌르고 2초 이내 또 눌렀따? 굿바이~
         if(System.currentTimeMillis() <= backkey_pressed_time + 2000){
 
-            activity.finish();
+            ActivityCompat.finishAffinity(activity);
+            //activity.finish();
             toast.cancel();
         }
     }

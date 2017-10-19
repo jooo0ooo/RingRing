@@ -12,10 +12,15 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_weight="10"
+            android:id="@+id/test_text_professor"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:id="@+id/test_text_professor"></TextView>
+            android:layout_weight="10"
+            android:text="교하!\n(교수님 하이!라는 뜻)"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="36sp"
+            android:textStyle="bold"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"

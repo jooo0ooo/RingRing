@@ -97,12 +97,6 @@ public class RegisterActivity extends AppCompatActivity{
                                         request.setParameters(parameters);
                                         request.executeAsync();
 
-                                        /*
-                                        Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                        */
                                     }
 
                                     @Override
@@ -175,12 +169,6 @@ public class RegisterActivity extends AppCompatActivity{
                                         request.setParameters(parameters);
                                         request.executeAsync();
 
-                                        /*
-                                        Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                        */
                                     }
 
                                     @Override
