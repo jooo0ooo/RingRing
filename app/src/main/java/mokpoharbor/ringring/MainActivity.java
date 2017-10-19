@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,8 +45,12 @@ public class MainActivity extends AppCompatActivity {
         //액티비티 타이틀바 내용 설정
         setTitle("HOME");
 
+        Bundle i = getIntent().getExtras();
+        String test = i.getString("name");
+        Toast.makeText(MainActivity.this, test, Toast.LENGTH_SHORT).show();
         //String test = PropertyManager.getInstance().get_user_name();
-        //Toast.makeText(getApplicationContext(), test, Toast.LENGTH_SHORT).show();
+        //Variables variables = (Variables)getApplication();
+        //Toast.makeText(MainActivity.this, variables.getName(), Toast.LENGTH_SHORT).show();
 
         //뒤로가기 버튼 눌를시 토스트메세지로 확인 메세지를 뛰어준다
         back_pressed = new BackPressClose(this);

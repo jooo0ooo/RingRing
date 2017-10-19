@@ -11,11 +11,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ListView
+        <TextView
             android:layout_weight="10"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:id="@+id/test_list_professor"></ListView>
+            android:id="@+id/test_text_professor"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"

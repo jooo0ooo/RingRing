@@ -24,6 +24,13 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private String user_name;
+    private String user_profile_image_url = "user_profile_image_url";
+    private String user_email = "user_email";
+    private String user_id = "user_id";
+    private String user_gender = "user_gender";
+
+
     //아래 코드 짧고 존나 쉬워보이죠? ㅋ 이리저리 삽질하면서 수 많은 시행착오를 거치느라 5시간 걸림
 
     private ImageView login_with_facebook;
@@ -51,11 +58,42 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
                                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
                                     public void onCompleted(JSONObject object, GraphResponse response) {
                                         try{
                                             Log.e("user profile",object.toString());
+
+/*
+                                            String test = response.getJSONObject().getString("name").toString();
+                                            Variables variables = (Variables) getApplication();
+                                            variables.setName(test);
+
+  */
+                                            user_name = object.getString("name");
+                                            //user_name = response.getJSONObject().getString("name").toString();
+//                                            user_profile_image_url = response.getJSONObject().getString("picture").toString();
+  //                                          user_email = response.getJSONObject().getString("email").toString();
+    //                                        user_id = response.getJSONObject().getString("id").toString();
+      //                                      user_gender = response.getJSONObject().getString("gender").toString();
+
+                                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                            i.putExtra("name", user_name);
+                                            startActivity(i);
+                                            finish();
+
+                                            //Toast.makeText(LoginActivity.this, user_name, Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getApplicationContext(), user_profile_image_url, Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getApplicationContext(), user_email, Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getApplicationContext(), user_id, Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getApplicationContext(), user_gender, Toast.LENGTH_SHORT).show();
+
+
+
+                                            /*
+                                            //String test = response.getJSONObject().getString("name").toString();
+                                            //Toast.makeText(getApplicationContext(), test, Toast.LENGTH_SHORT).show();
 
                                             PropertyManager.getInstance().set_user_id("");
                                             PropertyManager.getInstance().set_user_email("");
@@ -65,18 +103,17 @@ public class LoginActivity extends AppCompatActivity {
                                             PropertyManager.getInstance().set_user_profileimageurl("");
                                             PropertyManager.getInstance().set_user_name("");
 
-                                            Toast.makeText(getApplicationContext(), object.toString(), Toast.LENGTH_SHORT).show();
-
 
                                             //해당 파싱된 정보를 공유 저장소에 저장//
-                                            PropertyManager.getInstance().set_user_id(object.getJSONObject("id").toString());
-                                            PropertyManager.getInstance().set_user_email(object.getJSONObject("email").toString());
+                                            PropertyManager.getInstance().set_user_id(response.getJSONObject().getString("id").toString());
+                                            PropertyManager.getInstance().set_user_email(response.getJSONObject().getString("email").toString());
                                             //PropertyManager.getInstance().set_user_facebookid(object.getJSONObject("acces").toString());
                                             //PropertyManager.getInstance().set_user_fcmtoken(object.getJSONObject("id").toString());
-                                            PropertyManager.getInstance().set_user_gender(object.getJSONObject("gender").toString());
-                                            PropertyManager.getInstance().set_user_profileimageurl(object.getJSONObject("id").toString());
-                                            //PropertyManager.getInstance().set_user_name(object.optString("name"));
+                                            PropertyManager.getInstance().set_user_gender(response.getJSONObject().getString("gender").toString());
+                                            //PropertyManager.getInstance().set_user_profileimageurl(object.getJSONObject("id").toString());
+                                            PropertyManager.getInstance().set_user_name(response.getJSONObject().getString("name").toString());
 
+*/
 
                                         }catch(Exception e){
                                             e.printStackTrace();
@@ -85,15 +122,28 @@ public class LoginActivity extends AppCompatActivity {
                                 });
 
                                 Bundle parameters = new Bundle();
-                                parameters.putString("fields", "id, name, email, gender, birthday, picture");
+                                parameters.putString("user profi", "id, name, email, gender, birthday, picture");
                                 request.setParameters(parameters);
                                 request.executeAsync();
 
+                                //Toast.makeText(LoginActivity.this, user_name, Toast.LENGTH_SHORT).show();
+
+                                //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                //intent.putExtras(request.getParameters());
+                                //startActivity(intent);
+                                //finish();
+
+                                //String test = request.getParameters().toString();
+                                //Toast.makeText(LoginActivity.this, test, Toast.LENGTH_LONG).show();
 
                                 //Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+
+                                /*
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
                                 startActivity(intent);
                                 finish();
+                                */
                             }
 
                             @Override
