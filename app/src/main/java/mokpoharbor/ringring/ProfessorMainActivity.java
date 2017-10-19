@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class ProfessorMainActivity extends AppCompatActivity {
 
@@ -35,9 +34,12 @@ public class ProfessorMainActivity extends AppCompatActivity {
         user_image_url = i.getString("image_url");
         user_id = i.getString("id");
 
+        /*
+        //정보 잘 가져오나 테스트
         Toast.makeText(ProfessorMainActivity.this, "사용자 id->" + user_id, Toast.LENGTH_SHORT).show();
         Toast.makeText(ProfessorMainActivity.this, "사용자 이름->" + user_name, Toast.LENGTH_SHORT).show();
         Toast.makeText(ProfessorMainActivity.this, "프필 URL->" + user_image_url, Toast.LENGTH_SHORT).show();
+        */
 
         //뒤로가기 버튼 눌를시 토스트메세지로 확인 메세지를 뛰어준다
         back_pressed = new BackPressClose(this);
