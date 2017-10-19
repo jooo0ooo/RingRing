@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/user_image"
             android:layout_weight="30"
             android:layout_width="fill_parent"
             android:src="@drawable/test_image"

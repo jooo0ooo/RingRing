@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                intent.putExtra("image_url", user_image_url);
                 startActivity(intent);
                 finish();
             }
