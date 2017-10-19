@@ -11,6 +11,11 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String user_name;
+    private String user_id;
+    private String user_image_url;
+
+
     BackPressClose back_pressed;
 
     //list 테스트 해보는 겁니당.
@@ -46,16 +51,16 @@ public class MainActivity extends AppCompatActivity {
         setTitle("HOME");
 
         Bundle i = getIntent().getExtras();
-        String test1 = i.getString("name");
-        String test2 = i.getString("image_url");
+        user_name = i.getString("name");
+        user_image_url = i.getString("image_url");
        // String test3 = i.getString("email");
-        String test4 = i.getString("id");
-        //String test5 = i.getString("gender");
-        Toast.makeText(MainActivity.this, test1, Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this, test2, Toast.LENGTH_SHORT).show();
+        user_id = i.getString("id");
+       // String test5 = i.getString("gender");
+        Toast.makeText(MainActivity.this, user_id, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, user_name, Toast.LENGTH_SHORT).show();
         //Toast.makeText(MainActivity.this, test3, Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this, test4, Toast.LENGTH_SHORT).show();
-        //Toast.makeText(MainActivity.this, test5, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, user_image_url, Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(MainActivity.this, test5, Toast.LENGTH_SHORT).show();
         //String test = PropertyManager.getInstance().get_user_name();
         //Variables variables = (Variables)getApplication();
         //Toast.makeText(MainActivity.this, variables.getName(), Toast.LENGTH_SHORT).show();

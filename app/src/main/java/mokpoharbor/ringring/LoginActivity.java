@@ -26,7 +26,6 @@ import java.util.Arrays;
 public class LoginActivity extends AppCompatActivity {
 
     private String user_name;
-    private String user_profile_image_url = "user_profile_image_url";
     private String user_email = "user_email";
     private String user_id = "user_id";
     private String user_gender = "user_gender";
@@ -79,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                            user_profile_image_url = response.getJSONObject().getString("picture").toString();
 //                                            user_email = response.getJSONObject().getString("email").toString();
                                             user_id = response.getJSONObject().getString("id").toString();
-//                                            user_gender = response.getJSONObject().getString("gender").toString();
+    //                                        user_gender = response.getJSONObject().getString("gender").toString();
 
                                             user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
@@ -88,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
   //                                          i.putExtra("picture", user_profile_image_url);
     //                                        i.putExtra("email", user_email);
                                             i.putExtra("id", user_id);
-                                            i.putExtra("gender", user_gender);
+                   //                         i.putExtra("gender", user_gender);
                                             i.putExtra("image_url", user_picture_url.toString());
                                             startActivity(i);
                                             finish();
