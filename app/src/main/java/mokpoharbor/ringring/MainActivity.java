@@ -51,19 +51,14 @@ public class MainActivity extends AppCompatActivity {
         setTitle("HOME");
 
         Bundle i = getIntent().getExtras();
+
         user_name = i.getString("name");
         user_image_url = i.getString("image_url");
-       // String test3 = i.getString("email");
         user_id = i.getString("id");
-       // String test5 = i.getString("gender");
-        Toast.makeText(MainActivity.this, user_id, Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this, user_name, Toast.LENGTH_SHORT).show();
-        //Toast.makeText(MainActivity.this, test3, Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this, user_image_url, Toast.LENGTH_SHORT).show();
-     //   Toast.makeText(MainActivity.this, test5, Toast.LENGTH_SHORT).show();
-        //String test = PropertyManager.getInstance().get_user_name();
-        //Variables variables = (Variables)getApplication();
-        //Toast.makeText(MainActivity.this, variables.getName(), Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(MainActivity.this, "사용자 id->" + user_id, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "사용자 이름->" + user_name, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "프필 URL->" + user_image_url, Toast.LENGTH_SHORT).show();
 
         //뒤로가기 버튼 눌를시 토스트메세지로 확인 메세지를 뛰어준다
         back_pressed = new BackPressClose(this);
@@ -83,7 +78,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+
+                intent.putExtra("name", user_name);
+                intent.putExtra("id", user_id);
                 intent.putExtra("image_url", user_image_url);
+
                 startActivity(intent);
                 finish();
             }

@@ -18,6 +18,8 @@ import java.net.URL;
 
 public class SettingActivity extends AppCompatActivity {
 
+    private String user_name;
+    private String user_id;
     private String user_image_url;
 
     Handler handler = new Handler();
@@ -40,6 +42,7 @@ public class SettingActivity extends AppCompatActivity {
 
 
         Bundle i = getIntent().getExtras();
+
         user_image_url= i.getString("image_url");
 
         Thread t =new Thread(new Runnable() {
@@ -78,6 +81,11 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+
+                intent.putExtra("name", user_name);
+                intent.putExtra("id", user_id);
+                intent.putExtra("image_url", user_image_url);
+
                 startActivity(intent);
                 finish();
             }

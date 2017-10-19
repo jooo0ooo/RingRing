@@ -59,70 +59,24 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.e("onSuccess", "onSuccess");
 
 
-
-
                                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
                                     public void onCompleted(JSONObject object, GraphResponse response) {
                                         try{
                                             Log.e("user profile",object.toString());
 
-/*
-                                            String test = response.getJSONObject().getString("name").toString();
-                                            Variables variables = (Variables) getApplication();
-                                            variables.setName(test);
-
-  */
-                                            //user_name = object.getString("name");
                                             user_name = response.getJSONObject().getString("name").toString();
-//                                            user_profile_image_url = response.getJSONObject().getString("picture").toString();
-//                                            user_email = response.getJSONObject().getString("email").toString();
                                             user_id = response.getJSONObject().getString("id").toString();
-    //                                        user_gender = response.getJSONObject().getString("gender").toString();
-
                                             user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
                                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
+
                                             i.putExtra("name", user_name);
-  //                                          i.putExtra("picture", user_profile_image_url);
-    //                                        i.putExtra("email", user_email);
                                             i.putExtra("id", user_id);
-                   //                         i.putExtra("gender", user_gender);
                                             i.putExtra("image_url", user_picture_url.toString());
+
                                             startActivity(i);
                                             finish();
-
-                                            //Toast.makeText(LoginActivity.this, user_name, Toast.LENGTH_SHORT).show();
-                                            //Toast.makeText(getApplicationContext(), user_profile_image_url, Toast.LENGTH_SHORT).show();
-                                            //Toast.makeText(getApplicationContext(), user_email, Toast.LENGTH_SHORT).show();
-                                            //Toast.makeText(getApplicationContext(), user_id, Toast.LENGTH_SHORT).show();
-                                            //Toast.makeText(getApplicationContext(), user_gender, Toast.LENGTH_SHORT).show();
-
-
-
-                                            /*
-                                            //String test = response.getJSONObject().getString("name").toString();
-                                            //Toast.makeText(getApplicationContext(), test, Toast.LENGTH_SHORT).show();
-
-                                            PropertyManager.getInstance().set_user_id("");
-                                            PropertyManager.getInstance().set_user_email("");
-                                            PropertyManager.getInstance().set_user_facebookid("");
-                                            PropertyManager.getInstance().set_user_fcmtoken("");
-                                            PropertyManager.getInstance().set_user_gender("");
-                                            PropertyManager.getInstance().set_user_profileimageurl("");
-                                            PropertyManager.getInstance().set_user_name("");
-
-
-                                            //해당 파싱된 정보를 공유 저장소에 저장//
-                                            PropertyManager.getInstance().set_user_id(response.getJSONObject().getString("id").toString());
-                                            PropertyManager.getInstance().set_user_email(response.getJSONObject().getString("email").toString());
-                                            //PropertyManager.getInstance().set_user_facebookid(object.getJSONObject("acces").toString());
-                                            //PropertyManager.getInstance().set_user_fcmtoken(object.getJSONObject("id").toString());
-                                            PropertyManager.getInstance().set_user_gender(response.getJSONObject().getString("gender").toString());
-                                            //PropertyManager.getInstance().set_user_profileimageurl(object.getJSONObject("id").toString());
-                                            PropertyManager.getInstance().set_user_name(response.getJSONObject().getString("name").toString());
-
-*/
 
                                         }catch(Exception e){
                                             e.printStackTrace();
@@ -135,24 +89,6 @@ public class LoginActivity extends AppCompatActivity {
                                 request.setParameters(parameters);
                                 request.executeAsync();
 
-                                //Toast.makeText(LoginActivity.this, user_name, Toast.LENGTH_SHORT).show();
-
-                                //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                //intent.putExtras(request.getParameters());
-                                //startActivity(intent);
-                                //finish();
-
-                                //String test = request.getParameters().toString();
-                                //Toast.makeText(LoginActivity.this, test, Toast.LENGTH_LONG).show();
-
-                                //Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-
-                                /*
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
-                                startActivity(intent);
-                                finish();
-                                */
                             }
 
                             @Override
