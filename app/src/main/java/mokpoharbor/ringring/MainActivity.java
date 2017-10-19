@@ -46,8 +46,16 @@ public class MainActivity extends AppCompatActivity {
         setTitle("HOME");
 
         Bundle i = getIntent().getExtras();
-        String test = i.getString("name");
-        Toast.makeText(MainActivity.this, test, Toast.LENGTH_SHORT).show();
+        String test1 = i.getString("name");
+        String test2 = i.getString("image_url");
+       // String test3 = i.getString("email");
+        String test4 = i.getString("id");
+        //String test5 = i.getString("gender");
+        Toast.makeText(MainActivity.this, test1, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, test2, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, test3, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, test4, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, test5, Toast.LENGTH_SHORT).show();
         //String test = PropertyManager.getInstance().get_user_name();
         //Variables variables = (Variables)getApplication();
         //Toast.makeText(MainActivity.this, variables.getName(), Toast.LENGTH_SHORT).show();

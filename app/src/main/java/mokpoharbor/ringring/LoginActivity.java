@@ -19,6 +19,7 @@ import com.facebook.login.LoginResult;
 
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.Arrays;
 
 
@@ -29,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private String user_email = "user_email";
     private String user_id = "user_id";
     private String user_gender = "user_gender";
+
+    private URL user_picture_url;
 
 
     //아래 코드 짧고 존나 쉬워보이죠? ㅋ 이리저리 삽질하면서 수 많은 시행착오를 거치느라 5시간 걸림
@@ -71,15 +74,22 @@ public class LoginActivity extends AppCompatActivity {
                                             variables.setName(test);
 
   */
-                                            user_name = object.getString("name");
-                                            //user_name = response.getJSONObject().getString("name").toString();
+                                            //user_name = object.getString("name");
+                                            user_name = response.getJSONObject().getString("name").toString();
 //                                            user_profile_image_url = response.getJSONObject().getString("picture").toString();
-  //                                          user_email = response.getJSONObject().getString("email").toString();
-    //                                        user_id = response.getJSONObject().getString("id").toString();
-      //                                      user_gender = response.getJSONObject().getString("gender").toString();
+//                                            user_email = response.getJSONObject().getString("email").toString();
+                                            user_id = response.getJSONObject().getString("id").toString();
+//                                            user_gender = response.getJSONObject().getString("gender").toString();
+
+                                            user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
                                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                             i.putExtra("name", user_name);
+  //                                          i.putExtra("picture", user_profile_image_url);
+    //                                        i.putExtra("email", user_email);
+                                            i.putExtra("id", user_id);
+                                            i.putExtra("gender", user_gender);
+                                            i.putExtra("image_url", user_picture_url.toString());
                                             startActivity(i);
                                             finish();
 
