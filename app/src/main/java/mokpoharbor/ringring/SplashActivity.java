@@ -130,7 +130,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         try{
-            Thread.sleep(1000);
+            Thread.sleep(4000);
             graphRequest(AccessToken.getCurrentAccessToken());
         }catch (InterruptedException e){
             e.printStackTrace();

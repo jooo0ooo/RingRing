@@ -2,7 +2,6 @@ package mokpoharbor.ringring;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -116,23 +115,7 @@ public class RegisterActivity extends AppCompatActivity{
                                                     }
                                                     */
 
-                                                    Intent i = new Intent(RegisterActivity.this, MainActivity.class);
-                                                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-                                                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    } else {
-                                                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    }
 
-                                                    i.putExtra("name", user_name);
-                                                    i.putExtra("id", user_id);
-                                                    i.putExtra("image_url", user_picture_url.toString());
-
-                                                    Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-
-                                                    startActivity(i);
-
-
-                                                    /*
                                                     Intent i = new Intent(RegisterActivity.this, MainActivity.class);
 
                                                     //인텐트 할때 얻은 정보도 같이 넘겨주기
@@ -142,10 +125,9 @@ public class RegisterActivity extends AppCompatActivity{
 
                                                     Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
 
-
                                                     startActivity(i);
                                                     finish();
-                                                    */
+
 
                                                 }catch(Exception e){
                                                     e.printStackTrace();
@@ -206,7 +188,7 @@ public class RegisterActivity extends AppCompatActivity{
                                                     user_id = response.getJSONObject().getString("id").toString();
                                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
-                                                    user_flag = "";
+                                                    user_flag = "Professor";
 
                                                     SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                                                     SharedPreferences.Editor editor = pref.edit();
@@ -247,22 +229,6 @@ public class RegisterActivity extends AppCompatActivity{
 
 
                                                     Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
-                                                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-                                                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    } else {
-                                                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    }
-
-                                                    i.putExtra("name", user_name);
-                                                    i.putExtra("id", user_id);
-                                                    i.putExtra("image_url", user_picture_url.toString());
-
-                                                    Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-
-                                                    startActivity(i);
-
-                                                    /*
-                                                    Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
 
                                                     //인텐트 할때 얻은 정보도 같이 넘겨주기
                                                     i.putExtra("name", user_name);
@@ -271,10 +237,8 @@ public class RegisterActivity extends AppCompatActivity{
 
                                                     Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
 
-
                                                     startActivity(i);
                                                     finish();
-                                                    */
 
                                                 }catch(Exception e){
                                                     e.printStackTrace();
