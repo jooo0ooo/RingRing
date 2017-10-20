@@ -20,11 +20,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:background="@drawable/back"
                 android:gravity="center_vertical"
-                android:src="@drawable/class_setting"
                 android:textAlignment="center"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="18sp"
@@ -38,11 +36,9 @@
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:background="@drawable/back"
-                android:gravity="center_vertical"
-                android:src="@drawable/personal_setting" />
+                android:gravity="center_vertical" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,11 +49,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:background="@drawable/back"
                 android:gravity="center_vertical"
-                android:src="@drawable/class_setting"
                 android:textAlignment="center"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="18sp"
@@ -71,11 +65,9 @@
                 android:id="@+id/user_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:background="@drawable/back"
-                android:gravity="center_vertical"
-                android:src="@drawable/personal_setting" />
+                android:gravity="center_vertical" />
         </LinearLayout>
 
         <ImageView

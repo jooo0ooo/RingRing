@@ -107,5 +107,14 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        ImageView class_setting = (ImageView)findViewById(R.id.class_setting);
+        class_setting.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(SettingActivity.this, ClassSettingStudentActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

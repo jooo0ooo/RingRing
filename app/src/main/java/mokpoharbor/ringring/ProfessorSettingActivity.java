@@ -108,6 +108,16 @@ public class ProfessorSettingActivity extends AppCompatActivity {
             }
         });
 
+        ImageView class_setting_professor = (ImageView)findViewById(R.id.class_setting_professor);
+        class_setting_professor.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(ProfessorSettingActivity.this, ClassSettingProfessorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
     }

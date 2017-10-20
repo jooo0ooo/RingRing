@@ -114,6 +114,12 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.addItem("못하는게 : ",
                 "뭔가요 당신",
                 "2017-10-23");
+        mAdapter.addItem("날씨가 추워지니 ",
+                "다들 딱 붙어 뎅긴다",
+                "2017-10-24");
+        mAdapter.addItem("커플들 ",
+                "다 사라졌으면^^",
+                "2017-10-25");
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
