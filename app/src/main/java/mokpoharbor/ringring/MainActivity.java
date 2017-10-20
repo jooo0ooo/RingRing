@@ -1,14 +1,26 @@
 package mokpoharbor.ringring;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ListView mListView = null;
+    private ListViewAdapter mAdapter = null;
 
     private String user_name;
     private String user_id;
@@ -65,14 +77,55 @@ public class MainActivity extends AppCompatActivity {
         //뒤로가기 버튼 눌를시 토스트메세지로 확인 메세지를 뛰어준다
         back_pressed = new BackPressClose(this);
 
+        /*
+
         //리스트뷰를 이용하기위해 어댑터 사용
         ArrayAdapter adapter = new ArrayAdapter(
                 getApplicationContext(),
                 R.layout.myrow,
                 data);
 
-        ListView lv = (ListView)findViewById(R.id.test_list);
+        ListView lv = (ListView)findViewById(R.id.homework_list);
         lv.setAdapter(adapter);
+
+        */
+
+
+        mListView = (ListView) findViewById(R.id.homework_list);
+
+        mAdapter = new ListViewAdapter(this);
+        mListView.setAdapter(mAdapter);
+
+        mAdapter.addItem("팀프로젝트 : ",
+                "시나리오 작성",
+                "2017-10-18");
+        mAdapter.addItem("교양골프 : ",
+                "7번 아이언 연습",
+                "2017-10-19");
+        mAdapter.addItem("정지우 : ",
+                "목포의 사나이",
+                "2017-10-20");
+        mAdapter.addItem("올해안에 : ",
+                "여자친구 생기게 해주세요",
+                "2017-10-21");
+        mAdapter.addItem("정팀장 : ",
+                "최고의 조장님!",
+                "2017-10-22");
+        mAdapter.addItem("못하는게 : ",
+                "뭔가요 당신",
+                "2017-10-23");
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id){
+                ListData mData = mAdapter.mListData.get(position);
+                TextView test = (TextView)findViewById(R.id.mText);
+
+                Toast.makeText(MainActivity.this, mData.mText + " 끝~", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         //setting 이미지 아이콘을 터치할때 화면전환 되는 부분
         ImageView setting = (ImageView)findViewById(R.id.setting_image);
@@ -92,4 +145,111 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private class ViewHolder {
+        public TextView mTitle;
+
+        public TextView mText;
+
+        public TextView mDate;
+    }
+
+    private class ListViewAdapter extends BaseAdapter {
+        private Context mContext = null;
+        private ArrayList<ListData> mListData = new ArrayList<ListData>();
+
+
+
+        public void addItem(String mTitle, String mText, String mDate){
+            ListData addInfo = null;
+            addInfo = new ListData();
+            addInfo.mTitle = mTitle;
+            addInfo.mText = mText;
+            addInfo.mDate = mDate;
+
+            mListData.add(addInfo);
+        }
+
+        public void remove(int position){
+            mListData.remove(position);
+            dataChange();
+        }
+
+        public void sort(){
+            Collections.sort(mListData, ListData.ALPHA_COMPARATOR);
+            dataChange();
+        }
+
+        public void dataChange(){
+            mAdapter.notifyDataSetChanged();
+        }
+
+
+        public ListViewAdapter(Context mContext) {
+            super();
+            this.mContext = mContext;
+        }
+
+        @Override
+        public int getCount() {
+            return mListData.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mListData.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+/*
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return null;
+        }
+*/
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+
+                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.myrow, null);
+
+                holder.mTitle = (TextView) convertView.findViewById(R.id.mTitle);
+                holder.mText = (TextView) convertView.findViewById(R.id.mText);
+                holder.mDate = (TextView) convertView.findViewById(R.id.mDate);
+
+                convertView.setTag(holder);
+            }else{
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            ListData mData = mListData.get(position);
+
+        /*
+        if (mData.mIcon != null) {
+            holder.mTitle.setVisibility(View.VISIBLE);
+            holder.mTitle.setImageDrawable(mData.mIcon);
+        }else{
+            holder.mTitle.setVisibility(View.GONE);
+        }
+        */
+            holder.mTitle.setText(mData.mTitle);
+            holder.mText.setText(mData.mText);
+            holder.mDate.setText(mData.mDate);
+
+            return convertView;
+        }
+
+    }
+
+
+
+
+
+
 }
