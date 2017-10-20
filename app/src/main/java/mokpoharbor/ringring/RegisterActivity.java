@@ -1,6 +1,7 @@
 package mokpoharbor.ringring;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,13 +21,12 @@ import com.facebook.login.LoginResult;
 
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.net.URL;
 import java.util.Arrays;
 
 public class RegisterActivity extends AppCompatActivity{
+
+    String user_flag;
 
     //페이스북으로부터 받을 정보를 저장할 변수
     private String user_name;
@@ -75,6 +75,15 @@ public class RegisterActivity extends AppCompatActivity{
                                                     user_id = response.getJSONObject().getString("id").toString();
                                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
+                                                    user_flag = "Student";
+
+                                                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = pref.edit();
+
+                                                    editor.putString("user_flag", user_flag);
+                                                    editor.commit();
+
+                                                    /*
                                                     File file = new File("/data/data/mokpoharbor.ringring/cache/user_flag.txt") ;
                                                     FileWriter fw = null ;
                                                     BufferedWriter bufwr = null ;
@@ -103,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity{
                                                     } catch (Exception e) {
                                                         e.printStackTrace();
                                                     }
+                                                    */
 
 
                                                     Intent i = new Intent(RegisterActivity.this, MainActivity.class);
@@ -177,6 +187,15 @@ public class RegisterActivity extends AppCompatActivity{
                                                     user_id = response.getJSONObject().getString("id").toString();
                                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
+                                                    user_flag = "Professor";
+
+                                                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = pref.edit();
+
+                                                    editor.putString("user_flag", user_flag);
+                                                    editor.commit();
+
+                                                    /*
                                                     File file = new File("/data/data/mokpoharbor.ringring/cache/user_flag.txt") ;
                                                     FileWriter fw = null ;
                                                     BufferedWriter bufwr = null ;
@@ -205,6 +224,7 @@ public class RegisterActivity extends AppCompatActivity{
                                                     } catch (Exception e) {
                                                         e.printStackTrace();
                                                     }
+                                                    */
 
 
                                                     Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);

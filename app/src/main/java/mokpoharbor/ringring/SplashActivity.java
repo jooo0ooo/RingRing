@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -15,9 +16,6 @@ import com.facebook.Profile;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -54,29 +52,11 @@ public class SplashActivity extends Activity {
                                 user_id = response.getJSONObject().getString("id").toString();
                                 user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
-                                File file = new File("/data/data/mokpoharbor.ringring/cache/user_flag.txt") ;
-                                FileReader fr = null ;
-                                BufferedReader bufrd = null ;
+                                SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                String user_flag = pref.getString("user_flag", "nothing");
 
-                                String s = null;
+                                if(user_flag.equals("Student")){
 
-                                try {
-                                    // open file.
-                                    fr = new FileReader(file) ;
-                                    bufrd = new BufferedReader(fr) ;
-
-                                    while ((s=bufrd.readLine()) != null) {
-
-                                    }
-
-                                    // close file.
-                                    bufrd.close() ;
-                                    fr.close() ;
-                                } catch (Exception e) {
-                                    e.printStackTrace() ;
-                                }
-
-                                if(s == "Student"){
                                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
 
                                     //인텐트 할때 얻은 정보도 같이 넘겨주기
@@ -86,7 +66,9 @@ public class SplashActivity extends Activity {
 
                                     startActivity(i);
                                     finish();
-                                }else{
+
+                                }else if(user_flag.equals("Professor")){
+
                                     Intent i = new Intent(SplashActivity.this, ProfessorMainActivity.class);
 
                                     //인텐트 할때 얻은 정보도 같이 넘겨주기
@@ -96,8 +78,12 @@ public class SplashActivity extends Activity {
 
                                     startActivity(i);
                                     finish();
-                                }
 
+                                }else{
+
+                                    Toast.makeText(SplashActivity.this, "Error or NotUser", Toast.LENGTH_SHORT).show();
+
+                                }
 
                                 /*
                                 Intent i = new Intent(SplashActivity.this, MainActivity.class);
@@ -144,7 +130,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         try{
-            Thread.sleep(4000);
+            Thread.sleep(1000);
             graphRequest(AccessToken.getCurrentAccessToken());
         }catch (InterruptedException e){
             e.printStackTrace();
