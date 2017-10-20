@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:context="mokpoharbor.ringring.MainActivity">
 
-        <LinearLayout
-            android:id="@+id/main_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ListView
             android:layout_weight="10"
