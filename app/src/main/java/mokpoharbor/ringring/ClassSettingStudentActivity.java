@@ -104,6 +104,21 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
             }
         });
 
+        Button my_class = (Button) findViewById(R.id.my_class);
+        my_class.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ClassSettingStudentActivity.this, "수강 강좌 보기 - 만들 예정", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button register_class = (Button) findViewById(R.id.register_class);
+        register_class.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ClassSettingStudentActivity.this, "강좌 등록하기 - 만들 예정", Toast.LENGTH_SHORT).show();}
+        });
+
     }
 }
 
