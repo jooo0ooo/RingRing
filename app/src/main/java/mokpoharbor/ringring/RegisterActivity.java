@@ -20,6 +20,9 @@ import com.facebook.login.LoginResult;
 
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -71,6 +74,36 @@ public class RegisterActivity extends AppCompatActivity{
                                                     user_name = response.getJSONObject().getString("name").toString();
                                                     user_id = response.getJSONObject().getString("id").toString();
                                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
+
+                                                    File file = new File("/data/data/mokpoharbor.ringring/cache/user_flag.txt") ;
+                                                    FileWriter fw = null ;
+                                                    BufferedWriter bufwr = null ;
+
+                                                    String str = "Student" ;
+
+                                                    try {
+                                                        // open file.
+                                                        fw = new FileWriter(file) ;
+                                                        bufwr = new BufferedWriter(fw) ;
+
+                                                        // write data to the file.
+                                                        bufwr.write(str) ;
+
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace() ;
+                                                    }
+
+                                                    // close file.
+                                                    try {
+                                                        if (bufwr != null)
+                                                            bufwr.close() ;
+
+                                                        if (fw != null)
+                                                            fw.close() ;
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+
 
                                                     Intent i = new Intent(RegisterActivity.this, MainActivity.class);
 
@@ -143,6 +176,36 @@ public class RegisterActivity extends AppCompatActivity{
                                                     user_name = response.getJSONObject().getString("name").toString();
                                                     user_id = response.getJSONObject().getString("id").toString();
                                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
+
+                                                    File file = new File("/data/data/mokpoharbor.ringring/cache/user_flag.txt") ;
+                                                    FileWriter fw = null ;
+                                                    BufferedWriter bufwr = null ;
+
+                                                    String str = "Professor" ;
+
+                                                    try {
+                                                        // open file.
+                                                        fw = new FileWriter(file) ;
+                                                        bufwr = new BufferedWriter(fw) ;
+
+                                                        // write data to the file.
+                                                        bufwr.write(str) ;
+
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace() ;
+                                                    }
+
+                                                    // close file.
+                                                    try {
+                                                        if (bufwr != null)
+                                                            bufwr.close() ;
+
+                                                        if (fw != null)
+                                                            fw.close() ;
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+
 
                                                     Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
 
