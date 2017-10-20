@@ -23,10 +23,11 @@
             android:textStyle="bold"></TextView>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/hand_over_subject"
+            android:background="@drawable/back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="35"
+            android:layout_weight="25"
             android:src="@drawable/hand_over_subject" />
 
 
