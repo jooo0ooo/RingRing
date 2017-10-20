@@ -81,7 +81,7 @@ public class SplashActivity extends Activity {
 
                                 }else{
 
-                                    Toast.makeText(SplashActivity.this, "Error or NotUser", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SplashActivity.this, "Error or Not_User", Toast.LENGTH_SHORT).show();
 
                                 }
 

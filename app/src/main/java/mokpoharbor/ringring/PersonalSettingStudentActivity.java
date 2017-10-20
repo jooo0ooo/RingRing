@@ -1,6 +1,7 @@
 package mokpoharbor.ringring;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,11 @@ public class PersonalSettingStudentActivity extends AppCompatActivity {
         name.setText(user_name);
         TextView id = (TextView)findViewById(R.id.user_id);
         id.setText(user_id);
+
+        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String user_flag = pref.getString("user_flag", "nothing");
+        TextView status = (TextView)findViewById(R.id.user_status);
+        status.setText(user_flag);
 
         ImageView logout = (ImageView)findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener(){
