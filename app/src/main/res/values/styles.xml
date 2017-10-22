@@ -10,7 +10,7 @@
 
     <!-- splash화면 설정 -->
     <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@drawable/splash_img</item>
+        <item name="android:windowBackground">@drawable/splash_image</item>
     </style>
 
 </resources>
