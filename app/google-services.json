@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "858443208045",
+    "firebase_url": "https://ringring-dfdab.firebaseio.com",
+    "project_id": "ringring-dfdab",
+    "storage_bucket": "ringring-dfdab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858443208045:android:97eed4799c3170c3",
+        "android_client_info": {
+          "package_name": "mokpoharbor.ringring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858443208045-ap3o0iaq64kan1clfu3601q65u8jdhtd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mokpoharbor.ringring",
+            "certificate_hash": "17c30edb45b85c191ff6144650a019f05cc6b609"
+          }
+        },
+        {
+          "client_id": "858443208045-bcn4ip09advehtd2h7pkt99flqafpors.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChYhVtI-_P4V-x7qAFxCCziifarqFmwvY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858443208045-bcn4ip09advehtd2h7pkt99flqafpors.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
