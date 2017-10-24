@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -74,8 +76,25 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                     }
                 });
 
+                final AlertDialog ad = builder.create();
+                ad.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        final ListView lv = ad.getListView();
+                        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                            @Override
+                            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                                String selected = (lv.getItemAtPosition(position)).toString();
+                                myRef.child(selected).removeValue();
+                                return true;
+                            }
+                        });
+                    }
+                });
+
                 //builder.create();
-                builder.show();
+                //builder.show();
+                ad.show();
             }
 
         });
@@ -118,7 +137,6 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 myclass.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
