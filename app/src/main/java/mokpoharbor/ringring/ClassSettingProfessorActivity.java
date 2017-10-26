@@ -1,6 +1,7 @@
 package mokpoharbor.ringring;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +28,11 @@ import java.util.ArrayList;
 public class ClassSettingProfessorActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
-    DatabaseReference myRef;
+    DatabaseReference myRef, classRef, userRef;
+
+    String my_id;
+
+
 
     ArrayList <String> myclass = new ArrayList<>();
 
@@ -36,8 +41,16 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_setting_professor);
 
+        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        my_id = pref.getString("my_id", "nothing");
+
+
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("professor_class");
+
+        classRef = database.getReference("class");
+
+        userRef = database.getReference("user");
 
         //final ArrayList my_class_list = new ArrayList();
 
@@ -53,6 +66,13 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
         });
 
         final Button my_class = (Button) findViewById(R.id.my_class);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         my_class.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,8 +104,30 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                             @Override
                             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                                String selected = (lv.getItemAtPosition(position)).toString();
-                                myRef.child(selected).removeValue();
+                                final String selected = (lv.getItemAtPosition(position)).toString();
+                                //myRef.child(selected).removeValue();
+                                AlertDialog.Builder remove = new AlertDialog.Builder(ClassSettingProfessorActivity.this);
+
+                                remove.setTitle("Delete Class");
+                                remove.setMessage("선택한 과목을 삭제하시겠습니까?");
+
+                                remove.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        userRef.child(my_id).child("my_class").child(selected).removeValue();
+                                        ad.cancel();
+                                        Toast.makeText(ClassSettingProfessorActivity.this, selected+"가 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                remove.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                remove.show();
+                                //userRef.child(my_id).child("my_class").child(selected).removeValue();
                                 return true;
                             }
                         });
@@ -113,7 +155,15 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                 dialog.setPositiveButton("Regist", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String class_name = etEdit.getText().toString();
-                        myRef.child(class_name).push().setValue(class_name);
+
+                        classRef.child(class_name).setValue(class_name);
+
+
+                        //SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                        //my_id = pref.getString("my_id", "nothing");
+                        userRef.child(my_id).child("my_class").child(class_name).setValue(class_name);
+
+                        //myRef.child(class_name).push().setValue(class_name);
                         Toast.makeText(ClassSettingProfessorActivity.this, class_name, Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -134,12 +184,12 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
             }
         });
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myclass.clear();
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.child(my_id).child("my_class").getChildren()) {
                     String key = snapshot.getKey();
                     myclass.add(key);
                 }

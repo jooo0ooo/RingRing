@@ -18,6 +18,8 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONObject;
 
@@ -26,6 +28,9 @@ import java.util.Arrays;
 
 public class RegisterActivity extends AppCompatActivity{
 
+    FirebaseDatabase database;
+    DatabaseReference userRef;
+
     private static final String PREFS_NAME = "MyPrefs"; //MyPrefs.xml로 저장
     String user_flag;
 
@@ -33,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity{
     private String user_name;
     private String user_id = "user_id";
     private URL user_picture_url;
+
+    private String my_id;
 
 
     private Button register_with_facebook_stu;
@@ -44,6 +51,10 @@ public class RegisterActivity extends AppCompatActivity{
         FacebookSdk.sdkInitialize(getApplicationContext()); // SDK 초기화 (setContentView 보다 먼저 실행되어야합니다. 안그럼 에러납니다.)
         setContentView(R.layout.activity_register);
         callbackManager = CallbackManager.Factory.create();  //로그인 응답을 처리할 콜백 관리자
+
+        database = FirebaseDatabase.getInstance();
+        userRef = database.getReference("user");
+
 
         //액티비티 타이틀바 내용 설정
         setTitle("Register");
@@ -77,11 +88,18 @@ public class RegisterActivity extends AppCompatActivity{
                                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
                                                     user_flag = "Student";
+                                                    my_id = user_id;
+
+                                                    userRef.child(user_id).child("name").setValue(user_name);
+                                                    userRef.child(user_id).child("status").setValue("student");
 
                                                     SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                                                     SharedPreferences.Editor editor = pref.edit();
 
                                                     editor.putString("user_flag", user_flag);
+
+                                                    editor.putString("my_id", my_id);
+
                                                     editor.commit();
 
                                                     /*
@@ -189,11 +207,17 @@ public class RegisterActivity extends AppCompatActivity{
                                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
                                                     user_flag = "Professor";
+                                                    my_id = user_id;
+
+
+                                                    userRef.child(user_id).child("name").setValue(user_name);
+                                                    userRef.child(user_id).child("status").setValue("professor");
 
                                                     SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                                                     SharedPreferences.Editor editor = pref.edit();
 
                                                     editor.putString("user_flag", user_flag);
+                                                    editor.putString("my_id", my_id);
                                                     editor.commit();
 
                                                     /*
