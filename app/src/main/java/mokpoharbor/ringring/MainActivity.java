@@ -2,6 +2,7 @@ package mokpoharbor.ringring;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -14,10 +15,32 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    ArrayList<String> myclass = new ArrayList<>();
+    ArrayList<String> homework = new ArrayList<>();
+    ArrayList<String> homework_context = new ArrayList<>();
+    ArrayList<String> homework_limit = new ArrayList<>();
+
+    String[] my_homework = homework.toArray(new String[homework.size()]);
+    String[] my_homework_context = homework_context.toArray(new String[homework_context.size()]);
+    String[] my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
+
+
+    FirebaseDatabase database;
+    DatabaseReference userRef, classRef;
+
+    String my_id;
 
     private ListView mListView = null;
     private ListViewAdapter mAdapter = null;
@@ -30,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     BackPressClose back_pressed;
 
     //list 테스트 해보는 겁니당.
+    /*
     String [] data = { "☞ 콜로키움 : 감상문 작성 : 1시간",
             "☞ 알고리즘 : 보고서 작성 : 2시간",
             "☞ 영어2 : 영어단어 암기 : 3시간",
@@ -46,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             "☞ 알코올 : 은 싫지만 주면 : 마실 수 밖에",
             "☞ 테스트 : 목록 : 넣는 중",
             "☞ 더이상 : 할게 : 없어요"};
+    */
 
     //오버롸이드~
     @Override
@@ -57,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        my_id = pref.getString("my_id", "nothing");
+
+        database = FirebaseDatabase.getInstance();
+        userRef = database.getReference("user");
+        classRef = database.getReference("class");
 
         //액티비티 타이틀바 내용 설정
         setTitle("HOME");
@@ -90,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
         */
 
-
+/*
         mListView = (ListView) findViewById(R.id.homework_list);
 
         mAdapter = new ListViewAdapter(this);
@@ -120,18 +153,7 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.addItem("커플들 ",
                 "다 사라졌으면^^",
                 "2017-10-25");
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-                ListData mData = mAdapter.mListData.get(position);
-                TextView test = (TextView)findViewById(R.id.mText);
-
-                Toast.makeText(MainActivity.this, mData.mText + " 끝~", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        */
 
         //setting 이미지 아이콘을 터치할때 화면전환 되는 부분
         ImageView setting = (ImageView)findViewById(R.id.setting_image);
@@ -149,9 +171,69 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mListView = (ListView) findViewById(R.id.homework_list);
+        mAdapter = new MainActivity.ListViewAdapter(this);
+        mListView.setAdapter(mAdapter);
+        //Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
+        for(int n = 0; n < homework.size(); n++){
+            mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);
+        }
+
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id){
+                ListData mData = mAdapter.mListData.get(position);
+                TextView test = (TextView)findViewById(R.id.mText);
+
+                Toast.makeText(MainActivity.this, mData.mText + " 끝~", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        classRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myclass.clear();
+                homework.clear();
+                homework_context.clear();
+                homework_limit.clear();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    for(DataSnapshot find_me : snapshot.child("Student").getChildren()){
+                        if(find_me.getKey().equals(my_id)){
+                            String title = snapshot.child("Homework").getRef().getParent().getKey();
+                            String text = snapshot.child("Homework").getKey();
+                            String date = snapshot.child("Homework").getValue().toString();
+
+                            homework.add(title);
+                            homework_context.add(text);
+                            homework_limit.add(date);
+                        }
+                    }
+                    my_homework = homework.toArray(new String[homework.size()]);
+                    my_homework_context = homework_context.toArray(new String[homework_context.size()]);
+                    my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
+
+                    mListView = (ListView) findViewById(R.id.homework_list);
+                    mAdapter = new MainActivity.ListViewAdapter(MainActivity.this);
+                    mListView.setAdapter(mAdapter);
+
+                    for(int n = 0; n < homework.size(); n++){
+                        mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
 
     }
-
     private class ViewHolder {
         public TextView mTitle;
 
@@ -210,12 +292,7 @@ public class MainActivity extends AppCompatActivity {
         public long getItemId(int position) {
             return position;
         }
-/*
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
-        }
-*/
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
@@ -235,15 +312,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             ListData mData = mListData.get(position);
-
-        /*
-        if (mData.mIcon != null) {
-            holder.mTitle.setVisibility(View.VISIBLE);
-            holder.mTitle.setImageDrawable(mData.mIcon);
-        }else{
-            holder.mTitle.setVisibility(View.GONE);
-        }
-        */
             holder.mTitle.setText(mData.mTitle);
             holder.mText.setText(mData.mText);
             holder.mDate.setText(mData.mDate);
@@ -252,4 +320,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 }
+

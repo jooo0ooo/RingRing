@@ -115,7 +115,8 @@ public class StudentRegistClass extends AppCompatActivity{
 // OK 버튼 이벤트
                 dialog.setPositiveButton("Regist", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        classRef.child(class_name).setValue(class_name);
+                        //classRef.child(class_name).setValue(class_name);
+                        classRef.child(class_name).child("Student").child(my_id).setValue(my_id);
 
                         //SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                         //my_id = pref.getString("my_id", "nothing");

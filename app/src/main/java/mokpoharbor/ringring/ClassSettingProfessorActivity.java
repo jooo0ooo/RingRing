@@ -150,6 +150,7 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                         String class_name = etEdit.getText().toString();
 
                         classRef.child(class_name).setValue(class_name);
+                        classRef.child(class_name).child("Professor").child(my_id).setValue(my_id);
 
 
                         //SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);

@@ -237,7 +237,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                                             Toast.makeText(ProfessorMainActivity.this, "위 항목을 다 채워주세요", Toast.LENGTH_SHORT).show();
                                             recall_dialog();
                                         }else{
-                                            classRef.child(my_subject_title).child(homework).setValue(limit_new_format);
+                                            classRef.child(my_subject_title).child("Homework").child(homework).setValue(limit_new_format);
                                             userRef.child(my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
 
                                             dialog.cancel();
@@ -481,7 +481,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                             Toast.makeText(ProfessorMainActivity.this, "위 항목을 다 채워주세요", Toast.LENGTH_SHORT).show();
                             recall_dialog();
                         }else{
-                            classRef.child(my_subject_title).child(homework).setValue(limit_new_format);
+                            classRef.child(my_subject_title).child("Homework").child(homework).setValue(limit_new_format);
                             userRef.child(my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
 
                             dialog.cancel();
