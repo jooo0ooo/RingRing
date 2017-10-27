@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -73,7 +74,7 @@ public class StudentRegistClass extends AppCompatActivity{
         arraylist = new ArrayList<String>();
         arraylist.addAll(list);
         //&&&&&&&&&&&&
-        arraylist.addAll(myclass);
+        //arraylist.addAll(myclass);
 
         // 리스트에 연동될 아답터를 생성한다.
         adapter = new SearchAdapter(list, this);
@@ -106,7 +107,8 @@ public class StudentRegistClass extends AppCompatActivity{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final String class_name = arraylist.get(position).toString();
+                final String class_name = ((TextView) view.findViewById(R.id.label)).getText().toString();
+                //final String class_name = arraylist.get(adapter.).toString();
                 AlertDialog.Builder dialog = new AlertDialog.Builder(StudentRegistClass.this);
                 dialog.setTitle("강좌 등록");
                 dialog.setMessage(class_name+"를 등록하시겠습니까?");
@@ -148,6 +150,7 @@ public class StudentRegistClass extends AppCompatActivity{
                 }
                 test = myclass.toArray(new String[myclass.size()]);
                 settingList();
+                arraylist.clear();
                 arraylist.addAll(myclass);
                 //adapter.notifyDataSetChanged();
             }

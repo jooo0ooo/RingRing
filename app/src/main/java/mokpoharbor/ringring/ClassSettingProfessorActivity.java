@@ -106,6 +106,7 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                                 remove.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        classRef.child(selected).removeValue();
                                         userRef.child(my_id).child("my_class").child(selected).removeValue();
                                         ad.cancel();
                                         Toast.makeText(ClassSettingProfessorActivity.this, selected+"가 삭제되었습니다", Toast.LENGTH_SHORT).show();
