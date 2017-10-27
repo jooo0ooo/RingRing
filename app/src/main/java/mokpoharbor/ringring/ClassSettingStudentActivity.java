@@ -15,8 +15,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -211,6 +214,26 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
                 //Toast.makeText(ClassSettingStudentActivity.this, "강좌 등록하기 - 만들 예정", Toast.LENGTH_SHORT).show();
             }
         });
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myclass.clear();
+
+                for (DataSnapshot snapshot : dataSnapshot.child(my_id).child("my_class").getChildren()) {
+                    String key = snapshot.getKey();
+                    myclass.add(key);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
     }
 }
 

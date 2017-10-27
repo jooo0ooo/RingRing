@@ -1,12 +1,17 @@
 package mokpoharbor.ringring;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,6 +81,8 @@ public class StudentRegistClass extends AppCompatActivity{
         // 리스트뷰에 아답터를 연결한다.
         listView.setAdapter(adapter);
 
+        //adapter.notifyDataSetChanged();
+
         // input창에 검색어를 입력시 "addTextChangedListener" 이벤트 리스너를 정의한다.
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -96,6 +103,38 @@ public class StudentRegistClass extends AppCompatActivity{
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String class_name = arraylist.get(position).toString();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(StudentRegistClass.this);
+                dialog.setTitle("강좌 등록");
+                dialog.setMessage(class_name+"를 등록하시겠습니까?");
+// OK 버튼 이벤트
+                dialog.setPositiveButton("Regist", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        classRef.child(class_name).setValue(class_name);
+
+                        //SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                        //my_id = pref.getString("my_id", "nothing");
+                        userRef.child(my_id).child("my_class").child(class_name).setValue(class_name);
+
+                        //myRef.child(class_name).push().setValue(class_name);
+                        Toast.makeText(StudentRegistClass.this, class_name+"등록 완료", Toast.LENGTH_SHORT).show();
+                    }
+                });
+// Cancel 버튼 이벤트
+                dialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+
+                //Toast.makeText(StudentRegistClass.this, arraylist.get(position).toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //=================================================
 
         classRef.addValueEventListener(new ValueEventListener() {
@@ -110,6 +149,7 @@ public class StudentRegistClass extends AppCompatActivity{
                 test = myclass.toArray(new String[myclass.size()]);
                 settingList();
                 arraylist.addAll(myclass);
+                //adapter.notifyDataSetChanged();
             }
 
 

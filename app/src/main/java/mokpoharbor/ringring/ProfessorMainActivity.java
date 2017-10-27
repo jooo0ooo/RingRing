@@ -292,7 +292,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //취소 버튼이 눌렸을 때 토스트를 띄워줍니다.
-                        Toast.makeText(ProfessorMainActivity.this, "구현 준비 중 입니다.", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ProfessorMainActivity.this, "구현 준비 중 입니다.", Toast.LENGTH_SHORT).show();
                     }
                 });
 
