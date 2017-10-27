@@ -11,16 +11,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/test_text_professor"
+        <ListView
+            android:id="@+id/listView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="30"
-            android:text="교하!\n(교수님 하이!라는 뜻)"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="36sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"></ListView>
 
         <ImageButton
             android:id="@+id/hand_over_subject"
