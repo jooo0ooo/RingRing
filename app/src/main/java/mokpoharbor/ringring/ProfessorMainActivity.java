@@ -29,9 +29,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class ProfessorMainActivity extends AppCompatActivity {
@@ -218,17 +221,24 @@ public class ProfessorMainActivity extends AppCompatActivity {
                                         String date = limit_date.getText().toString();
                                         String time = limit_time.getText().toString();
 
-                                        String test = date + " / " + time;
+                                        String limit = date + " / " + time;
+                                        String limit_new_format = null;
 
-                                        //SimpleDateFormat original_format = new SimpleDateFormat("yyyy");
-                                        //SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                                        SimpleDateFormat original_format = new SimpleDateFormat("yyyy / MM / dd / HH / mm");
+                                        SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                        try {
+                                            Date date_test = original_format.parse(limit);
+                                            limit_new_format = new_format.format(date_test);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
 
                                         if(homework.isEmpty() || date.isEmpty() || time.isEmpty()){
                                             Toast.makeText(ProfessorMainActivity.this, "위 항목을 다 채워주세요", Toast.LENGTH_SHORT).show();
                                             recall_dialog();
                                         }else{
-                                            classRef.child(my_subject_title).child(homework).setValue(test);
-                                            userRef.child(my_id).child("my_class").child(my_subject_title).child(homework).setValue(test);
+                                            classRef.child(my_subject_title).child(homework).setValue(limit_new_format);
+                                            userRef.child(my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
 
                                             dialog.cancel();
                                             Toast.makeText(ProfessorMainActivity.this, "과제 등록 완료", Toast.LENGTH_SHORT).show();
@@ -455,14 +465,24 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         String date = limit_date.getText().toString();
                         String time = limit_time.getText().toString();
 
-                        String test = date + " / " + time;
+                        String limit = date + " / " + time;
+                        String limit_new_format = null;
+
+                        SimpleDateFormat original_format = new SimpleDateFormat("yyyy / MM / dd / HH / mm");
+                        SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        try {
+                            Date date_test = original_format.parse(limit);
+                            limit_new_format = new_format.format(date_test);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
                         if(homework.isEmpty() || date.isEmpty() || time.isEmpty()){
                             Toast.makeText(ProfessorMainActivity.this, "위 항목을 다 채워주세요", Toast.LENGTH_SHORT).show();
                             recall_dialog();
                         }else{
-                            classRef.child(my_subject[which]).child(homework).setValue(test);
-                            userRef.child(my_id).child("my_class").child(my_subject_title).child(homework).setValue(test);
+                            classRef.child(my_subject[which]).child(homework).setValue(limit_new_format);
+                            userRef.child(my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
 
                             dialog.cancel();
                             Toast.makeText(ProfessorMainActivity.this, "과제 등록 완료", Toast.LENGTH_SHORT).show();
@@ -475,7 +495,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-
                 homework_context.show();
             }
         });

@@ -46,10 +46,8 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
 
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("professor_class");
 
         classRef = database.getReference("class");
-
         userRef = database.getReference("user");
 
         //final ArrayList my_class_list = new ArrayList();
@@ -66,12 +64,6 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
         });
 
         final Button my_class = (Button) findViewById(R.id.my_class);
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         my_class.setOnClickListener(new View.OnClickListener() {
             @Override
