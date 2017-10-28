@@ -203,13 +203,15 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     for(DataSnapshot find_me : snapshot.child("Student").getChildren()){
                         if(find_me.getKey().equals(my_id)){
-                            String title = snapshot.child("Homework").getRef().getParent().getKey();
-                            String text = snapshot.child("Homework").getKey();
-                            String date = snapshot.child("Homework").getValue().toString();
-
-                            homework.add(title);
-                            homework_context.add(text);
-                            homework_limit.add(date);
+                            for(DataSnapshot my_homework : snapshot.child("Homework").getChildren()){
+                                String title = snapshot.getKey();
+                                String text = my_homework.getKey();
+                                String date = my_homework.getValue().toString();
+                                
+                                homework.add(title);
+                                homework_context.add(text);
+                                homework_limit.add(date);
+                            }
                         }
                     }
                     my_homework = homework.toArray(new String[homework.size()]);
