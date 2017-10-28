@@ -108,12 +108,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
         user_image_url = i.getString("image_url");
         user_id = i.getString("id");
 
-        /*
-        //정보 잘 가져오나 테스트
-        Toast.makeText(ProfessorMainActivity.this, "사용자 id->" + user_id, Toast.LENGTH_SHORT).show();
-        Toast.makeText(ProfessorMainActivity.this, "사용자 이름->" + user_name, Toast.LENGTH_SHORT).show();
-        Toast.makeText(ProfessorMainActivity.this, "프필 URL->" + user_image_url, Toast.LENGTH_SHORT).show();
-        */
 
         //뒤로가기 버튼 눌를시 토스트메세지로 확인 메세지를 뛰어준다
         back_pressed = new BackPressClose(this);
@@ -155,10 +149,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         limit_date = new Button(ProfessorMainActivity.this);
                         limit_time = new Button(ProfessorMainActivity.this);
 
-
-                        //limit_date.setHint("클릭하여 설정하세요");
-                        //limit_time.setHint("클릭하여 설정하세요");
-
                         final CharSequence[] items = {context.getText(), limit_date.getText(), limit_time.getText()};
 
                         AlertDialog.Builder make_subject = new AlertDialog.Builder(ProfessorMainActivity.this);
@@ -175,25 +165,8 @@ public class ProfessorMainActivity extends AppCompatActivity {
 
                                 LinearLayout ll = new LinearLayout(ProfessorMainActivity.this);
                                 ll.setOrientation(LinearLayout.VERTICAL);
-                                //homework_context.setView(context);
 
                                 context.setHint("과제 내용을 입력하세요");
-                                /*
-                                homework_context.setItems(items, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        switch (which){
-                                            case 1:
-                                                new DatePickerDialog(ProfessorMainActivity.this, dateSetListener, year, month, day).show();
-
-                                            case 2:
-                                                new TimePickerDialog(ProfessorMainActivity.this, timeSetListener, hour, minute, false).show();
-                                        }
-                                    }
-                                });
-                                */
-                                //homework_context.setView(limit_date);
-                                //homework_context.setView(limit_time);
                                 ll.addView(context);
                                 ll.addView(limit_date);
                                 ll.addView(limit_time);
@@ -254,7 +227,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                                 });
 
                                 homework_context.show();
-                                //Toast.makeText(ProfessorMainActivity.this, my_subject[which], Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -265,26 +237,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         });
 
                         make_subject.show();
-                        /*
-                        final AlertDialog mk_subject = make_subject.create();
-                        mk_subject.show();
-
-                        mk_subject.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Boolean wantToCloseDialog = false;
-                                //Do stuff, possibly set wantToCloseDialog to true then...
-                                if(wantToCloseDialog)
-                                    mk_subject.dismiss();
-                                //else dialog stays open. Make sure you have an obvious way to close the dialog especially if you set cancellable to false.
-                            }
-                        });
-                        */
-
-
-                        //확인 버튼이 눌렸을 때 토스트를 띄워줍니다.
-                        //Toast.makeText(ProfessorMainActivity.this, "구현 준비 중 입니다.", Toast.LENGTH_SHORT).show();
-
                     }
                 });
 
@@ -292,8 +244,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                 alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //취소 버튼이 눌렸을 때 토스트를 띄워줍니다.
-                        //Toast.makeText(ProfessorMainActivity.this, "구현 준비 중 입니다.", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -301,11 +251,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                 alert.show();
             }
         });
-
-        //final String[] my_homework = homework.toArray(new String[homework.size()]);
-        //final String[] my_homework_context = homework_context.toArray(new String[homework_context.size()]);
-        //final String[] my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
-
 
         mListView = (ListView) findViewById(R.id.listView);
         mAdapter = new ProfessorMainActivity.ListViewAdapter(this);
@@ -344,8 +289,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
             }
         });
 
-
-
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -357,8 +300,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.child(my_id).child("my_class").getChildren()) {
                     String key = snapshot.getKey();
                     myclass.add(key);
-
-                    //Toast.makeText(ProfessorMainActivity.this, snapshot.hasChildren()+" ", Toast.LENGTH_SHORT).show();
 
                     if(snapshot.hasChildren()){
                         for(DataSnapshot snapshot_child : snapshot.getChildren()){
@@ -386,39 +327,11 @@ public class ProfessorMainActivity extends AppCompatActivity {
 
                     }
                 }
-
-                //mListView = (ListView) findViewById(R.id.listView);
-                //mAdapter = new ProfessorMainActivity.ListViewAdapter(ProfessorMainActivity.this);
-                //mListView.setAdapter(mAdapter);
-                //for(int n = 0; n < homework.size(); n++){
-                //    mAdapter.addItem(my_homework[n], my_homework_context[n], my_homework_limit[n]);
-                //}
-
-                /*
-                int num = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    snapshot.getValue().toString();
-                    num++;
-                }
-
-                test2 = new String[num];
-
-
-                int i = 0;
-                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-                while(child.hasNext()){
-                    test2[i] = child.next().getKey();
-                    //Toast.makeText(ClassSettingProfessorActivity.this, test2[i], Toast.LENGTH_SHORT).show();
-                }
-*/
-                //Toast.makeText(ClassSettingProfessorActivity.this, num+"test", Toast.LENGTH_LONG).show();
             }
 
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                //Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 
@@ -429,19 +342,15 @@ public class ProfessorMainActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             String date = String.format("%d / %d / %d", year,monthOfYear+1, dayOfMonth);
             limit_date.setText(date);
-          //  Toast.makeText(ProfessorMainActivity.this, msg, Toast.LENGTH_SHORT).show();
         }
 
     };
-
-
 
     private TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             String time = String.format("%d / %d", hourOfDay, minute);
             limit_time.setText(time);
-            //Toast.makeText(ProfessorMainActivity.this, msg, Toast.LENGTH_SHORT).show();
         }
 
     };
@@ -597,12 +506,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
         public long getItemId(int position) {
             return position;
         }
-        /*
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    return null;
-                }
-        */
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ProfessorMainActivity.ViewHolder holder;
@@ -623,14 +527,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
 
             ListData mData = mListData.get(position);
 
-        /*
-        if (mData.mIcon != null) {
-            holder.mTitle.setVisibility(View.VISIBLE);
-            holder.mTitle.setImageDrawable(mData.mIcon);
-        }else{
-            holder.mTitle.setVisibility(View.GONE);
-        }
-        */
             holder.mTitle.setText(mData.mTitle);
             holder.mText.setText(mData.mText);
             holder.mDate.setText(mData.mDate);

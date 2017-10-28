@@ -102,38 +102,6 @@ public class RegisterActivity extends AppCompatActivity{
 
                                                     editor.commit();
 
-                                                    /*
-                                                    File file = new File("/data/data/mokpoharbor.ringring/cache/user_flag.txt") ;
-                                                    FileWriter fw = null ;
-                                                    BufferedWriter bufwr = null ;
-
-                                                    String str = "Student" ;
-
-                                                    try {
-                                                        // open file.
-                                                        fw = new FileWriter(file) ;
-                                                        bufwr = new BufferedWriter(fw) ;
-
-                                                        // write data to the file.
-                                                        bufwr.write(str) ;
-
-                                                    } catch (Exception e) {
-                                                        e.printStackTrace() ;
-                                                    }
-
-                                                    // close file.
-                                                    try {
-                                                        if (bufwr != null)
-                                                            bufwr.close() ;
-
-                                                        if (fw != null)
-                                                            fw.close() ;
-                                                    } catch (Exception e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    */
-
-
                                                     Intent i = new Intent(RegisterActivity.this, MainActivity.class);
 
                                                     //인텐트 할때 얻은 정보도 같이 넘겨주기
@@ -220,38 +188,6 @@ public class RegisterActivity extends AppCompatActivity{
                                                     editor.putString("my_id", my_id);
                                                     editor.commit();
 
-                                                    /*
-                                                    File file = new File("/data/data/mokpoharbor.ringring/cache/user_flag.txt") ;
-                                                    FileWriter fw = null ;
-                                                    BufferedWriter bufwr = null ;
-
-                                                    String str = "Professor" ;
-
-                                                    try {
-                                                        // open file.
-                                                        fw = new FileWriter(file) ;
-                                                        bufwr = new BufferedWriter(fw) ;
-
-                                                        // write data to the file.
-                                                        bufwr.write(str) ;
-
-                                                    } catch (Exception e) {
-                                                        e.printStackTrace() ;
-                                                    }
-
-                                                    // close file.
-                                                    try {
-                                                        if (bufwr != null)
-                                                            bufwr.close() ;
-
-                                                        if (fw != null)
-                                                            fw.close() ;
-                                                    } catch (Exception e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    */
-
-
                                                     Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
 
                                                     //인텐트 할때 얻은 정보도 같이 넘겨주기
@@ -295,7 +231,6 @@ public class RegisterActivity extends AppCompatActivity{
             }
         });
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

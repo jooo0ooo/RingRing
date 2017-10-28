@@ -85,18 +85,6 @@ public class SplashActivity extends Activity {
 
                                 }
 
-                                /*
-                                Intent i = new Intent(SplashActivity.this, MainActivity.class);
-
-                                //인텐트 할때 얻은 정보도 같이 넘겨주기
-                                i.putExtra("name", user_name);
-                                i.putExtra("id", user_id);
-                                i.putExtra("image_url", user_picture_url.toString());
-
-                                startActivity(i);
-                                finish();
-                                */
-
                             }
 
                         } catch (JSONException e) {
