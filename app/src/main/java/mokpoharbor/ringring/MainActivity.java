@@ -1,9 +1,11 @@
 package mokpoharbor.ringring;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,8 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -184,10 +188,62 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-                ListData mData = mAdapter.mListData.get(position);
-                TextView test = (TextView)findViewById(R.id.mText);
 
-                Toast.makeText(MainActivity.this, mData.mText + " 끝~", Toast.LENGTH_SHORT).show();
+                final String class_name = ((TextView) v.findViewById(R.id.mTitle)).getText().toString();
+                final String date = ((TextView) v.findViewById(R.id.mDate)).getText().toString();
+
+                Date curDAte = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                Date reqDate = null;
+                try {
+                    reqDate = dateFormat.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                long reqDateTime = reqDate.getTime();
+                try {
+                    curDAte = dateFormat.parse(dateFormat.format(curDAte));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                long curDateTime = curDAte.getTime();
+                long minute = (curDateTime - reqDateTime) / 60000;
+                if(minute > 0){
+                    minute = -1;
+                }else{
+                    minute = Math.abs(minute);
+                }
+                //String time_to_limit = Long.toString(minute);
+                long limit_day = minute / 1440; // 24 * 60
+                long limit_hour = (minute - (limit_day * 1440)) / 60;
+                long limit_minute = (minute - (limit_day * 1440 + limit_hour * 60));
+
+                String left_time;
+
+                if(limit_day > 0){
+                    left_time = Long.toString(limit_day) + "일 " + Long.toString(limit_hour) + "시간 " + Long.toString(limit_minute) +"분 남았습니다.";
+                }else{
+                    if(limit_hour > 0){
+                        left_time = Long.toString(limit_hour) + "시간 " + Long.toString(limit_minute) +"분 남았습니다.";
+                    }else{
+                        if(limit_minute > 0){
+                            left_time =Long.toString(limit_minute) +"분 남았습니다.";
+                        }else{
+                            left_time = "과제 제출기간이 지났습니다.";
+                        }
+                    }
+                }
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                dialog.setTitle(class_name +"과제 남은 시간");
+                dialog.setMessage(left_time);
+
+                dialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
             }
         });
 
