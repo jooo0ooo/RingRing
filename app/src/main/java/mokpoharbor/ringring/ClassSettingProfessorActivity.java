@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +31,7 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
     DatabaseReference myRef, classRef, userRef;
 
     String my_id;
+    String my_name;
 
 
 
@@ -54,14 +55,6 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
 
         //액티비티 타이틀바 내용 설정
         setTitle("Class Setting");
-
-        ImageView urgent_notice = (ImageView) findViewById(R.id.urgent_notice);
-        urgent_notice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ClassSettingProfessorActivity.this, "urgent notice - 만들 예정", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         final Button my_class = (Button) findViewById(R.id.my_class);
 
@@ -187,6 +180,10 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                     String key = snapshot.getKey();
                     myclass.add(key);
                 }
+
+                my_name = dataSnapshot.child(my_id).child("name").getValue().toString();
+                TextView tv = (TextView) findViewById(R.id.empty_view);
+                tv.setText(my_name + "교수님 반갑습니다.");
                 /*
                 int num = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
