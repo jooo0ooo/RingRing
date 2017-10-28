@@ -178,6 +178,7 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         userRef.child(my_id).child("my_class").child(selected).removeValue();
+                                        classRef.child(selected).child("Student").child(my_id).removeValue();
                                         ad.cancel();
                                         Toast.makeText(ClassSettingStudentActivity.this, selected + "가 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                     }
