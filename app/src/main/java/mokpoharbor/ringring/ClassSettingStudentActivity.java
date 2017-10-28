@@ -1,5 +1,8 @@
 package mokpoharbor.ringring;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by pingrae on 2017. 10. 20..
@@ -84,6 +88,8 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
                 SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
 
+                new AlarmHATT(getApplicationContext()).Alarm();
+
                 if (!isChecked) {
                     AlertDialog.Builder alertdialog = new AlertDialog.Builder(ClassSettingStudentActivity.this);
                     //다이얼로그의 내용을 설정합니다.
@@ -104,6 +110,9 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
                             editor.putBoolean("alram", false);
 
                             editor.commit();
+
+                            new AlarmHATT(getApplicationContext()).Cancel();
+
                         }
                     });
 
@@ -234,6 +243,58 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
             }
         });
 
+
+        if(pref.getBoolean("alram", false)){
+            new AlarmHATT(getApplicationContext()).Alarm();
+        }
+
+
     }
+    public class AlarmHATT {
+        private Context context;
+        public AlarmHATT(Context context) {
+            this.context=context;
+        }
+        public void Alarm() {
+            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(ClassSettingStudentActivity.this, BroadcastD.class);
+
+            PendingIntent sender = PendingIntent.getBroadcast(ClassSettingStudentActivity.this, 0, intent, 0);
+
+            Calendar calendar = Calendar.getInstance();
+            //알람시간 calendar에 set해주기
+
+            SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
+            String hour = pref.getString("alram_hour", "nothing");
+            String minute = pref.getString("alram_minute", "nothing");
+            long my_hour = Long.parseLong(hour) * 60 * 60 * 1000;
+            long my_minute = Long.parseLong(minute) * 60 * 1000;
+            long my_period = my_hour + my_minute;
+
+            if (!hour.isEmpty() && !minute.isEmpty()){
+
+                calendar.set(calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DATE),
+                        calendar.get(Calendar.HOUR_OF_DAY),
+                        calendar.get(Calendar.MINUTE),
+                        calendar.get(Calendar.SECOND));
+
+                //am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+                am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), my_period, sender);
+            }
+
+        }
+        public void Cancel(){
+            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(ClassSettingStudentActivity.this, BroadcastD.class);
+
+            PendingIntent sender = PendingIntent.getBroadcast(ClassSettingStudentActivity.this, 0, intent, 0);
+
+            am.cancel(sender);
+        }
+    }
+
 }
 

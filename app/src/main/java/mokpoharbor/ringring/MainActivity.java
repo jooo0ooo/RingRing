@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         my_id = pref.getString("my_id", "nothing");
 
@@ -293,6 +292,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
     private class ViewHolder {
         public TextView mTitle;
 
@@ -380,7 +381,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
 }
+
 
