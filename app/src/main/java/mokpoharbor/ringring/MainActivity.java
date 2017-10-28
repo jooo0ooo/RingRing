@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                                 String title = snapshot.getKey();
                                 String text = my_homework.getKey();
                                 String date = my_homework.getValue().toString();
-                                
+
                                 homework.add(title);
                                 homework_context.add(text);
                                 homework_limit.add(date);
@@ -225,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
                     for(int n = 0; n < homework.size(); n++){
                         mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);
                     }
+                    mAdapter.sort();
 
                 }
 
