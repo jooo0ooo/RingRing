@@ -21,7 +21,7 @@ public class BroadcastD  extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, SplashActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(context);
         builder.setSmallIcon(android.R.drawable.ic_input_add).setTicker("RingRing").setWhen(System.currentTimeMillis())
-                .setNumber(1).setContentTitle("푸쉬제목").setContentText("푸쉬내용")
+                .setNumber(1).setContentTitle("과제는 다 했니?").setContentText("나같으면 다 하고 놀겠다")
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE).setContentIntent(pendingIntent).setAutoCancel(true);
 
         notificationmanager.notify(1, builder.build());

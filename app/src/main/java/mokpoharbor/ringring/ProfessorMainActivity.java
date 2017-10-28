@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -222,7 +223,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                                         String time = limit_time.getText().toString();
 
                                         String limit = date + " / " + time;
-                                        String limit_new_format = null;
+                                        String limit_new_format = new String();
 
                                         SimpleDateFormat original_format = new SimpleDateFormat("yyyy / MM / dd / HH / mm");
                                         SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -314,6 +315,36 @@ public class ProfessorMainActivity extends AppCompatActivity {
             mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);
         }
 
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
+                final String class_name = ((TextView) view.findViewById(R.id.mTitle)).getText().toString();
+                final String class_context = ((TextView) view.findViewById(R.id.mText)).getText().toString();
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ProfessorMainActivity.this);
+                dialog.setTitle(class_name +" - 과제삭제");
+                dialog.setMessage(class_context + " - 삭제하시겠습니까?");
+                dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(ProfessorMainActivity.this, class_name + ", " + class_context, Toast.LENGTH_SHORT).show();
+                        classRef.child(class_name).child("Homework").child(class_context).removeValue();
+                        userRef.child(my_id).child("my_class").child(class_name).child(class_context).removeValue();
+                    }
+                });
+                dialog.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+
+
+               return true;
+            }
+        });
+
+
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -349,7 +380,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         mListView.setAdapter(mAdapter);
 
                         for(int n = 0; n < homework.size(); n++){
-                            mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);
+                            mAdapter.addItem(my_homework[n], my_homework_context[n], my_homework_limit[n]);
                         }
 
 

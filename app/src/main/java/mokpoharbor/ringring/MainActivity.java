@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -182,18 +186,79 @@ public class MainActivity extends AppCompatActivity {
             mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);
         }
 
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
+
+                final String class_name = ((TextView) view.findViewById(R.id.mTitle)).getText().toString();
+                final String class_context = ((TextView) view.findViewById(R.id.mText)).getText().toString();
+                final LinearLayout row = (LinearLayout)view.findViewById(R.id.row_layout);
+
+                ColorDrawable color = (ColorDrawable) row.getBackground();
+
+                if(color.getColor() == Color.rgb(255, 204, 204)){
+
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                    dialog.setTitle(class_name);
+                    dialog.setMessage(class_context+" - 아직 덜함?");
+                    dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            row.setBackgroundColor(Color.rgb(255,255, 255));
+
+                            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putBoolean(class_context, false);
+                            editor.commit();
+                        }
+                    });
+                    dialog.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.show();
+
+                }else{
+
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                    dialog.setTitle(class_name);
+                    dialog.setMessage(class_context + " - 완료하셨습니까?");
+                    dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            row.setBackgroundColor(Color.rgb(255, 204, 204));
+
+                            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putBoolean(class_context, true);
+                            editor.commit();
+                        }
+                    });
+                    dialog.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.show();
+
+                }
+                return true;
+            }
+        });
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id){
+                Toast.makeText(MainActivity.this, id+"", Toast.LENGTH_SHORT).show();
 
                 final String class_name = ((TextView) v.findViewById(R.id.mTitle)).getText().toString();
                 final String date = ((TextView) v.findViewById(R.id.mDate)).getText().toString();
 
                 Date curDAte = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                Date reqDate = null;
+                Date reqDate = new Date();
                 try {
                     reqDate = dateFormat.parse(date);
                 } catch (ParseException e) {
@@ -376,6 +441,16 @@ public class MainActivity extends AppCompatActivity {
             holder.mText.setText(mData.mText);
             holder.mDate.setText(mData.mDate);
 
+            Boolean homework;
+            SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            homework = pref.getBoolean(mData.mText, false);
+
+            if(homework){
+                convertView.setBackgroundColor(Color.rgb(255, 204, 204));
+            }else{
+                convertView.setBackgroundColor(Color.rgb(255, 255, 255));
+            }
+            
             return convertView;
         }
 
