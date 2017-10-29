@@ -60,26 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
     BackPressClose back_pressed;
 
-    //list 테스트 해보는 겁니당.
-    /*
-    String [] data = { "☞ 콜로키움 : 감상문 작성 : 1시간",
-            "☞ 알고리즘 : 보고서 작성 : 2시간",
-            "☞ 영어2 : 영어단어 암기 : 3시간",
-            "☞ 고급객체 : 유투브 시청 : 4시간",
-            "☞ 공개SW실무 : 우분투 설치 : 5시간",
-            "☞ 교양골프 : 연습하기 : 6시간",
-            "☞ 팀프로젝트 : 치맥하기 : 7시간",
-            "☞ 직무역량어쩌고 : 출튀하기 : 8시간",
-            "☞ 나는야 : 목포 사나이 : 정지우",
-            "☞ 집 : 화장실청소하기 : 10시간",
-            "☞ 정지우 : 정말 멋진 팀장ㅎ : 최고에요!",
-            "☞ 데이트 : 여소점 : 올해는 제발ㅎ",
-            "☞ 과제는 : 언제나 : 극혐",
-            "☞ 알코올 : 은 싫지만 주면 : 마실 수 밖에",
-            "☞ 테스트 : 목록 : 넣는 중",
-            "☞ 더이상 : 할게 : 없어요"};
-    */
-
     //오버롸이드~
     @Override
     public void onBackPressed(){
@@ -101,66 +81,18 @@ public class MainActivity extends AppCompatActivity {
         //액티비티 타이틀바 내용 설정
         setTitle("HOME");
 
+        //비효율적인 번들을 없애는 중
+        /*
         Bundle i = getIntent().getExtras();
 
         user_name = i.getString("name");
         user_image_url = i.getString("image_url");
         user_id = i.getString("id");
-
-        /*
-        //정보 잘 가져오나 테스트
-        Toast.makeText(MainActivity.this, "사용자 id->" + user_id, Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this, "사용자 이름->" + user_name, Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this, "프필 URL->" + user_image_url, Toast.LENGTH_SHORT).show();
-        */
+*/
 
         //뒤로가기 버튼 눌를시 토스트메세지로 확인 메세지를 뛰어준다
         back_pressed = new BackPressClose(this);
 
-        /*
-
-        //리스트뷰를 이용하기위해 어댑터 사용
-        ArrayAdapter adapter = new ArrayAdapter(
-                getApplicationContext(),
-                R.layout.myrow,
-                data);
-
-        ListView lv = (ListView)findViewById(R.id.homework_list);
-        lv.setAdapter(adapter);
-
-        */
-
-/*
-        mListView = (ListView) findViewById(R.id.homework_list);
-
-        mAdapter = new ListViewAdapter(this);
-        mListView.setAdapter(mAdapter);
-
-        mAdapter.addItem("팀프로젝트 : ",
-                "시나리오 작성",
-                "2017-10-18");
-        mAdapter.addItem("교양골프 : ",
-                "7번 아이언 연습",
-                "2017-10-19");
-        mAdapter.addItem("정지우 : ",
-                "목포의 사나이",
-                "2017-10-20");
-        mAdapter.addItem("올해안에 : ",
-                "여자친구 생기게 해주세요",
-                "2017-10-21");
-        mAdapter.addItem("정팀장 : ",
-                "최고의 조장님!",
-                "2017-10-22");
-        mAdapter.addItem("못하는게 : ",
-                "뭔가요 당신",
-                "2017-10-23");
-        mAdapter.addItem("날씨가 추워지니 ",
-                "다들 딱 붙어 뎅긴다",
-                "2017-10-24");
-        mAdapter.addItem("커플들 ",
-                "다 사라졌으면^^",
-                "2017-10-25");
-        */
 
         //setting 이미지 아이콘을 터치할때 화면전환 되는 부분
         ImageView setting = (ImageView)findViewById(R.id.setting_image);
@@ -169,9 +101,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
 
-                intent.putExtra("name", user_name);
-                intent.putExtra("id", user_id);
-                intent.putExtra("image_url", user_image_url);
+                //비효율적인 번들을 없애는 중
+                //intent.putExtra("name", user_name);
+                //intent.putExtra("id", user_id);
+                //intent.putExtra("image_url", user_image_url);
 
                 startActivity(intent);
                 finish();

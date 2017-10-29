@@ -19,11 +19,12 @@ public class SearchAdapter extends BaseAdapter {
     private LayoutInflater inflate;
     private ViewHolder viewHolder;
 
-    public SearchAdapter(List<String> list, Context context){
+    public SearchAdapter(List<String> list, Context context) {
         this.list = list;
         this.context = context;
         this.inflate = LayoutInflater.from(context);
     }
+
     @Override
     public int getCount() {
         return list.size();
@@ -41,24 +42,20 @@ public class SearchAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        if(convertView == null){
-            convertView = inflate.inflate(R.layout.student_regist_class_row,null);
-
+        if (convertView == null) {
+            convertView = inflate.inflate(R.layout.student_regist_class_row, null);
             viewHolder = new ViewHolder();
             viewHolder.label = (TextView) convertView.findViewById(R.id.label);
-
             convertView.setTag(viewHolder);
-        }else{
-            viewHolder = (ViewHolder)convertView.getTag();
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
         // 리스트에 있는 데이터를 리스트뷰 셀에 뿌린다.
         viewHolder.label.setText(list.get(position));
-
         return convertView;
     }
 
-    class ViewHolder{
+    class ViewHolder {
         public TextView label;
     }
 

@@ -74,10 +74,11 @@ public class LoginActivity extends AppCompatActivity {
 
                                                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
 
+                                                //비효율적인 번들을 없애는 중
                                                 //인텐트 할때 얻은 정보도 같이 넘겨주기
-                                                i.putExtra("name", user_name);
-                                                i.putExtra("id", user_id);
-                                                i.putExtra("image_url", user_picture_url.toString());
+                                                //i.putExtra("name", user_name);
+                                                //i.putExtra("id", user_id);
+                                                //i.putExtra("image_url", user_picture_url.toString());
 
                                                 startActivity(i);
                                                 finish();
@@ -87,9 +88,9 @@ public class LoginActivity extends AppCompatActivity {
                                                 Intent i = new Intent(LoginActivity.this, ProfessorMainActivity.class);
 
                                                 //인텐트 할때 얻은 정보도 같이 넘겨주기
-                                                i.putExtra("name", user_name);
-                                                i.putExtra("id", user_id);
-                                                i.putExtra("image_url", user_picture_url.toString());
+                                                //i.putExtra("name", user_name);
+                                                //i.putExtra("id", user_id);
+                                                //i.putExtra("image_url", user_picture_url.toString());
 
                                                 startActivity(i);
                                                 finish();
@@ -100,17 +101,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                             }
 
-                                            /*
-                                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-
-                                            //인텐트 할때 얻은 정보도 같이 넘겨주기
-                                            i.putExtra("name", user_name);
-                                            i.putExtra("id", user_id);
-                                            i.putExtra("image_url", user_picture_url.toString());
-
-                                            startActivity(i);
-                                            finish();
-                                            */
 
                                         }catch(Exception e){
                                             e.printStackTrace();
