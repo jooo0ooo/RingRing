@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext()); // SDK 초기화 (setContentView 보다 먼저 실행되어야합니다. 안그럼 에러납니다.)
         setContentView(R.layout.activity_register);
-        callbackManager = CallbackManager.Factory.create();  //로그인 응답을 처리할 콜백 관리자
+        callbackManager = CallbackManager.Factory.create();
         database = FirebaseDatabase.getInstance();
         userRef = database.getReference("user");
         setTitle("Register");

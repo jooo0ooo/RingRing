@@ -24,48 +24,28 @@ import java.util.ArrayList;
 /**
  * Created by pingrae on 2017. 10. 20..
  */
-
 public class ClassSettingProfessorActivity extends AppCompatActivity {
-
     FirebaseDatabase database;
-    DatabaseReference myRef, classRef, userRef;
-
+    DatabaseReference classRef, userRef;
     String my_id;
     String my_name;
-
-
-
-    ArrayList <String> myclass = new ArrayList<>();
+    ArrayList<String> myclass = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_setting_professor);
-
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         my_id = pref.getString("my_id", "nothing");
-
-
         database = FirebaseDatabase.getInstance();
-
         classRef = database.getReference("class");
         userRef = database.getReference("user");
-
-        //final ArrayList my_class_list = new ArrayList();
-
-        //액티비티 타이틀바 내용 설정
         setTitle("Class Setting");
-
         final Button my_class = (Button) findViewById(R.id.my_class);
-
         my_class.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(ClassSettingProfessorActivity.this, test2, Toast.LENGTH_SHORT).show();
-
                 final String[] test = myclass.toArray(new String[myclass.size()]);
-
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(ClassSettingProfessorActivity.this);
                 builder.setTitle("My Class");
                 builder.setItems(test, new DialogInterface.OnClickListener() {
@@ -74,13 +54,11 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                         Toast.makeText(ClassSettingProfessorActivity.this, test[which], Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                builder.setNegativeButton("닫기",new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
-
                 final AlertDialog ad = builder.create();
                 ad.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
@@ -90,22 +68,18 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                             @Override
                             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                                 final String selected = (lv.getItemAtPosition(position)).toString();
-                                //myRef.child(selected).removeValue();
                                 AlertDialog.Builder remove = new AlertDialog.Builder(ClassSettingProfessorActivity.this);
-
                                 remove.setTitle("Delete Class");
                                 remove.setMessage("선택한 과목을 삭제하시겠습니까?");
-
                                 remove.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         classRef.child(selected).removeValue();
                                         userRef.child(my_id).child("my_class").child(selected).removeValue();
                                         ad.cancel();
-                                        Toast.makeText(ClassSettingProfessorActivity.this, selected+"가 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ClassSettingProfessorActivity.this, selected + "가 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
                                 remove.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -113,106 +87,56 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                                     }
                                 });
                                 remove.show();
-                                //userRef.child(my_id).child("my_class").child(selected).removeValue();
                                 return true;
                             }
                         });
                     }
                 });
-
-                //builder.create();
-                //builder.show();
                 ad.show();
             }
 
         });
-
-
         Button register_class = (Button) findViewById(R.id.register_class);
         register_class.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final EditText etEdit = new EditText(ClassSettingProfessorActivity.this);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(ClassSettingProfessorActivity.this);
                 dialog.setTitle("강좌명을 입력해 주세요.");
                 dialog.setView(etEdit);
-// OK 버튼 이벤트
                 dialog.setPositiveButton("Regist", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String class_name = etEdit.getText().toString();
-
                         classRef.child(class_name).setValue(class_name);
                         classRef.child(class_name).child("Professor").child(my_id).setValue(my_id);
-
-
-                        //SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                        //my_id = pref.getString("my_id", "nothing");
                         userRef.child(my_id).child("my_class").child(class_name).setValue(class_name);
-
-                        //myRef.child(class_name).push().setValue(class_name);
                         Toast.makeText(ClassSettingProfessorActivity.this, class_name, Toast.LENGTH_SHORT).show();
                     }
                 });
-// Cancel 버튼 이벤트
-                dialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
                 dialog.show();
-
-                /*
-                String class_name = etEdit.getText().toString();
-                myRef.child("class").push().setValue(class_name);
-                */
-
-                //Toast.makeText(ClassSettingProfessorActivity.this, "강좌 등록하기 - 만들 예정", Toast.LENGTH_SHORT).show();
             }
         });
-
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myclass.clear();
-
                 for (DataSnapshot snapshot : dataSnapshot.child(my_id).child("my_class").getChildren()) {
                     String key = snapshot.getKey();
                     myclass.add(key);
                 }
-
                 my_name = dataSnapshot.child(my_id).child("name").getValue().toString();
                 TextView tv = (TextView) findViewById(R.id.empty_view);
                 tv.setText(my_name + "교수님 반갑습니다.");
-                /*
-                int num = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    snapshot.getValue().toString();
-                    num++;
-                }
-
-                test2 = new String[num];
-
-
-                int i = 0;
-                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-                while(child.hasNext()){
-                    test2[i] = child.next().getKey();
-                    //Toast.makeText(ClassSettingProfessorActivity.this, test2[i], Toast.LENGTH_SHORT).show();
-                }
-*/
-                //Toast.makeText(ClassSettingProfessorActivity.this, num+"test", Toast.LENGTH_LONG).show();
             }
-
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                //Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
     }
-
-
-
 }

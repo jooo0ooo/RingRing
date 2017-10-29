@@ -24,11 +24,9 @@ import java.net.URL;
  */
 
 public class SplashActivity extends Activity {
-
     private String user_name;
     private String user_id;
     private URL user_picture_url;
-
     private SharedPreferences settings;
 
     private void graphRequest(AccessToken accessToken) {
@@ -41,21 +39,16 @@ public class SplashActivity extends Activity {
                             response) {
                         try {
                             if (object != null) {
-
                                 String id = object.getString("id");
                                 String name = object.getString("name");
-
                                 editor.putString("username", id);
                                 editor.putString("name", name);
                                 editor.apply();
-
                                 user_name = response.getJSONObject().getString("name").toString();
                                 user_id = response.getJSONObject().getString("id").toString();
                                 user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
-
                                 SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                                 String user_flag = pref.getString("user_flag", "nothing");
-
                                 if (user_flag.equals("Student")) {
                                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
                                     startActivity(i);

@@ -10,8 +10,7 @@ import android.content.Intent;
 /**
  * Created by pingrae on 2017. 10. 28..
  */
-
-public class BroadcastD  extends BroadcastReceiver {
+public class BroadcastD extends BroadcastReceiver {
     String INTENT_ACTION = Intent.ACTION_BOOT_COMPLETED;
 
     @Override
@@ -23,8 +22,6 @@ public class BroadcastD  extends BroadcastReceiver {
         builder.setSmallIcon(android.R.drawable.ic_input_add).setTicker("RingRing").setWhen(System.currentTimeMillis())
                 .setNumber(1).setContentTitle("과제는 다 했니?").setContentText("나같으면 다 하고 놀겠다")
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE).setContentIntent(pendingIntent).setAutoCancel(true);
-
         notificationmanager.notify(1, builder.build());
     }
-
 }
