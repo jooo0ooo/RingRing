@@ -83,6 +83,12 @@ public class RegisterActivity extends AppCompatActivity {
                                                     editor.putString("my_name", user_name);
                                                     editor.putString("picture_url", user_picture_url.toString());
                                                     editor.commit();
+
+                                                    MyInfo.my_name = user_name;
+                                                    MyInfo.my_id = user_id;
+                                                    MyInfo.user_flag = user_flag;
+                                                    MyInfo.user_picture_url = user_picture_url.toString();
+
                                                     Intent i = new Intent(RegisterActivity.this, MainActivity.class);
                                                     Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                                                     startActivity(i);
@@ -145,6 +151,12 @@ public class RegisterActivity extends AppCompatActivity {
                                                     editor.putString("my_name", user_name);
                                                     editor.putString("picture_url", user_picture_url.toString());
                                                     editor.commit();
+
+                                                    MyInfo.my_name = user_name;
+                                                    MyInfo.my_id = user_id;
+                                                    MyInfo.user_flag = user_flag;
+                                                    MyInfo.user_picture_url = user_picture_url.toString();
+
                                                     Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
                                                     Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                                                     startActivity(i);

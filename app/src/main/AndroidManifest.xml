@@ -32,16 +32,12 @@
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".ProfessorMainActivity"></activity>
-        <activity android:name=".ProfessorSettingActivity"></activity>
-        <activity android:name=".PersonalSettingStudentActivity"></activity>
-        <activity android:name=".PersonalSettingProfessorActivity"></activity>
+        <activity android:name=".PersonalSettingActivity"></activity>
         <activity android:name=".ClassSettingStudentActivity"></activity>
         <activity android:name=".ClassSettingProfessorActivity"></activity>
         <activity android:name=".StudentRegistClass"></activity>
 
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
 
         <activity android:name=".SettingActivity" />
 

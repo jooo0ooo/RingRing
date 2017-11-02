@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -42,7 +41,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
     ListView mListView = null;
     ListViewAdapter mAdapter = null;
     String my_subject_title;
-    EditText context;
+    //EditText context;
     Button limit_date;
     Button limit_time;
     int year, month, day, hour, minute;
@@ -55,7 +54,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
     String[] my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
     FirebaseDatabase database;
     DatabaseReference userRef, classRef;
-    String my_id;
     BackPressClose back_pressed;
 
     @Override
@@ -73,8 +71,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
-        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        my_id = pref.getString("my_id", "nothing");
+
         database = FirebaseDatabase.getInstance();
         userRef = database.getReference("user");
         classRef = database.getReference("class");
@@ -84,7 +81,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfessorMainActivity.this, ProfessorSettingActivity.class);
+                Intent intent = new Intent(ProfessorMainActivity.this, SettingActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -155,7 +152,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                                             recall_dialog();
                                         } else {
                                             classRef.child(my_subject_title).child("Homework").child(homework).setValue(limit_new_format);
-                                            userRef.child(my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
+                                            userRef.child(MyInfo.my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
                                             dialog.cancel();
                                             Toast.makeText(ProfessorMainActivity.this, "과제 등록 완료", Toast.LENGTH_SHORT).show();
                                         }
@@ -205,7 +202,8 @@ public class ProfessorMainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(ProfessorMainActivity.this, class_name + ", " + class_context, Toast.LENGTH_SHORT).show();
                         classRef.child(class_name).child("Homework").child(class_context).removeValue();
-                        userRef.child(my_id).child("my_class").child(class_name).child(class_context).removeValue();
+                        userRef.child(MyInfo.my_id).child("my_class").child(class_name).child(class_context).removeValue();
+
                     }
                 });
                 dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -224,7 +222,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                 homework.clear();
                 homework_context.clear();
                 homework_limit.clear();
-                for (DataSnapshot snapshot : dataSnapshot.child(my_id).child("my_class").getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.child(MyInfo.my_id).child("my_class").getChildren()) {
                     String key = snapshot.getKey();
                     myclass.add(key);
                     if (snapshot.hasChildren()) {
@@ -326,7 +324,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                             recall_dialog();
                         } else {
                             classRef.child(my_subject_title).child("Homework").child(homework).setValue(limit_new_format);
-                            userRef.child(my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
+                            userRef.child(MyInfo.my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
                             dialog.cancel();
                             Toast.makeText(ProfessorMainActivity.this, "과제 등록 완료", Toast.LENGTH_SHORT).show();
                         }

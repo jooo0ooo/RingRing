@@ -52,8 +52,14 @@ public class LoginActivity extends AppCompatActivity {
                                     user_name = response.getJSONObject().getString("name").toString();
                                     user_id = response.getJSONObject().getString("id").toString();
                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
+
+                                    MyInfo.my_name = user_name;
+                                    MyInfo.my_id = user_id;
+                                    MyInfo.user_picture_url = user_picture_url.toString();
+
                                     SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                                     String user_flag = pref.getString("user_flag", "nothing");
+                                    MyInfo.user_flag = user_flag;
                                     if (user_flag.equals("Student")) {
                                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(i);

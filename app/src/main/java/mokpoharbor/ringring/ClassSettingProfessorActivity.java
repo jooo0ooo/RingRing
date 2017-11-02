@@ -36,7 +36,8 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_setting_professor);
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        my_id = pref.getString("my_id", "nothing");
+        //my_id = pref.getString("my_id", "nothing");
+
         database = FirebaseDatabase.getInstance();
         classRef = database.getReference("class");
         userRef = database.getReference("user");
@@ -75,7 +76,7 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         classRef.child(selected).removeValue();
-                                        userRef.child(my_id).child("my_class").child(selected).removeValue();
+                                        userRef.child(MyInfo.my_id).child("my_class").child(selected).removeValue();
                                         ad.cancel();
                                         Toast.makeText(ClassSettingProfessorActivity.this, selected + "가 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                     }
@@ -108,8 +109,8 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String class_name = etEdit.getText().toString();
                         classRef.child(class_name).setValue(class_name);
-                        classRef.child(class_name).child("Professor").child(my_id).setValue(my_id);
-                        userRef.child(my_id).child("my_class").child(class_name).setValue(class_name);
+                        classRef.child(class_name).child("Professor").child(MyInfo.my_id).setValue(MyInfo.my_id);
+                        userRef.child(MyInfo.my_id).child("my_class").child(class_name).setValue(class_name);
                         Toast.makeText(ClassSettingProfessorActivity.this, class_name, Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -125,11 +126,11 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myclass.clear();
-                for (DataSnapshot snapshot : dataSnapshot.child(my_id).child("my_class").getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.child(MyInfo.my_id).child("my_class").getChildren()) {
                     String key = snapshot.getKey();
                     myclass.add(key);
                 }
-                my_name = dataSnapshot.child(my_id).child("name").getValue().toString();
+                my_name = dataSnapshot.child(MyInfo.my_id).child("name").getValue().toString();
                 TextView tv = (TextView) findViewById(R.id.empty_view);
                 tv.setText(my_name + "교수님 반갑습니다.");
             }

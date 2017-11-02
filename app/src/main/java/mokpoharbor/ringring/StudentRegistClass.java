@@ -1,7 +1,6 @@
 package mokpoharbor.ringring;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +28,6 @@ import java.util.List;
 public class StudentRegistClass extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference classRef, userRef;
-    String my_id;
     ArrayList<String> myclass = new ArrayList<>();
     String[] test = myclass.toArray(new String[myclass.size()]);
 
@@ -44,8 +42,6 @@ public class StudentRegistClass extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_regist_class);
 
-        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        my_id = pref.getString("my_id", "nothing");
         database = FirebaseDatabase.getInstance();
         classRef = database.getReference("class");
         userRef = database.getReference("user");
@@ -92,8 +88,8 @@ public class StudentRegistClass extends AppCompatActivity {
                 dialog.setMessage(class_name + "를 등록하시겠습니까?");
                 dialog.setPositiveButton("Regist", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        classRef.child(class_name).child("Student").child(my_id).setValue(my_id);
-                        userRef.child(my_id).child("my_class").child(class_name).setValue(class_name);
+                        classRef.child(class_name).child("Student").child(MyInfo.my_id).setValue(MyInfo.my_id);
+                        userRef.child(MyInfo.my_id).child("my_class").child(class_name).setValue(class_name);
                         Toast.makeText(StudentRegistClass.this, class_name + "등록 완료", Toast.LENGTH_SHORT).show();
                     }
                 });

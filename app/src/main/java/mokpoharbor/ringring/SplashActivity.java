@@ -49,6 +49,12 @@ public class SplashActivity extends Activity {
                                 user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
                                 SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                                 String user_flag = pref.getString("user_flag", "nothing");
+
+                                MyInfo.my_name = user_name;
+                                MyInfo.my_id = user_id;
+                                MyInfo.user_flag = user_flag;
+                                MyInfo.user_picture_url = user_picture_url.toString();
+
                                 if (user_flag.equals("Student")) {
                                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
                                     startActivity(i);

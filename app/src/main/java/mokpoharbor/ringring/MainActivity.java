@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     String[] my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
     FirebaseDatabase database;
     DatabaseReference userRef, classRef;
-    String my_id;
     private ListView mListView = null;
     private ListViewAdapter mAdapter = null;
     BackPressClose back_pressed;
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        my_id = pref.getString("my_id", "nothing");
         database = FirebaseDatabase.getInstance();
         userRef = database.getReference("user");
         classRef = database.getReference("class");
@@ -194,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 homework_limit.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     for (DataSnapshot find_me : snapshot.child("Student").getChildren()) {
-                        if (find_me.getKey().equals(my_id)) {
+                        if (find_me.getKey().equals(MyInfo.my_id)) {
                             for (DataSnapshot my_homework : snapshot.child("Homework").getChildren()) {
                                 String title = snapshot.getKey();
                                 String text = my_homework.getKey();
