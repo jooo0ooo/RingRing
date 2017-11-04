@@ -16,6 +16,11 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
@@ -30,12 +35,19 @@ public class LoginActivity extends AppCompatActivity {
     private URL user_picture_url;
     private ImageView login_with_facebook;
     private CallbackManager callbackManager;
+    String user_flag;
+
+    FirebaseDatabase database;
+    DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
+        database = FirebaseDatabase.getInstance();
+        userRef = database.getReference("user");
+
         callbackManager = CallbackManager.Factory.create();
         login_with_facebook = (ImageView) findViewById(R.id.login_with_facebook);
         login_with_facebook.setOnClickListener(new View.OnClickListener() {
@@ -53,32 +65,54 @@ public class LoginActivity extends AppCompatActivity {
                                     user_id = response.getJSONObject().getString("id").toString();
                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
-                                    SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                                    if(pref.getString("my_id", "nothing").equals(user_id)){
+                                    if(userRef.child(user_id).getKey().equals(user_id)){
+                                        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot snapshot : dataSnapshot.child(user_id).getChildren()){
+                                                    if(snapshot.getKey().equals("status")){
+                                                        String status = snapshot.getValue().toString();
+                                                        if(status.equals("professor")){
+                                                            user_flag = "Professor";
+                                                        }else if(status.equals("student")){
+                                                            user_flag = "Student";
+                                                        }
+                                                        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                                        SharedPreferences.Editor editor = pref.edit();
+                                                        editor.putString("user_flag", user_flag);
+                                                        editor.putString("my_id", user_id);
+                                                        editor.putString("my_name", user_name);
+                                                        editor.putString("picture_url", user_picture_url.toString());
+                                                        editor.commit();
 
-                                        MyInfo.my_name = user_name;
-                                        MyInfo.my_id = user_id;
-                                        MyInfo.user_picture_url = user_picture_url.toString();
+                                                        MyInfo.my_name = user_name;
+                                                        MyInfo.my_id = user_id;
+                                                        MyInfo.user_picture_url = user_picture_url.toString();
+                                                        MyInfo.user_flag = user_flag;
 
+                                                        if (user_flag.equals("Student")) {
+                                                            Intent i = new Intent(LoginActivity.this, StudentMainActivity.class);
+                                                            startActivity(i);
+                                                            finish();
+                                                        } else if (user_flag.equals("Professor")) {
+                                                            Intent i = new Intent(LoginActivity.this, ProfessorMainActivity.class);
+                                                            startActivity(i);
+                                                            finish();
+                                                        } else {
+                                                            Toast.makeText(LoginActivity.this, "Error or Not_User", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                }
+                                            }
 
-                                        String user_flag = pref.getString("user_flag", "nothing");
-                                        MyInfo.user_flag = user_flag;
-                                        if (user_flag.equals("Student")) {
-                                            Intent i = new Intent(LoginActivity.this, StudentMainActivity.class);
-                                            startActivity(i);
-                                            finish();
-                                        } else if (user_flag.equals("Professor")) {
-                                            Intent i = new Intent(LoginActivity.this, ProfessorMainActivity.class);
-                                            startActivity(i);
-                                            finish();
-                                        } else {
-                                            Toast.makeText(LoginActivity.this, "Error or Not_User", Toast.LENGTH_SHORT).show();
-                                        }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
 
+                                            }
+                                        });
                                     }else{
-                                        Toast.makeText(LoginActivity.this, "회원가입을 해주세요", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(),"존재하지 않는 아이디입니다.\n회원가입을 해주세요",Toast.LENGTH_LONG).show();
                                     }
-
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
