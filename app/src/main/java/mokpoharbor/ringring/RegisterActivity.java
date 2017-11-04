@@ -74,6 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                     user_id = response.getJSONObject().getString("id").toString();
                                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
+                                                    Toast.makeText(RegisterActivity.this, user_id+"@", Toast.LENGTH_SHORT).show();
+
                                                     isStudentUser();
 
                                                 } catch (Exception e) {
@@ -155,6 +157,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void isStudentUser(){
         if(userRef.child(user_id).getKey().equals(user_id)){
+            Toast.makeText(RegisterActivity.this, userRef.child(user_id).getKey().toString()+"%", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, userRef.child(user_id).child("my_class").getKey().toString(), Toast.LENGTH_SHORT).show();
             Toast.makeText(RegisterActivity.this, "이미 회원가입을 하셨습니다.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {

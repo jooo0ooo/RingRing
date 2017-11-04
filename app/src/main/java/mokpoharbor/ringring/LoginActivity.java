@@ -36,9 +36,10 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView login_with_facebook;
     private CallbackManager callbackManager;
     String user_flag;
+    String checking = "null";
 
     FirebaseDatabase database;
-    DatabaseReference userRef;
+    DatabaseReference userRef, myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,55 +66,55 @@ public class LoginActivity extends AppCompatActivity {
                                     user_id = response.getJSONObject().getString("id").toString();
                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
-                                    if(userRef.child(user_id).getKey().equals(user_id)){
-                                        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                for (DataSnapshot snapshot : dataSnapshot.child(user_id).getChildren()){
-                                                    if(snapshot.getKey().equals("status")){
-                                                        String status = snapshot.getValue().toString();
-                                                        if(status.equals("professor")){
-                                                            user_flag = "Professor";
-                                                        }else if(status.equals("student")){
-                                                            user_flag = "Student";
-                                                        }
-                                                        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                                                        SharedPreferences.Editor editor = pref.edit();
-                                                        editor.putString("user_flag", user_flag);
-                                                        editor.putString("my_id", user_id);
-                                                        editor.putString("my_name", user_name);
-                                                        editor.putString("picture_url", user_picture_url.toString());
-                                                        editor.commit();
+                                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                                if(snapshot.getKey().equals(user_id)){
+                                                    checking = "check";
+                                                    for (DataSnapshot snap : dataSnapshot.child(user_id).getChildren()){
+                                                        if(snap.getKey().equals("status")){
+                                                            String status = snap.getValue().toString();
+                                                            if(status.equals("professor")){
+                                                                user_flag = "Professor";
+                                                            }else if(status.equals("student")){
+                                                                user_flag = "Student";
+                                                            }
+                                                            SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                                            SharedPreferences.Editor editor = pref.edit();
+                                                            editor.putString("user_flag", user_flag);
+                                                            editor.putString("my_id", user_id);
+                                                            editor.putString("my_name", user_name);
+                                                            editor.putString("picture_url", user_picture_url.toString());
+                                                            editor.commit();
 
-                                                        MyInfo.my_name = user_name;
-                                                        MyInfo.my_id = user_id;
-                                                        MyInfo.user_picture_url = user_picture_url.toString();
-                                                        MyInfo.user_flag = user_flag;
+                                                            MyInfo.my_name = user_name;
+                                                            MyInfo.my_id = user_id;
+                                                            MyInfo.user_picture_url = user_picture_url.toString();
+                                                            MyInfo.user_flag = user_flag;
 
-                                                        if (user_flag.equals("Student")) {
-                                                            Intent i = new Intent(LoginActivity.this, StudentMainActivity.class);
-                                                            startActivity(i);
-                                                            finish();
-                                                        } else if (user_flag.equals("Professor")) {
-                                                            Intent i = new Intent(LoginActivity.this, ProfessorMainActivity.class);
-                                                            startActivity(i);
-                                                            finish();
-                                                        } else {
-                                                            Toast.makeText(LoginActivity.this, "Error or Not_User", Toast.LENGTH_SHORT).show();
+                                                            if (user_flag.equals("Student")) {
+                                                                Intent i = new Intent(LoginActivity.this, StudentMainActivity.class);
+                                                                startActivity(i);
+                                                                finish();
+                                                            } else if (user_flag.equals("Professor")) {
+                                                                Intent i = new Intent(LoginActivity.this, ProfessorMainActivity.class);
+                                                                startActivity(i);
+                                                                finish();
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-
+                                            if(checking.toString().equals("null")){
+                                                Toast.makeText(getApplicationContext(),"존재하지 않는 아이디입니다.\n회원가입을 해주세요",Toast.LENGTH_LONG).show();
                                             }
-                                        });
-                                    }else{
-                                        Toast.makeText(getApplicationContext(),"존재하지 않는 아이디입니다.\n회원가입을 해주세요",Toast.LENGTH_LONG).show();
-                                    }
+                                        }
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
 
+                                        }
+                                    });
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
