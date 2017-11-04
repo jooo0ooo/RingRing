@@ -21,8 +21,11 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
@@ -42,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button register_with_facebook_stu;
     private Button register_with_facebook_pro;
     private CallbackManager callbackManager;
+    String checking = "null";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -73,8 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
                                                     user_name = response.getJSONObject().getString("name").toString();
                                                     user_id = response.getJSONObject().getString("id").toString();
                                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
-
-                                                    Toast.makeText(RegisterActivity.this, user_id+"@", Toast.LENGTH_SHORT).show();
 
                                                     isStudentUser();
 
@@ -155,100 +157,127 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void isStudentUser(){
-        if(userRef.child(user_id).getKey().equals(user_id)){
-            Toast.makeText(RegisterActivity.this, userRef.child(user_id).getKey().toString()+"%", Toast.LENGTH_SHORT).show();
-            Toast.makeText(RegisterActivity.this, userRef.child(user_id).child("my_class").getKey().toString(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(RegisterActivity.this, "이미 회원가입을 하셨습니다.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            } else {
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            }
-            startActivity(intent);
-        }else{
-            user_flag = "Student";
-            my_id = user_id;
-            userRef.child(user_id).child("name").setValue(user_name);
-            userRef.child(user_id).child("status").setValue("student");
-
-            SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("user_flag", user_flag);
-            editor.putString("my_id", my_id);
-            editor.putString("my_name", user_name);
-            editor.putString("picture_url", user_picture_url.toString());
-            editor.commit();
-
-            MyInfo.my_name = user_name;
-            MyInfo.my_id = user_id;
-            MyInfo.user_flag = user_flag;
-            MyInfo.user_picture_url = user_picture_url.toString();
-
-            Intent i = new Intent(RegisterActivity.this, StudentMainActivity.class);
-            Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-            startActivity(i);
-            finish();
-        }
-    }
-
-    public void isProfessorUser(){
-        if(userRef.child(user_id).getKey().equals(user_id)){
-            Toast.makeText(RegisterActivity.this, "이미 회원가입을 하셨습니다.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            } else {
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            }
-            startActivity(intent);
-        }else{
-            final EditText etEdit = new EditText(RegisterActivity.this);
-            AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity.this);
-            dialog.setTitle("교수님 인증키를 입력하세요");
-            dialog.setView(etEdit);
-            dialog.setPositiveButton("Regist", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    String inputValue = etEdit.getText().toString();
-                    if(inputValue.equals("mokpo")){
-                        user_flag = "Professor";
-                        my_id = user_id;
-                        userRef.child(user_id).child("name").setValue(user_name);
-                        userRef.child(user_id).child("status").setValue("professor");
-
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putBoolean("isProfessor", true);
-                        editor.putString("user_flag", user_flag);
-                        editor.putString("my_id", my_id);
-                        editor.putString("my_name", user_name);
-                        editor.putString("picture_url", user_picture_url.toString());
-                        editor.commit();
-
-                        MyInfo.my_name = user_name;
-                        MyInfo.my_id = user_id;
-                        MyInfo.user_flag = user_flag;
-                        MyInfo.user_picture_url = user_picture_url.toString();
-
-                        Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
-                        Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                        startActivity(i);
-                        finish();
-                    }else{
-                        Toast.makeText(RegisterActivity.this, "인증키가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+    public void isStudentUser() {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.getKey().equals(user_id)) {
+                        checking = "check";
+                        Toast.makeText(RegisterActivity.this, "이미 회원가입을 하셨습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        } else {
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        }
+                        startActivity(intent);
                     }
                 }
-            });
+                if (checking.equals("null")) {
+                    user_flag = "Student";
+                    my_id = user_id;
+                    userRef.child(user_id).child("name").setValue(user_name);
+                    userRef.child(user_id).child("status").setValue("student");
 
-            dialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("user_flag", user_flag);
+                    editor.putString("my_id", my_id);
+                    editor.putString("my_name", user_name);
+                    editor.putString("picture_url", user_picture_url.toString());
+                    editor.commit();
+
+                    MyInfo.my_name = user_name;
+                    MyInfo.my_id = user_id;
+                    MyInfo.user_flag = user_flag;
+                    MyInfo.user_picture_url = user_picture_url.toString();
+
+                    Intent i = new Intent(RegisterActivity.this, StudentMainActivity.class);
+                    Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                    startActivity(i);
+                    finish();
                 }
-            });
-            dialog.show();
+            }
 
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void isProfessorUser() {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.getKey().equals(user_id)) {
+                        checking = "check";
+                        Toast.makeText(RegisterActivity.this, "이미 회원가입을 하셨습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        } else {
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        }
+                        startActivity(intent);
+                    }
+                }
+                if (checking.equals("null")) {
+                    final EditText etEdit = new EditText(RegisterActivity.this);
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity.this);
+                    dialog.setTitle("교수님 인증키를 입력하세요");
+                    dialog.setView(etEdit);
+                    dialog.setPositiveButton("Regist", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            String inputValue = etEdit.getText().toString();
+                            if (inputValue.equals("mokpo")) {
+                                user_flag = "Professor";
+                                my_id = user_id;
+                                userRef.child(user_id).child("name").setValue(user_name);
+                                userRef.child(user_id).child("status").setValue("professor");
+
+                                SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putBoolean("isProfessor", true);
+                                editor.putString("user_flag", user_flag);
+                                editor.putString("my_id", my_id);
+                                editor.putString("my_name", user_name);
+                                editor.putString("picture_url", user_picture_url.toString());
+                                editor.commit();
+
+                                MyInfo.my_name = user_name;
+                                MyInfo.my_id = user_id;
+                                MyInfo.user_flag = user_flag;
+                                MyInfo.user_picture_url = user_picture_url.toString();
+
+                                Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
+                                Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                startActivity(i);
+                                finish();
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "인증키가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                    dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.show();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
