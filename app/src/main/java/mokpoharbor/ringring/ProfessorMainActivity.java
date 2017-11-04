@@ -100,7 +100,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         final EditText context = new EditText(ProfessorMainActivity.this);
                         limit_date = new Button(ProfessorMainActivity.this);
                         limit_time = new Button(ProfessorMainActivity.this);
-                        final CharSequence[] items = {context.getText(), limit_date.getText(), limit_time.getText()};
+                        //final CharSequence[] items = {context.getText(), limit_date.getText(), limit_time.getText()};
                         AlertDialog.Builder make_subject = new AlertDialog.Builder(ProfessorMainActivity.this);
                         make_subject.setTitle("과목을 선택하세용");
                         make_subject.setItems(my_subject, new DialogInterface.OnClickListener() {

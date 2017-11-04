@@ -53,24 +53,33 @@ public class LoginActivity extends AppCompatActivity {
                                     user_id = response.getJSONObject().getString("id").toString();
                                     user_picture_url = new URL("https://graph.facebook.com/" + user_id + "/picture?width=500&height=500");
 
-                                    MyInfo.my_name = user_name;
-                                    MyInfo.my_id = user_id;
-                                    MyInfo.user_picture_url = user_picture_url.toString();
-
                                     SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                                    String user_flag = pref.getString("user_flag", "nothing");
-                                    MyInfo.user_flag = user_flag;
-                                    if (user_flag.equals("Student")) {
-                                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(i);
-                                        finish();
-                                    } else if (user_flag.equals("Professor")) {
-                                        Intent i = new Intent(LoginActivity.this, ProfessorMainActivity.class);
-                                        startActivity(i);
-                                        finish();
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, "Error or Not_User", Toast.LENGTH_SHORT).show();
+                                    if(pref.getString("my_id", "nothing").equals(user_id)){
+
+                                        MyInfo.my_name = user_name;
+                                        MyInfo.my_id = user_id;
+                                        MyInfo.user_picture_url = user_picture_url.toString();
+
+
+                                        String user_flag = pref.getString("user_flag", "nothing");
+                                        MyInfo.user_flag = user_flag;
+                                        if (user_flag.equals("Student")) {
+                                            Intent i = new Intent(LoginActivity.this, StudentMainActivity.class);
+                                            startActivity(i);
+                                            finish();
+                                        } else if (user_flag.equals("Professor")) {
+                                            Intent i = new Intent(LoginActivity.this, ProfessorMainActivity.class);
+                                            startActivity(i);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(LoginActivity.this, "Error or Not_User", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }else{
+                                        Toast.makeText(LoginActivity.this, "회원가입을 해주세요", Toast.LENGTH_SHORT).show();
                                     }
+
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

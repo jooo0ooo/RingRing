@@ -190,7 +190,7 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
 
         public void Alarm() {
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(ClassSettingStudentActivity.this, BroadcastD.class);
+            Intent intent = new Intent(ClassSettingStudentActivity.this, BroadcastClass.class);
             PendingIntent sender = PendingIntent.getBroadcast(ClassSettingStudentActivity.this, 0, intent, 0);
             Calendar calendar = Calendar.getInstance();
             SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -207,7 +207,7 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
 
         public void Cancel() {
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(ClassSettingStudentActivity.this, BroadcastD.class);
+            Intent intent = new Intent(ClassSettingStudentActivity.this, BroadcastClass.class);
             PendingIntent sender = PendingIntent.getBroadcast(ClassSettingStudentActivity.this, 0, intent, 0);
             am.cancel(sender);
         }

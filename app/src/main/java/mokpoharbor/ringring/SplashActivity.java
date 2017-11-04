@@ -56,13 +56,17 @@ public class SplashActivity extends Activity {
                                 MyInfo.user_picture_url = user_picture_url.toString();
 
                                 if (user_flag.equals("Student")) {
-                                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                                    Intent i = new Intent(SplashActivity.this, StudentMainActivity.class);
                                     startActivity(i);
                                     finish();
                                 } else if (user_flag.equals("Professor")) {
-                                    Intent i = new Intent(SplashActivity.this, ProfessorMainActivity.class);
-                                    startActivity(i);
-                                    finish();
+                                    if(pref.getBoolean("isProfessor", false)){
+                                        Intent i = new Intent(SplashActivity.this, ProfessorMainActivity.class);
+                                        startActivity(i);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(SplashActivity.this, "Who are U", Toast.LENGTH_SHORT).show();
+                                    }
                                 } else {
                                     Toast.makeText(SplashActivity.this, "Error or Not_User", Toast.LENGTH_SHORT).show();
                                 }
@@ -84,7 +88,7 @@ public class SplashActivity extends Activity {
     protected void onResume() {
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         if (!TextUtils.isEmpty(settings.getString("username", ""))) {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, StudentMainActivity.class));
             finish();
         }
         Profile profile = Profile.getCurrentProfile();

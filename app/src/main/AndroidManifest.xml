@@ -37,7 +37,7 @@
         <activity android:name=".ClassSettingProfessorActivity"></activity>
         <activity android:name=".StudentRegistClass"></activity>
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".StudentMainActivity"></activity>
 
         <activity android:name=".SettingActivity" />
 
@@ -61,7 +61,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".BroadcastD"></receiver>
+        <receiver android:name=".BroadcastClass"></receiver>
 
 
 

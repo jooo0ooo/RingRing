@@ -1,5 +1,7 @@
 package mokpoharbor.ringring;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -76,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     my_id = user_id;
                                                     userRef.child(user_id).child("name").setValue(user_name);
                                                     userRef.child(user_id).child("status").setValue("student");
+
                                                     SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                                                     SharedPreferences.Editor editor = pref.edit();
                                                     editor.putString("user_flag", user_flag);
@@ -89,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     MyInfo.user_flag = user_flag;
                                                     MyInfo.user_picture_url = user_picture_url.toString();
 
-                                                    Intent i = new Intent(RegisterActivity.this, MainActivity.class);
+                                                    Intent i = new Intent(RegisterActivity.this, StudentMainActivity.class);
                                                     Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                                                     startActivity(i);
                                                     finish();
@@ -144,6 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     my_id = user_id;
                                                     userRef.child(user_id).child("name").setValue(user_name);
                                                     userRef.child(user_id).child("status").setValue("professor");
+
                                                     SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                                                     SharedPreferences.Editor editor = pref.edit();
                                                     editor.putString("user_flag", user_flag);
@@ -157,10 +162,36 @@ public class RegisterActivity extends AppCompatActivity {
                                                     MyInfo.user_flag = user_flag;
                                                     MyInfo.user_picture_url = user_picture_url.toString();
 
-                                                    Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
-                                                    Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                                                    startActivity(i);
-                                                    finish();
+                                                    final EditText etEdit = new EditText(RegisterActivity.this);
+                                                    AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity.this);
+                                                    dialog.setTitle("교수님 인증키를 입력하세요");
+                                                    dialog.setView(etEdit);
+                                                    dialog.setPositiveButton("Regist", new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            String inputValue = etEdit.getText().toString();
+                                                            if(inputValue.equals("mokpo")){
+                                                                SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+                                                                SharedPreferences.Editor editor = pref.edit();
+                                                                editor.putBoolean("isProfessor", true);
+                                                                editor.commit();
+                                                                Intent i = new Intent(RegisterActivity.this, ProfessorMainActivity.class);
+                                                                Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                                                startActivity(i);
+                                                                finish();
+                                                            }else{
+                                                                Toast.makeText(RegisterActivity.this, "인증키가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    });
+
+                                                    dialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+                                                    dialog.show();
+
+
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }

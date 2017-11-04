@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class StudentMainActivity extends AppCompatActivity {
     ArrayList<String> myclass = new ArrayList<>();
     ArrayList<String> homework = new ArrayList<>();
     ArrayList<String> homework_context = new ArrayList<>();
@@ -65,13 +65,13 @@ public class MainActivity extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                Intent intent = new Intent(StudentMainActivity.this, SettingActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
         mListView = (ListView) findViewById(R.id.homework_list);
-        mAdapter = new MainActivity.ListViewAdapter(this);
+        mAdapter = new StudentMainActivity.ListViewAdapter(this);
         mListView.setAdapter(mAdapter);
         for (int n = 0; n < homework.size(); n++) {
             mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 final LinearLayout row = (LinearLayout) view.findViewById(R.id.row_layout);
                 ColorDrawable color = (ColorDrawable) row.getBackground();
                 if (color.getColor() == Color.rgb(255, 204, 204)) {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(StudentMainActivity.this);
                     dialog.setTitle(class_name);
                     dialog.setMessage(class_context + " - 아직 덜함?");
                     dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                     dialog.show();
                 } else {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(StudentMainActivity.this);
                     dialog.setTitle(class_name);
                     dialog.setMessage(class_context + " - 완료하셨습니까?");
                     dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(MainActivity.this, id + "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StudentMainActivity.this, id + "", Toast.LENGTH_SHORT).show();
                 final String class_name = ((TextView) v.findViewById(R.id.mTitle)).getText().toString();
                 final String date = ((TextView) v.findViewById(R.id.mDate)).getText().toString();
                 Date curDAte = new Date();
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(StudentMainActivity.this);
                 dialog.setTitle(class_name + "과제 남은 시간");
                 dialog.setMessage(left_time);
                 dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                     my_homework_context = homework_context.toArray(new String[homework_context.size()]);
                     my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
                     mListView = (ListView) findViewById(R.id.homework_list);
-                    mAdapter = new MainActivity.ListViewAdapter(MainActivity.this);
+                    mAdapter = new StudentMainActivity.ListViewAdapter(StudentMainActivity.this);
                     mListView.setAdapter(mAdapter);
                     for (int n = 0; n < homework.size(); n++) {
                         mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);

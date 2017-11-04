@@ -57,7 +57,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (MyInfo.user_flag.equals("Student")) {
-                    Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SettingActivity.this, StudentMainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
