@@ -67,7 +67,7 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
-                new AlarmHATT(getApplicationContext()).Alarm();
+                new MyAlarm(getApplicationContext()).Alarm();
                 if (!isChecked) {
                     AlertDialog.Builder alertdialog = new AlertDialog.Builder(ClassSettingStudentActivity.this);
                     alertdialog.setTitle("Warning!");
@@ -81,7 +81,7 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = pref.edit();
                             editor.putBoolean("alram", false);
                             editor.commit();
-                            new AlarmHATT(getApplicationContext()).Cancel();
+                            new MyAlarm(getApplicationContext()).Cancel();
                         }
                     });
                     alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -177,14 +177,14 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
             }
         });
         if (pref.getBoolean("alram", false)) {
-            new AlarmHATT(getApplicationContext()).Alarm();
+            new MyAlarm(getApplicationContext()).Alarm();
         }
     }
 
-    public class AlarmHATT {
+    public class MyAlarm {
         private Context context;
 
-        public AlarmHATT(Context context) {
+        public MyAlarm(Context context) {
             this.context = context;
         }
 
