@@ -26,9 +26,6 @@ public class PersonalSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_setting_professor);
         setTitle("Personal Setting");
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        //String user_flag = pref.getString("user_flag", "nothing");
-        //user_id = pref.getString("my_id", "nothing");
-        //user_name = pref.getString("my_name", "nothing");
 
         TextView name = (TextView) findViewById(R.id.user_name);
         name.setText(MyInfo.my_name);

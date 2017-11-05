@@ -1,7 +1,6 @@
 package mokpoharbor.ringring;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 public class ClassSettingProfessorActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference classRef, userRef;
-    String my_id;
     String my_name;
     ArrayList<String> myclass = new ArrayList<>();
 
@@ -35,8 +33,6 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_setting_professor);
-        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        //my_id = pref.getString("my_id", "nothing");
 
         database = FirebaseDatabase.getInstance();
         classRef = database.getReference("class");

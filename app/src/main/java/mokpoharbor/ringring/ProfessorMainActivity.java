@@ -96,82 +96,9 @@ public class ProfessorMainActivity extends AppCompatActivity {
                 alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        final String[] my_subject = myclass.toArray(new String[myclass.size()]);
-                        final EditText context = new EditText(ProfessorMainActivity.this);
-                        limit_date = new Button(ProfessorMainActivity.this);
-                        limit_time = new Button(ProfessorMainActivity.this);
-                        //final CharSequence[] items = {context.getText(), limit_date.getText(), limit_time.getText()};
-                        AlertDialog.Builder make_subject = new AlertDialog.Builder(ProfessorMainActivity.this);
-                        make_subject.setTitle("과목을 선택하세용");
-                        make_subject.setItems(my_subject, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                final AlertDialog.Builder homework_context = new AlertDialog.Builder(ProfessorMainActivity.this);
-                                my_subject_title = my_subject[which];
-                                homework_context.setTitle(my_subject[which] + " 과제");
-                                LinearLayout ll = new LinearLayout(ProfessorMainActivity.this);
-                                ll.setOrientation(LinearLayout.VERTICAL);
-                                context.setHint("과제 내용을 입력하세요");
-                                ll.addView(context);
-                                ll.addView(limit_date);
-                                ll.addView(limit_time);
-                                homework_context.setView(ll);
-                                limit_date.setHint("클릭하여 마감 날짜를 설정하세요");
-                                limit_time.setHint("클릭하여 마감 시간를 설정하세요");
-                                limit_date.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        new DatePickerDialog(ProfessorMainActivity.this, dateSetListener, year, month, day).show();
-                                    }
-                                });
-                                limit_time.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        new TimePickerDialog(ProfessorMainActivity.this, timeSetListener, hour, minute, false).show();
-                                    }
-                                });
 
-                                homework_context.setPositiveButton("등록", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int num) {
-                                        String homework = context.getText().toString();
-                                        String date = limit_date.getText().toString();
-                                        String time = limit_time.getText().toString();
-                                        String limit = date + " / " + time;
-                                        String limit_new_format = new String();
-                                        SimpleDateFormat original_format = new SimpleDateFormat("yyyy / MM / dd / HH / mm");
-                                        SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                        try {
-                                            Date date_test = original_format.parse(limit);
-                                            limit_new_format = new_format.format(date_test);
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-                                        if (homework.isEmpty() || date.isEmpty() || time.isEmpty()) {
-                                            Toast.makeText(ProfessorMainActivity.this, "위 항목을 다 채워주세요", Toast.LENGTH_SHORT).show();
-                                            recall_dialog();
-                                        } else {
-                                            classRef.child(my_subject_title).child("Homework").child(homework).setValue(limit_new_format);
-                                            userRef.child(MyInfo.my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
-                                            dialog.cancel();
-                                            Toast.makeText(ProfessorMainActivity.this, "과제 등록 완료", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                                homework_context.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-                                homework_context.show();
-                            }
-                        });
-                        make_subject.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        make_subject.show();
+                        recall_dialog();
+
                     }
                 });
                 alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -281,6 +208,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 final AlertDialog.Builder homework_context = new AlertDialog.Builder(ProfessorMainActivity.this);
+                my_subject_title = my_subject[which];
                 homework_context.setTitle(my_subject[which] + " 과제");
                 LinearLayout ll = new LinearLayout(ProfessorMainActivity.this);
                 ll.setOrientation(LinearLayout.VERTICAL);

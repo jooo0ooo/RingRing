@@ -29,6 +29,9 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         setTitle("SETTING");
+
+        //사진을 불러오는데 약간의 시간이 걸려서 사진 부분은 Myinfo에서 안가져오고 SharedPreferences를 사용할까 고민중...
+        //테스트 해보고 별 차이 없으면 걍 이대로 합니다...
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
