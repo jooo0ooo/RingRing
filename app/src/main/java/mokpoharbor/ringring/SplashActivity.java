@@ -4,31 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-import android.widget.Toast;
-
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.Profile;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Created by pingrae on 2017. 10. 17..
  */
 
 public class SplashActivity extends Activity {
-    private String user_name;
-    private String user_id;
-    private URL user_picture_url;
-    private SharedPreferences settings;
-
+    String user_name;
+    String user_id;
+    String user_picture_url;
+    String user_flag;
+/*
     private void graphRequest(AccessToken accessToken) {
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = settings.edit();
@@ -83,7 +69,8 @@ public class SplashActivity extends Activity {
         request.setParameters(parameters);
         request.executeAsync();
     }
-
+*/
+/*
     @Override
     protected void onResume() {
         settings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -94,13 +81,47 @@ public class SplashActivity extends Activity {
         Profile profile = Profile.getCurrentProfile();
         super.onResume();
     }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
             Thread.sleep(1000);
-            graphRequest(AccessToken.getCurrentAccessToken());
+            SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            user_flag = pref.getString("user_flag", "nothing");
+            if(user_flag.equals("Student")){
+
+                user_id = pref.getString("my_id", "nothing");
+                user_name = pref.getString("my_name", "nothing");
+                user_picture_url = pref.getString("picture_url", "nothing");
+
+                MyInfo.my_name = user_name;
+                MyInfo.my_id = user_id;
+                MyInfo.user_flag = user_flag;
+                MyInfo.user_picture_url = user_picture_url;
+
+                Intent i = new Intent(SplashActivity.this, StudentMainActivity.class);
+                startActivity(i);
+                finish();
+
+            }else if(user_flag.equals("Professor")){
+
+                user_id = pref.getString("my_id", "nothing");
+                user_name = pref.getString("my_name", "nothing");
+                user_picture_url = pref.getString("picture_url", "nothing");
+
+                MyInfo.my_name = user_name;
+                MyInfo.my_id = user_id;
+                MyInfo.user_flag = user_flag;
+                MyInfo.user_picture_url = user_picture_url;
+
+                Intent i = new Intent(SplashActivity.this, ProfessorMainActivity.class);
+                startActivity(i);
+                finish();
+
+            }
+            //graphRequest(AccessToken.getCurrentAccessToken());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
