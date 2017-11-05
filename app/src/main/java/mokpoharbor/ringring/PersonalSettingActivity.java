@@ -25,7 +25,6 @@ public class PersonalSettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_setting_professor);
         setTitle("Personal Setting");
-        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
         TextView name = (TextView) findViewById(R.id.user_name);
         name.setText(MyInfo.my_name);
@@ -38,6 +37,9 @@ public class PersonalSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 disconnectFromFacebook();
+                SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                pref.edit().clear().commit();
+
                 Intent intent = new Intent(PersonalSettingActivity.this, LoginActivity.class);
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

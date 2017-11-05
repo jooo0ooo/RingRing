@@ -87,7 +87,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(4000);
             SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             user_flag = pref.getString("user_flag", "nothing");
             if(user_flag.equals("Student")){
@@ -120,12 +120,14 @@ public class SplashActivity extends Activity {
                 startActivity(i);
                 finish();
 
+            }else{
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
             }
             //graphRequest(AccessToken.getCurrentAccessToken());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
+
     }
 }
