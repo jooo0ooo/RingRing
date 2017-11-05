@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.firebase.database.DataSnapshot;
@@ -108,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                             }
                                             if(checking.toString().equals("null")){
                                                 Toast.makeText(getApplicationContext(),"존재하지 않는 아이디입니다.\n회원가입을 해주세요",Toast.LENGTH_LONG).show();
+                                                disconnectFromFacebook();
                                             }
                                         }
                                         @Override
@@ -153,5 +156,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void disconnectFromFacebook() {
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+                LoginManager.getInstance().logOut();
+            }
+        }).executeAsync();
     }
 }
