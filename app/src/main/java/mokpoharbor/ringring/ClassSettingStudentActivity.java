@@ -67,6 +67,12 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
+                String minute = pref.getString("alram_minute", "nothing");
+                if(minute.equals("nothing")){
+                    Toast.makeText(ClassSettingStudentActivity.this, "알람 주기를 설정해 주세요", Toast.LENGTH_SHORT).show();
+                    get_alram.setChecked(false);
+                    return;
+                }
                 new MyAlarm(getApplicationContext()).Alarm();
                 if (!isChecked) {
                     AlertDialog.Builder alertdialog = new AlertDialog.Builder(ClassSettingStudentActivity.this);
