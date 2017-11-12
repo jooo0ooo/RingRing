@@ -1,7 +1,9 @@
 package mokpoharbor.ringring;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -190,6 +192,47 @@ public class ProfessorMainActivity extends AppCompatActivity {
 
     }
 
+    public class MyAlarm {
+        private Context context;
+
+        private String year_only;
+        private String month_only;
+        private String date_only;
+        private String hour_only;
+        private String minute_only;
+
+        public MyAlarm(Context context, String year_only, String month_only, String date_only, String hour_only, String minute_only) {
+            this.context = context;
+            this.year_only = year_only;
+            this.month_only = month_only;
+            this.date_only = date_only;
+            this.hour_only = hour_only;
+            this.minute_only = minute_only;
+        }
+
+        public void Alarm() {
+            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(ProfessorMainActivity.this, BroadcastClass.class);
+            PendingIntent sender = PendingIntent.getBroadcast(ProfessorMainActivity.this, 0, intent, 0);
+            Calendar calendar = Calendar.getInstance();
+            int homework_year = Integer.parseInt(year_only);
+            int homework_month = Integer.parseInt(month_only);
+            int homework_date = Integer.parseInt(date_only);
+            int homework_hour = Integer.parseInt(hour_only);
+            int homework_minute = Integer.parseInt(minute_only);
+
+            calendar.set(homework_year, homework_month-1, homework_date, homework_hour, homework_minute, 0);
+            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+        }
+
+        public void Cancel() {
+            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(ProfessorMainActivity.this, BroadcastClass.class);
+            PendingIntent sender = PendingIntent.getBroadcast(ProfessorMainActivity.this, 0, intent, 0);
+            am.cancel(sender);
+        }
+    }
+
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -251,6 +294,29 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         String limit_new_format = null;
                         SimpleDateFormat original_format = new SimpleDateFormat("yyyy / MM / dd / HH / mm");
                         SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                        /*Detail Date For Alarm*/
+                        String year_only = null;
+                        String month_only = null;
+                        String date_only = null;
+                        String hour_only = null;
+                        String minute_only = null;
+                        SimpleDateFormat year_only_format = new SimpleDateFormat("yyyy");
+                        SimpleDateFormat month_only_format = new SimpleDateFormat("MM");
+                        SimpleDateFormat date_only_format = new SimpleDateFormat("dd");
+                        SimpleDateFormat hour_only_format = new SimpleDateFormat("HH");
+                        SimpleDateFormat minute_only_format = new SimpleDateFormat("mm");
+                        try {
+                            Date date_detail = original_format.parse(limit);
+                            year_only = year_only_format.format(date_detail);
+                            month_only = month_only_format.format(date_detail);
+                            date_only = date_only_format.format(date_detail);
+                            hour_only = hour_only_format.format(date_detail);
+                            minute_only = minute_only_format.format(date_detail);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                         try {
                             Date date_test = original_format.parse(limit);
                             limit_new_format = new_format.format(date_test);
@@ -265,6 +331,8 @@ public class ProfessorMainActivity extends AppCompatActivity {
                             userRef.child(MyInfo.my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
                             dialog.cancel();
                             Toast.makeText(ProfessorMainActivity.this, "과제 등록 완료", Toast.LENGTH_SHORT).show();
+                            new MyAlarm(getApplicationContext(), year_only, month_only, date_only, hour_only, minute_only).Alarm();
+
                         }
                     }
                 });

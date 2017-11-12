@@ -31,17 +31,13 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <Switch
-            android:text="과제 종료 알림 받기"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:id="@+id/alram_professor"
+        <ImageView
+            android:id="@+id/logo"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="35"
-            android:background="@drawable/back" />
+            android:background="@drawable/back"
+            android:src="@drawable/myongi_logo" />
 
         <LinearLayout
             android:layout_width="match_parent"
