@@ -119,6 +119,7 @@ public class StudentRegistClass extends AppCompatActivity {
             public void onCancelled(DatabaseError error) {
             }
         });
+
     }
 
     // 검색을 수행하는 메소드

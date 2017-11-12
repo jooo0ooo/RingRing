@@ -40,6 +40,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import mokpoharbor.ringring.GuideActivity.ProfessorMainGuide;
+
 public class ProfessorMainActivity extends AppCompatActivity {
     ListView mListView = null;
     ListViewAdapter mAdapter = null;
@@ -186,7 +188,8 @@ public class ProfessorMainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ProfessorMainActivity.this, "test", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ProfessorMainActivity.this, ProfessorMainGuide.class);
+                startActivity(intent);
             }
         });
 

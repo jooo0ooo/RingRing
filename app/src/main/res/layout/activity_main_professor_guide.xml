@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#00000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mokpoharbor.ringring.StudentMainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="교수님이 가르치시는 과목의\n과제 목록들을 보여줍니다\n\n과제를 길게 터치하면\n과제를 삭제할 수 있습니다"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="20"></TextView>
+
+
+        <TextView
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="과제 내주기 버튼입니다"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="35"></TextView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="45">
+
+            <TextView
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"></TextView>
+
+            <TextView
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="설정화면으로 가는\n버튼입니다"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

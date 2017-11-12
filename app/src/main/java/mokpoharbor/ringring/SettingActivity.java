@@ -5,12 +5,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.io.InputStream;
 import java.net.URL;
+
+import mokpoharbor.ringring.GuideActivity.SettingGuide;
 
 /**
  * Created by pingrae on 2017. 10. 8..
@@ -93,6 +96,15 @@ public class SettingActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, SettingGuide.class);
+                startActivity(intent);
             }
         });
     }

@@ -1,7 +1,9 @@
 package mokpoharbor.ringring;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import mokpoharbor.ringring.GuideActivity.ClassSettingProfessorGuide;
 
 /**
  * Created by pingrae on 2017. 10. 20..
@@ -133,6 +137,15 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ClassSettingProfessorActivity.this, ClassSettingProfessorGuide.class);
+                startActivity(intent);
             }
         });
 

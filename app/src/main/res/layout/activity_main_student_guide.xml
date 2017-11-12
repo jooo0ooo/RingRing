@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mokpoharbor.ringring.StudentMainActivity">
+
+
+    <LinearLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_weight="10"
+            android:text="자신이 수강하는 과목의 과제들을\n남은기간이 짧은 순서대로 보여줍니다\n\n과제 목록을 터치하면\n남은 기간을 보여줍니다\n\n길게 터치를 하면\n과제 완료 설정을 할 수 있습니다"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="90">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"/>
+
+            <TextView
+                android:text="설정화면으로 가는\n버튼입니다"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"/>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+</RelativeLayout>

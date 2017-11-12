@@ -87,7 +87,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            Thread.sleep(4000);
+            Thread.sleep(1000);
             SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             user_flag = pref.getString("user_flag", "nothing");
             if(user_flag.equals("Student")){

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import mokpoharbor.ringring.GuideActivity.StudentMainGuide;
+
 public class StudentMainActivity extends AppCompatActivity {
     ArrayList<String> myclass = new ArrayList<>();
     ArrayList<String> homework = new ArrayList<>();
@@ -54,7 +57,7 @@ public class StudentMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_student);
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         database = FirebaseDatabase.getInstance();
         userRef = database.getReference("user");
@@ -218,6 +221,15 @@ public class StudentMainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StudentMainActivity.this, StudentMainGuide.class);
+                startActivity(intent);
             }
         });
     }

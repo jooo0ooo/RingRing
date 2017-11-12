@@ -36,10 +36,33 @@
         <activity android:name=".ClassSettingStudentActivity"></activity>
         <activity android:name=".ClassSettingProfessorActivity"></activity>
         <activity android:name=".StudentRegistClass"></activity>
-
         <activity android:name=".StudentMainActivity"></activity>
-
         <activity android:name=".SettingActivity" />
+
+        <activity
+            android:name=".GuideActivity.ProfessorMainGuide"
+            android:label="Guide"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".GuideActivity.ClassSettingProfessorGuide"
+            android:label="Guide"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".GuideActivity.SettingGuide"
+            android:label="Guide"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".GuideActivity.PersonalSettingGuide"
+            android:label="Guide"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".GuideActivity.StudentMainGuide"
+            android:label="Guide"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".GuideActivity.ClassSettingStudentGuide"
+            android:label="Guide"
+            android:theme="@style/Theme.AppCompat.Translucent" />
 
 
 
