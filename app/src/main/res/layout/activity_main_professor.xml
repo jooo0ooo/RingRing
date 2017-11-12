@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_help"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         app:fabSize="mini" />
 
