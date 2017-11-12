@@ -30,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-
                 android:background="@drawable/back"
                 android:gravity="center"
                 android:text="과제 알림 받기"

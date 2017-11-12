@@ -39,7 +39,7 @@ public class ClassSettingStudentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_class_setting);
+        setContentView(R.layout.activity_class_setting_student);
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         my_id = pref.getString("my_id", "nothing");
         database = FirebaseDatabase.getInstance();

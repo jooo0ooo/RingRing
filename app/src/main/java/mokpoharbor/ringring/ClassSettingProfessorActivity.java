@@ -1,14 +1,17 @@
 package mokpoharbor.ringring;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -135,5 +138,25 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError error) {
             }
         });
+
+        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        final Switch get_alram = (Switch) findViewById(R.id.alram_professor);
+        get_alram.setChecked(pref.getBoolean("professor_alram", false));
+        get_alram.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                if (!isChecked) {
+                    get_alram.setChecked(false);
+                    editor.putBoolean("professor_alram", false);
+                    editor.commit();
+                } else {
+                    editor.putBoolean("professor_alram", true);
+                    editor.commit();
+                }
+            }
+        });
+
     }
 }
