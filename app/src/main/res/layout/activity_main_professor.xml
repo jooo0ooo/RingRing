@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="mokpoharbor.ringring.StudentMainActivity">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_help"
+        android:layout_alignParentRight="true"
+        app:fabSize="mini" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,6 +29,7 @@
             android:textAllCaps="false"
             android:textSize="36sp"
             android:textStyle="bold"></ListView>
+
 
         <ImageButton
             android:id="@+id/hand_over_subject"
