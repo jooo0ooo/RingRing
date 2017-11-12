@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="mokpoharbor.ringring.StudentMainActivity">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_help"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:fabSize="mini" />
+
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"

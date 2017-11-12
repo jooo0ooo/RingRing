@@ -23,7 +23,7 @@ public class PersonalSettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal_setting_professor);
+        setContentView(R.layout.activity_personal_setting);
         setTitle("Personal Setting");
 
         TextView name = (TextView) findViewById(R.id.user_name);
