@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import mokpoharbor.ringring.GuideActivity.ProfessorMainGuide;
 
@@ -126,16 +128,26 @@ public class ProfessorMainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
                 final String class_name = ((TextView) view.findViewById(R.id.mTitle)).getText().toString();
                 final String class_context = ((TextView) view.findViewById(R.id.mText)).getText().toString();
+                final String limit_date = ((TextView) view.findViewById(R.id.mDate)).getText().toString();
                 AlertDialog.Builder dialog = new AlertDialog.Builder(ProfessorMainActivity.this);
                 dialog.setTitle(class_name + " - 과제삭제");
                 dialog.setMessage(class_context + " - 삭제하시겠습니까?");
                 dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                        int my_index = pref.getInt(class_name+class_context+limit_date, -1);
+                        if(my_index == -1){
+                            Toast.makeText(ProfessorMainActivity.this, "Fail to load my_index", Toast.LENGTH_SHORT).show();
+                        }else{
+                            new MyAlarm(getApplicationContext(), "","","","","",my_index).Cancel();
+                            Toast.makeText(ProfessorMainActivity.this, "load_index:"+my_index, Toast.LENGTH_SHORT).show();
+
+                        }
                         Toast.makeText(ProfessorMainActivity.this, class_name + ", " + class_context, Toast.LENGTH_SHORT).show();
                         classRef.child(class_name).child("Homework").child(class_context).removeValue();
                         userRef.child(MyInfo.my_id).child("my_class").child(class_name).child(class_context).removeValue();
-
                     }
                 });
                 dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -175,6 +187,70 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         for (int n = 0; n < homework.size(); n++) {
                             mAdapter.addItem(my_homework[n], my_homework_context[n], my_homework_limit[n]);
                         }
+
+                        for (DataSnapshot snapshot_child : snapshot.getChildren()) {
+                            SimpleDateFormat year_formatter = new SimpleDateFormat ("yyyy", Locale.KOREA);
+                            SimpleDateFormat month_formatter = new SimpleDateFormat ("MM", Locale.KOREA);
+                            SimpleDateFormat date_formatter = new SimpleDateFormat ("dd", Locale.KOREA);
+                            SimpleDateFormat hour_formatter = new SimpleDateFormat ("HH", Locale.KOREA);
+                            SimpleDateFormat minute_formatter = new SimpleDateFormat ("mm", Locale.KOREA);
+                            Date currentTime = new Date();
+
+                            int year_now = Integer.parseInt(year_formatter.format(currentTime));
+                            int month_now = Integer.parseInt(month_formatter.format(currentTime));
+                            int date_now = Integer.parseInt(date_formatter.format(currentTime));
+                            int hour_now = Integer.parseInt(hour_formatter.format(currentTime));
+                            int minute_now = Integer.parseInt(minute_formatter.format(currentTime));
+
+                            String title = snapshot_child.getRef().getParent().getKey();
+                            String text = snapshot_child.getKey();
+                            String date = snapshot_child.getValue().toString();
+
+                            int homework_year = -1;
+                            int homework_month = -1;
+                            int homework_date = -1;
+                            int homework_hour = -1;
+                            int homework_minute = -1;
+
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                            SimpleDateFormat year_only_format = new SimpleDateFormat("yyyy");
+                            SimpleDateFormat month_only_format = new SimpleDateFormat("MM");
+                            SimpleDateFormat date_only_format = new SimpleDateFormat("dd");
+                            SimpleDateFormat hour_only_format = new SimpleDateFormat("HH");
+                            SimpleDateFormat minute_only_format = new SimpleDateFormat("mm");
+
+                            Date date_detail = null;
+                            try {
+                                date_detail = format.parse(date);
+                                homework_year = Integer.parseInt(year_only_format.format(date_detail));
+                                homework_month = Integer.parseInt(month_only_format.format(date_detail));
+                                homework_date = Integer.parseInt(date_only_format.format(date_detail));
+                                homework_hour = Integer.parseInt(hour_only_format.format(date_detail));
+                                homework_minute = Integer.parseInt(minute_only_format.format(date_detail));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            int reverse_To_minute_now = (date_now * 60 * 24) + (hour_now * 60) + minute_now;
+                            int reverse_To_minute_homework = (homework_date * 60 * 24) + (homework_hour * 60) + homework_minute;
+
+                            if(year_now > homework_year){
+                                classRef.child(title).child("Homework").child(text).removeValue();
+                                userRef.child(MyInfo.my_id).child("my_class").child(title).child(text).removeValue();
+                            }else if(year_now == homework_year){
+                                if(month_now > homework_month){
+                                    classRef.child(title).child("Homework").child(text).removeValue();
+                                    userRef.child(MyInfo.my_id).child("my_class").child(title).child(text).removeValue();
+                                }else if(month_now == homework_month){
+                                    if( (reverse_To_minute_now - reverse_To_minute_homework) >= 1440 ){
+                                        classRef.child(title).child("Homework").child(text).removeValue();
+                                        userRef.child(MyInfo.my_id).child("my_class").child(title).child(text).removeValue();
+                                    }
+                                }
+                            }
+
+                        }
+
+
                     }
                 }
             }
@@ -203,20 +279,22 @@ public class ProfessorMainActivity extends AppCompatActivity {
         private String date_only;
         private String hour_only;
         private String minute_only;
+        private int index;
 
-        public MyAlarm(Context context, String year_only, String month_only, String date_only, String hour_only, String minute_only) {
+        public MyAlarm(Context context, String year_only, String month_only, String date_only, String hour_only, String minute_only, int index) {
             this.context = context;
             this.year_only = year_only;
             this.month_only = month_only;
             this.date_only = date_only;
             this.hour_only = hour_only;
             this.minute_only = minute_only;
+            this.index = index;
         }
 
         public void Alarm() {
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(ProfessorMainActivity.this, BroadcastClass.class);
-            PendingIntent sender = PendingIntent.getBroadcast(ProfessorMainActivity.this, 0, intent, 0);
+            Intent intent = new Intent(ProfessorMainActivity.this, BroadcastClassForProfessor.class);
+            PendingIntent sender = PendingIntent.getBroadcast(ProfessorMainActivity.this, index, intent, 0);
             Calendar calendar = Calendar.getInstance();
             int homework_year = Integer.parseInt(year_only);
             int homework_month = Integer.parseInt(month_only);
@@ -230,8 +308,8 @@ public class ProfessorMainActivity extends AppCompatActivity {
 
         public void Cancel() {
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(ProfessorMainActivity.this, BroadcastClass.class);
-            PendingIntent sender = PendingIntent.getBroadcast(ProfessorMainActivity.this, 0, intent, 0);
+            Intent intent = new Intent(ProfessorMainActivity.this, BroadcastClassForProfessor.class);
+            PendingIntent sender = PendingIntent.getBroadcast(ProfessorMainActivity.this, index, intent, 0);
             am.cancel(sender);
         }
     }
@@ -332,11 +410,20 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         } else {
                             classRef.child(my_subject_title).child("Homework").child(homework).setValue(limit_new_format);
                             userRef.child(MyInfo.my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
+
+                            SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            //editor.putString(my_subject_title+homework+limit_new_format, my_subject_title+homework+limit_new_format);
+                            int my_index = pref.getInt("index", 1);
+                            Toast.makeText(ProfessorMainActivity.this, "my_index:"+my_index, Toast.LENGTH_SHORT).show();
+                            editor.putInt(my_subject_title+homework+limit_new_format, my_index);
+                            new MyAlarm(getApplicationContext(), year_only, month_only, date_only, hour_only, minute_only, my_index).Alarm();
+                            ++my_index;
+                            editor.putInt("index",my_index);
+                            editor.commit();
                             dialog.cancel();
                             Toast.makeText(ProfessorMainActivity.this, "과제 등록 완료", Toast.LENGTH_SHORT).show();
-                            new MyAlarm(getApplicationContext(), year_only, month_only, date_only, hour_only, minute_only).Alarm();
-
-                        }
+                            }
                     }
                 });
                 homework_context.setNegativeButton("닫기", new DialogInterface.OnClickListener() {

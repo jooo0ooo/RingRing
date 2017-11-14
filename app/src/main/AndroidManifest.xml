@@ -85,6 +85,7 @@
         </activity>
 
         <receiver android:name=".BroadcastClass"></receiver>
+        <receiver android:name=".BroadcastClassForProfessor"></receiver>
 
 
 
