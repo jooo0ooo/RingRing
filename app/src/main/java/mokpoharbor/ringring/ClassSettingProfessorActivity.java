@@ -111,6 +111,7 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                         classRef.child(class_name).setValue(class_name);
                         classRef.child(class_name).child("Professor").child(MyInfo.my_id).setValue(MyInfo.my_id);
                         userRef.child(MyInfo.my_id).child("my_class").child(class_name).setValue(class_name);
+                        userRef.child(MyInfo.my_id).child("my_class").child(class_name).child("Prevent of delete").setValue(class_name);
                         Toast.makeText(ClassSettingProfessorActivity.this, class_name, Toast.LENGTH_SHORT).show();
                     }
                 });

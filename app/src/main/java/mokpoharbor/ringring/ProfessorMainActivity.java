@@ -99,7 +99,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder alertdialog = new AlertDialog.Builder(ProfessorMainActivity.this);
                 alertdialog.setTitle("Warning!");
-                alertdialog.setMessage("과제를 생성하시면 학생들에게 미움받을 수 있습니다.\n미움받을 용기 있으십니까?");
+                alertdialog.setMessage("과제를 생성하시면 학생들의 사랑을 독차지 하게 되십니다\n사랑을 독차지 하시겠습니까?");
                 alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -147,7 +147,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                         }
                         Toast.makeText(ProfessorMainActivity.this, class_name + ", " + class_context, Toast.LENGTH_SHORT).show();
                         classRef.child(class_name).child("Homework").child(class_context).removeValue();
-                        userRef.child(MyInfo.my_id).child("my_class").child(class_name).child(class_context).removeValue();
+                        userRef.child(MyInfo.my_id).child("my_class").child(class_name).child("Homework").child(class_context).removeValue();
                     }
                 });
                 dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -169,9 +169,9 @@ public class ProfessorMainActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.child(MyInfo.my_id).child("my_class").getChildren()) {
                     String key = snapshot.getKey();
                     myclass.add(key);
-                    if (snapshot.hasChildren()) {
-                        for (DataSnapshot snapshot_child : snapshot.getChildren()) {
-                            String title = snapshot_child.getRef().getParent().getKey();
+                    if (snapshot.child("Homework").hasChildren()) {
+                        for (DataSnapshot snapshot_child : snapshot.child("Homework").getChildren()) {
+                            String title = snapshot_child.getRef().getParent().getParent().getKey();
                             String text = snapshot_child.getKey();
                             String date = snapshot_child.getValue().toString();
                             homework.add(title);
@@ -188,7 +188,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                             mAdapter.addItem(my_homework[n], my_homework_context[n], my_homework_limit[n]);
                         }
 
-                        for (DataSnapshot snapshot_child : snapshot.getChildren()) {
+                        for (DataSnapshot snapshot_child : snapshot.child("Homework").getChildren()) {
                             SimpleDateFormat year_formatter = new SimpleDateFormat ("yyyy", Locale.KOREA);
                             SimpleDateFormat month_formatter = new SimpleDateFormat ("MM", Locale.KOREA);
                             SimpleDateFormat date_formatter = new SimpleDateFormat ("dd", Locale.KOREA);
@@ -202,7 +202,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                             int hour_now = Integer.parseInt(hour_formatter.format(currentTime));
                             int minute_now = Integer.parseInt(minute_formatter.format(currentTime));
 
-                            String title = snapshot_child.getRef().getParent().getKey();
+                            String title = snapshot_child.getRef().getParent().getParent().getKey();
                             String text = snapshot_child.getKey();
                             String date = snapshot_child.getValue().toString();
 
@@ -235,15 +235,15 @@ public class ProfessorMainActivity extends AppCompatActivity {
 
                             if(year_now > homework_year){
                                 classRef.child(title).child("Homework").child(text).removeValue();
-                                userRef.child(MyInfo.my_id).child("my_class").child(title).child(text).removeValue();
+                                userRef.child(MyInfo.my_id).child("my_class").child(title).child("Homework").child(text).removeValue();
                             }else if(year_now == homework_year){
                                 if(month_now > homework_month){
                                     classRef.child(title).child("Homework").child(text).removeValue();
-                                    userRef.child(MyInfo.my_id).child("my_class").child(title).child(text).removeValue();
+                                    userRef.child(MyInfo.my_id).child("my_class").child(title).child("Homework").child(text).removeValue();
                                 }else if(month_now == homework_month){
                                     if( (reverse_To_minute_now - reverse_To_minute_homework) >= 1440 ){
                                         classRef.child(title).child("Homework").child(text).removeValue();
-                                        userRef.child(MyInfo.my_id).child("my_class").child(title).child(text).removeValue();
+                                        userRef.child(MyInfo.my_id).child("my_class").child(title).child("Homework").child(text).removeValue();
                                     }
                                 }
                             }
@@ -409,7 +409,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                             recall_dialog();
                         } else {
                             classRef.child(my_subject_title).child("Homework").child(homework).setValue(limit_new_format);
-                            userRef.child(MyInfo.my_id).child("my_class").child(my_subject_title).child(homework).setValue(limit_new_format);
+                            userRef.child(MyInfo.my_id).child("my_class").child(my_subject_title).child("Homework").child(homework).setValue(limit_new_format);
 
                             SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
