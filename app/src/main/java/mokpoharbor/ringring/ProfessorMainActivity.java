@@ -142,7 +142,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                             Toast.makeText(ProfessorMainActivity.this, "Fail to load my_index", Toast.LENGTH_SHORT).show();
                         }else{
                             new MyAlarm(getApplicationContext(), "","","","","",my_index).Cancel();
-                            Toast.makeText(ProfessorMainActivity.this, "load_index:"+my_index, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ProfessorMainActivity.this, "load_index:"+my_index, Toast.LENGTH_SHORT).show();
 
                         }
                         Toast.makeText(ProfessorMainActivity.this, class_name + ", " + class_context, Toast.LENGTH_SHORT).show();
@@ -415,7 +415,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = pref.edit();
                             //editor.putString(my_subject_title+homework+limit_new_format, my_subject_title+homework+limit_new_format);
                             int my_index = pref.getInt("index", 1);
-                            Toast.makeText(ProfessorMainActivity.this, "my_index:"+my_index, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ProfessorMainActivity.this, "my_index:"+my_index, Toast.LENGTH_SHORT).show();
                             editor.putInt(my_subject_title+homework+limit_new_format, my_index);
                             new MyAlarm(getApplicationContext(), year_only, month_only, date_only, hour_only, minute_only, my_index).Alarm();
                             ++my_index;
