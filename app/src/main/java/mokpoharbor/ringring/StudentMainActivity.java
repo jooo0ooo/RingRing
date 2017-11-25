@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 
 import mokpoharbor.ringring.GuideActivity.StudentMainGuide;
 
@@ -216,6 +217,72 @@ public class StudentMainActivity extends AppCompatActivity {
                         mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);
                     }
                     mAdapter.sort();
+                    for (DataSnapshot find_me : snapshot.child("Student").getChildren()) {
+                        if (find_me.getKey().equals(MyInfo.my_id)) {
+                            for (DataSnapshot snapshot_child : snapshot.child("Homework").getChildren()) {
+                                SimpleDateFormat year_formatter = new SimpleDateFormat("yyyy", Locale.KOREA);
+                                SimpleDateFormat month_formatter = new SimpleDateFormat("MM", Locale.KOREA);
+                                SimpleDateFormat date_formatter = new SimpleDateFormat("dd", Locale.KOREA);
+                                SimpleDateFormat hour_formatter = new SimpleDateFormat("HH", Locale.KOREA);
+                                SimpleDateFormat minute_formatter = new SimpleDateFormat("mm", Locale.KOREA);
+                                Date currentTime = new Date();
+
+                                int year_now = Integer.parseInt(year_formatter.format(currentTime));
+                                int month_now = Integer.parseInt(month_formatter.format(currentTime));
+                                int date_now = Integer.parseInt(date_formatter.format(currentTime));
+                                int hour_now = Integer.parseInt(hour_formatter.format(currentTime));
+                                int minute_now = Integer.parseInt(minute_formatter.format(currentTime));
+
+                                String title = snapshot_child.getRef().getParent().getParent().getKey();
+                                String text = snapshot_child.getKey();
+                                String date = snapshot_child.getValue().toString();
+
+                                int homework_year = -1;
+                                int homework_month = -1;
+                                int homework_date = -1;
+                                int homework_hour = -1;
+                                int homework_minute = -1;
+
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                SimpleDateFormat year_only_format = new SimpleDateFormat("yyyy");
+                                SimpleDateFormat month_only_format = new SimpleDateFormat("MM");
+                                SimpleDateFormat date_only_format = new SimpleDateFormat("dd");
+                                SimpleDateFormat hour_only_format = new SimpleDateFormat("HH");
+                                SimpleDateFormat minute_only_format = new SimpleDateFormat("mm");
+
+                                Date date_detail = null;
+                                try {
+                                    date_detail = format.parse(date);
+                                    homework_year = Integer.parseInt(year_only_format.format(date_detail));
+                                    homework_month = Integer.parseInt(month_only_format.format(date_detail));
+                                    homework_date = Integer.parseInt(date_only_format.format(date_detail));
+                                    homework_hour = Integer.parseInt(hour_only_format.format(date_detail));
+                                    homework_minute = Integer.parseInt(minute_only_format.format(date_detail));
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                int reverse_To_minute_now = (date_now * 60 * 24) + (hour_now * 60) + minute_now;
+                                int reverse_To_minute_homework = (homework_date * 60 * 24) + (homework_hour * 60) + homework_minute;
+
+                                if (year_now > homework_year) {
+                                    classRef.child(title).child("Homework").child(text).removeValue();
+                                    //userRef.child(MyInfo.my_id).child("my_class").child(title).child("Homework").child(text).removeValue();
+                                } else if (year_now == homework_year) {
+                                    if (month_now > homework_month) {
+                                        classRef.child(title).child("Homework").child(text).removeValue();
+                                        //userRef.child(MyInfo.my_id).child("my_class").child(title).child("Homework").child(text).removeValue();
+                                    } else if (month_now == homework_month) {
+                                        if ((reverse_To_minute_now - reverse_To_minute_homework) >= 1440) {
+                                            classRef.child(title).child("Homework").child(text).removeValue();
+                                            //userRef.child(MyInfo.my_id).child("my_class").child(title).child("Homework").child(text).removeValue();
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
                 }
             }
 
