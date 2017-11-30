@@ -84,7 +84,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".BroadcastClass"></receiver>
+        <receiver android:name=".BroadcastClassForSutdent"></receiver>
         <receiver android:name=".BroadcastClassForProfessor"></receiver>
 
 

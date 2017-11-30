@@ -8,9 +8,7 @@ import java.text.Collator;
 import java.util.Comparator;
 
 public class ListData {
-    public String mTitle;
-    public String mText;
-    public String mDate;
+    public String mTitle, mText, mDate;
 
     public static final Comparator<ListData> ALPHA_COMPARATOR = new Comparator<ListData>() {
         private final Collator sCollator = Collator.getInstance();

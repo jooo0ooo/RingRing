@@ -50,17 +50,13 @@ public class ProfessorMainActivity extends AppCompatActivity {
     ListView mListView = null;
     ListViewAdapter mAdapter = null;
     String my_subject_title;
-    //EditText context;
-    Button limit_date;
-    Button limit_time;
+    Button limit_date, limit_time;
     int year, month, day, hour, minute;
-    ArrayList<String> myclass = new ArrayList<>();
-    ArrayList<String> homework = new ArrayList<>();
-    ArrayList<String> homework_context = new ArrayList<>();
-    ArrayList<String> homework_limit = new ArrayList<>();
-    String[] my_homework = homework.toArray(new String[homework.size()]);
-    String[] my_homework_context = homework_context.toArray(new String[homework_context.size()]);
-    String[] my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
+    ArrayList<String> myclass = new ArrayList<>(), homework = new ArrayList<>(),
+            homework_context = new ArrayList<>(), homework_limit = new ArrayList<>();
+    String[] my_homework = homework.toArray(new String[homework.size()]),
+            my_homework_context = homework_context.toArray(new String[homework_context.size()]),
+            my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
     FirebaseDatabase database;
     DatabaseReference userRef, classRef;
     BackPressClose back_pressed;
@@ -122,52 +118,36 @@ public class ProfessorMainActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.listView);
         mAdapter = new ProfessorMainActivity.ListViewAdapter(this);
         mListView.setAdapter(mAdapter);
-        /**/
 
-        //ViewGroup child = (ViewGroup) mListView.getChildAt(0);
-        //child.setBackgroundColor(Color.rgb(255, 204, 204));
+        //==============================================================================================================================
 
-        //LinearLayout row = (LinearLayout) mListView.findViewById(R.id.row_layout);
-        //TextView textView = (TextView) listView.getAdapter().getView(0, null, listView);
-        //TextView v = (TextView) view.getChildAt(0);
-        //row.setBackgroundColor(Color.rgb(255, 204, 204));
+        SimpleDateFormat year_formatter = new SimpleDateFormat("yyyy", Locale.KOREA),
+                month_formatter = new SimpleDateFormat("MM", Locale.KOREA), date_formatter = new SimpleDateFormat("dd", Locale.KOREA),
+                hour_formatter = new SimpleDateFormat("HH", Locale.KOREA), minute_formatter = new SimpleDateFormat("mm", Locale.KOREA);
+        Date currentTime = new Date();
+
+        final int year_now = Integer.parseInt(year_formatter.format(currentTime)),
+                month_now = Integer.parseInt(month_formatter.format(currentTime)),
+                date_now = Integer.parseInt(date_formatter.format(currentTime)),
+                hour_now = Integer.parseInt(hour_formatter.format(currentTime)),
+                minute_now = Integer.parseInt(minute_formatter.format(currentTime));
+
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm"), year_only_format = new SimpleDateFormat("yyyy"),
+                month_only_format = new SimpleDateFormat("MM"), date_only_format = new SimpleDateFormat("dd"),
+                hour_only_format = new SimpleDateFormat("HH"), minute_only_format = new SimpleDateFormat("mm");
+
+        //==============================================================================================================================
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String limit_date = ((TextView) view.findViewById(R.id.mDate)).getText().toString();
 
-                SimpleDateFormat year_formatter = new SimpleDateFormat("yyyy", Locale.KOREA);
-                SimpleDateFormat month_formatter = new SimpleDateFormat("MM", Locale.KOREA);
-                SimpleDateFormat date_formatter = new SimpleDateFormat("dd", Locale.KOREA);
-                SimpleDateFormat hour_formatter = new SimpleDateFormat("HH", Locale.KOREA);
-                SimpleDateFormat minute_formatter = new SimpleDateFormat("mm", Locale.KOREA);
-                Date currentTime = new Date();
-
-                int year_now = Integer.parseInt(year_formatter.format(currentTime));
-                int month_now = Integer.parseInt(month_formatter.format(currentTime));
-                int date_now = Integer.parseInt(date_formatter.format(currentTime));
-                int hour_now = Integer.parseInt(hour_formatter.format(currentTime));
-                int minute_now = Integer.parseInt(minute_formatter.format(currentTime));
-
-                String date = limit_date;
-
-                int homework_year = -1;
-                int homework_month = -1;
-                int homework_date = -1;
-                int homework_hour = -1;
-                int homework_minute = -1;
-
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                SimpleDateFormat year_only_format = new SimpleDateFormat("yyyy");
-                SimpleDateFormat month_only_format = new SimpleDateFormat("MM");
-                SimpleDateFormat date_only_format = new SimpleDateFormat("dd");
-                SimpleDateFormat hour_only_format = new SimpleDateFormat("HH");
-                SimpleDateFormat minute_only_format = new SimpleDateFormat("mm");
+                int homework_year = -1, homework_month = -1, homework_date = -1, homework_hour = -1, homework_minute = -1;
 
                 Date date_detail = null;
                 try {
-                    date_detail = format.parse(date);
+                    date_detail = format.parse(limit_date);
                     homework_year = Integer.parseInt(year_only_format.format(date_detail));
                     homework_month = Integer.parseInt(month_only_format.format(date_detail));
                     homework_date = Integer.parseInt(date_only_format.format(date_detail));
@@ -176,8 +156,8 @@ public class ProfessorMainActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                int reverse_To_minute_now = (date_now * 60 * 24) + (hour_now * 60) + minute_now;
-                int reverse_To_minute_homework = (homework_date * 60 * 24) + (homework_hour * 60) + homework_minute;
+                int reverse_To_minute_now = (date_now * 60 * 24) + (hour_now * 60) + minute_now,
+                        reverse_To_minute_homework = (homework_date * 60 * 24) + (homework_hour * 60) + homework_minute;;
 
                 LinearLayout row = (LinearLayout) view.findViewById(R.id.row_layout);
 
@@ -198,22 +178,12 @@ public class ProfessorMainActivity extends AppCompatActivity {
             }
         });
 
-
-        //mListView.getAdapter().getView(0, null, null).performClick();
-        //mListView.performItemClick(mListView, 0, 0);
-
-        /**/
-        /*
-        for (int n = 0; n < homework.size(); n++) {
-            mAdapter.addItem(my_homework[n] + " : ", my_homework_context[n], my_homework_limit[n]);
-        }
-        */
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-                final String class_name = ((TextView) view.findViewById(R.id.mTitle)).getText().toString();
-                final String class_context = ((TextView) view.findViewById(R.id.mText)).getText().toString();
-                final String limit_date = ((TextView) view.findViewById(R.id.mDate)).getText().toString();
+                final String class_name = ((TextView) view.findViewById(R.id.mTitle)).getText().toString(),
+                        class_context = ((TextView) view.findViewById(R.id.mText)).getText().toString(),
+                        limit_date = ((TextView) view.findViewById(R.id.mDate)).getText().toString();
                 AlertDialog.Builder dialog = new AlertDialog.Builder(ProfessorMainActivity.this);
                 dialog.setTitle(class_name + " - 과제삭제");
                 dialog.setMessage(class_context + " - 삭제하시겠습니까?");
@@ -227,8 +197,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                             Toast.makeText(ProfessorMainActivity.this, "Fail to load my_index", Toast.LENGTH_SHORT).show();
                         } else {
                             new MyAlarm(getApplicationContext(), "", "", "", "", "", my_index).Cancel();
-                            //Toast.makeText(ProfessorMainActivity.this, "load_index:"+my_index, Toast.LENGTH_SHORT).show();
-
                         }
                         Toast.makeText(ProfessorMainActivity.this, class_name + ", " + class_context, Toast.LENGTH_SHORT).show();
                         classRef.child(class_name).child("Homework").child(class_context).removeValue();
@@ -256,9 +224,9 @@ public class ProfessorMainActivity extends AppCompatActivity {
                     myclass.add(key);
                     if (snapshot.child("Homework").hasChildren()) {
                         for (DataSnapshot snapshot_child : snapshot.child("Homework").getChildren()) {
-                            String title = snapshot_child.getRef().getParent().getParent().getKey();
-                            String text = snapshot_child.getKey();
-                            String date = snapshot_child.getValue().toString();
+                            String title = snapshot_child.getRef().getParent().getParent().getKey(),
+                                    text = snapshot_child.getKey(),
+                                    date = snapshot_child.getValue().toString();
                             homework.add(title);
                             homework_context.add(text);
                             homework_limit.add(date);
@@ -280,39 +248,15 @@ public class ProfessorMainActivity extends AppCompatActivity {
                                 }
                             });
 
-                            //ChangeColor(n, my_homework_limit[n]);
                         }
 
                         for (DataSnapshot snapshot_child : snapshot.child("Homework").getChildren()) {
-                            SimpleDateFormat year_formatter = new SimpleDateFormat("yyyy", Locale.KOREA);
-                            SimpleDateFormat month_formatter = new SimpleDateFormat("MM", Locale.KOREA);
-                            SimpleDateFormat date_formatter = new SimpleDateFormat("dd", Locale.KOREA);
-                            SimpleDateFormat hour_formatter = new SimpleDateFormat("HH", Locale.KOREA);
-                            SimpleDateFormat minute_formatter = new SimpleDateFormat("mm", Locale.KOREA);
-                            Date currentTime = new Date();
 
-                            int year_now = Integer.parseInt(year_formatter.format(currentTime));
-                            int month_now = Integer.parseInt(month_formatter.format(currentTime));
-                            int date_now = Integer.parseInt(date_formatter.format(currentTime));
-                            int hour_now = Integer.parseInt(hour_formatter.format(currentTime));
-                            int minute_now = Integer.parseInt(minute_formatter.format(currentTime));
+                            String title = snapshot_child.getRef().getParent().getParent().getKey(),
+                                    text = snapshot_child.getKey(),
+                                    date = snapshot_child.getValue().toString();
 
-                            String title = snapshot_child.getRef().getParent().getParent().getKey();
-                            String text = snapshot_child.getKey();
-                            String date = snapshot_child.getValue().toString();
-
-                            int homework_year = -1;
-                            int homework_month = -1;
-                            int homework_date = -1;
-                            int homework_hour = -1;
-                            int homework_minute = -1;
-
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                            SimpleDateFormat year_only_format = new SimpleDateFormat("yyyy");
-                            SimpleDateFormat month_only_format = new SimpleDateFormat("MM");
-                            SimpleDateFormat date_only_format = new SimpleDateFormat("dd");
-                            SimpleDateFormat hour_only_format = new SimpleDateFormat("HH");
-                            SimpleDateFormat minute_only_format = new SimpleDateFormat("mm");
+                            int homework_year = -1, homework_month = -1, homework_date = -1, homework_hour = -1, homework_minute = -1;
 
                             Date date_detail = null;
                             try {
@@ -330,22 +274,17 @@ public class ProfessorMainActivity extends AppCompatActivity {
 
                             if (year_now > homework_year) {
                                 classRef.child(title).child("Homework").child(text).removeValue();
-                                //userRef.child(MyInfo.my_id).child("my_class").child(title).child("Homework").child(text).removeValue();
                             } else if (year_now == homework_year) {
                                 if (month_now > homework_month) {
                                     classRef.child(title).child("Homework").child(text).removeValue();
-                                    //userRef.child(MyInfo.my_id).child("my_class").child(title).child("Homework").child(text).removeValue();
                                 } else if (month_now == homework_month) {
                                     if ((reverse_To_minute_now - reverse_To_minute_homework) >= 1440) {
                                         classRef.child(title).child("Homework").child(text).removeValue();
-                                        //userRef.child(MyInfo.my_id).child("my_class").child(title).child("Homework").child(text).removeValue();
                                     }
                                 }
                             }
 
                         }
-
-
                     }
                 }
             }
@@ -370,11 +309,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
     public class MyAlarm {
         private Context context;
 
-        private String year_only;
-        private String month_only;
-        private String date_only;
-        private String hour_only;
-        private String minute_only;
+        private String year_only, month_only, date_only, hour_only, minute_only;
         private int index;
 
         public MyAlarm(Context context, String year_only, String month_only, String date_only, String hour_only, String minute_only, int index) {
@@ -392,11 +327,10 @@ public class ProfessorMainActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfessorMainActivity.this, BroadcastClassForProfessor.class);
             PendingIntent sender = PendingIntent.getBroadcast(ProfessorMainActivity.this, index, intent, 0);
             Calendar calendar = Calendar.getInstance();
-            int homework_year = Integer.parseInt(year_only);
-            int homework_month = Integer.parseInt(month_only);
-            int homework_date = Integer.parseInt(date_only);
-            int homework_hour = Integer.parseInt(hour_only);
-            int homework_minute = Integer.parseInt(minute_only);
+            int homework_year = Integer.parseInt(year_only), homework_month = Integer.parseInt(month_only),
+                    homework_date = Integer.parseInt(date_only), homework_hour = Integer.parseInt(hour_only),
+                    homework_minute = Integer.parseInt(minute_only);
+
 
             calendar.set(homework_year, homework_month - 1, homework_date, homework_hour, homework_minute, 0);
             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
@@ -464,25 +398,20 @@ public class ProfessorMainActivity extends AppCompatActivity {
                 homework_context.setPositiveButton("등록", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String homework = context.getText().toString();
-                        String date = limit_date.getText().toString();
-                        String time = limit_time.getText().toString();
-                        String limit = date + " / " + time;
-                        String limit_new_format = null;
-                        SimpleDateFormat original_format = new SimpleDateFormat("yyyy / MM / dd / HH / mm");
-                        SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        String homework = context.getText().toString(), date = limit_date.getText().toString(),
+                                time = limit_time.getText().toString(), limit = date + " / " + time,
+                                limit_new_format = null;
+                        SimpleDateFormat original_format = new SimpleDateFormat("yyyy / MM / dd / HH / mm"),
+                                new_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
                         /*Detail Date For Alarm*/
-                        String year_only = null;
-                        String month_only = null;
-                        String date_only = null;
-                        String hour_only = null;
-                        String minute_only = null;
-                        SimpleDateFormat year_only_format = new SimpleDateFormat("yyyy");
-                        SimpleDateFormat month_only_format = new SimpleDateFormat("MM");
-                        SimpleDateFormat date_only_format = new SimpleDateFormat("dd");
-                        SimpleDateFormat hour_only_format = new SimpleDateFormat("HH");
-                        SimpleDateFormat minute_only_format = new SimpleDateFormat("mm");
+                        String year_only = null, month_only = null, date_only = null, hour_only = null, minute_only = null;
+
+
+                        SimpleDateFormat year_only_format = new SimpleDateFormat("yyyy"),
+                                month_only_format = new SimpleDateFormat("MM"), date_only_format = new SimpleDateFormat("dd"),
+                                hour_only_format = new SimpleDateFormat("HH"), minute_only_format = new SimpleDateFormat("mm");
+
                         try {
                             Date date_detail = original_format.parse(limit);
                             year_only = year_only_format.format(date_detail);
@@ -509,9 +438,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
 
                             SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
-                            //editor.putString(my_subject_title+homework+limit_new_format, my_subject_title+homework+limit_new_format);
                             int my_index = pref.getInt("index", 1);
-                            //Toast.makeText(ProfessorMainActivity.this, "my_index:"+my_index, Toast.LENGTH_SHORT).show();
                             editor.putInt(my_subject_title + homework + limit_new_format, my_index);
                             new MyAlarm(getApplicationContext(), year_only, month_only, date_only, hour_only, minute_only, my_index).Alarm();
                             ++my_index;
@@ -539,9 +466,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
     }
 
     private class ViewHolder {
-        public TextView mTitle;
-        public TextView mText;
-        public TextView mDate;
+        public TextView mTitle, mText, mDate;
     }
 
     private class ListViewAdapter extends BaseAdapter {
@@ -591,6 +516,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
             return position;
         }
 
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ProfessorMainActivity.ViewHolder holder;
@@ -611,6 +537,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
             holder.mDate.setText(mData.mDate);
             return convertView;
         }
+
 
     }
 }

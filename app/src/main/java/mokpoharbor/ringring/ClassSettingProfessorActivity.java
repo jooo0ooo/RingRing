@@ -149,27 +149,5 @@ public class ClassSettingProfessorActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        /*
-        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        final Switch get_alram = (Switch) findViewById(R.id.alram_professor);
-        get_alram.setChecked(pref.getBoolean("professor_alram", false));
-        get_alram.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                if (!isChecked) {
-                    get_alram.setChecked(false);
-                    editor.putBoolean("professor_alram", false);
-                    editor.commit();
-                } else {
-                    editor.putBoolean("professor_alram", true);
-                    editor.commit();
-                }
-            }
-        });
-        */
-
     }
 }

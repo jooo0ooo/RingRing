@@ -32,14 +32,11 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private String user_name;
-    private String user_id = "user_id";
+    private String user_name, user_id = "user_id";
     private URL user_picture_url;
     private ImageView login_with_facebook;
     private CallbackManager callbackManager;
-    String user_flag;
-    String checking = "null";
-
+    String user_flag, checking = "null";
     FirebaseDatabase database;
     DatabaseReference userRef, myRef;
 

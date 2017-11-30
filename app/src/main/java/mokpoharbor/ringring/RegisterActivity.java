@@ -34,18 +34,14 @@ import java.util.Arrays;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private static final String PREFS_NAME = "MyPrefs"; //MyPrefs.xml로 저장
+    private String user_name, user_id = "user_id", my_id;
+    private URL user_picture_url;
+    private Button register_with_facebook_stu, register_with_facebook_pro;
+    private CallbackManager callbackManager;
+    String user_flag, checking = "null";
     FirebaseDatabase database;
     DatabaseReference userRef;
-    private static final String PREFS_NAME = "MyPrefs"; //MyPrefs.xml로 저장
-    String user_flag;
-    private String user_name;
-    private String user_id = "user_id";
-    private URL user_picture_url;
-    private String my_id;
-    private Button register_with_facebook_stu;
-    private Button register_with_facebook_pro;
-    private CallbackManager callbackManager;
-    String checking = "null";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

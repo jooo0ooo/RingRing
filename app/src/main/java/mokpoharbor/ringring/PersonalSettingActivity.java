@@ -29,11 +29,10 @@ public class PersonalSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_setting);
         setTitle("Personal Setting");
 
-        TextView name = (TextView) findViewById(R.id.user_name);
+        TextView name = (TextView) findViewById(R.id.user_name), id = (TextView) findViewById(R.id.user_id),
+                status = (TextView) findViewById(R.id.user_status);
         name.setText(MyInfo.my_name);
-        TextView id = (TextView) findViewById(R.id.user_id);
         id.setText(MyInfo.my_id);
-        TextView status = (TextView) findViewById(R.id.user_status);
         status.setText(MyInfo.user_flag);
         ImageView logout = (ImageView) findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {

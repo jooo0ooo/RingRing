@@ -10,7 +10,7 @@ import android.content.Intent;
 /**
  * Created by pingrae on 2017. 10. 28..
  */
-public class BroadcastClass extends BroadcastReceiver {
+public class BroadcastClassForSutdent extends BroadcastReceiver {
     String INTENT_ACTION = Intent.ACTION_BOOT_COMPLETED;
 
     @Override

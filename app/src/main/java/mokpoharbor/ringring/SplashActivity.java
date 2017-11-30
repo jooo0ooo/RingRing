@@ -10,10 +10,7 @@ import android.os.Bundle;
  */
 
 public class SplashActivity extends Activity {
-    String user_name;
-    String user_id;
-    String user_picture_url;
-    String user_flag;
+    String user_name, user_id, user_picture_url, user_flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

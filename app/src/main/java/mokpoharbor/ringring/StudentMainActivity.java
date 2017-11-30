@@ -37,13 +37,11 @@ import java.util.Locale;
 import mokpoharbor.ringring.GuideActivity.StudentMainGuide;
 
 public class StudentMainActivity extends AppCompatActivity {
-    ArrayList<String> myclass = new ArrayList<>();
-    ArrayList<String> homework = new ArrayList<>();
-    ArrayList<String> homework_context = new ArrayList<>();
-    ArrayList<String> homework_limit = new ArrayList<>();
-    String[] my_homework = homework.toArray(new String[homework.size()]);
-    String[] my_homework_context = homework_context.toArray(new String[homework_context.size()]);
-    String[] my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
+    ArrayList<String> myclass = new ArrayList<>(), homework = new ArrayList<>(),
+            homework_context = new ArrayList<>(), homework_limit = new ArrayList<>();
+    String[] my_homework = homework.toArray(new String[homework.size()]),
+            my_homework_context = homework_context.toArray(new String[homework_context.size()]),
+            my_homework_limit = homework_limit.toArray(new String[homework_limit.size()]);
     FirebaseDatabase database;
     DatabaseReference userRef, classRef;
     private ListView mListView = null;
@@ -83,8 +81,8 @@ public class StudentMainActivity extends AppCompatActivity {
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-                final String class_name = ((TextView) view.findViewById(R.id.mTitle)).getText().toString();
-                final String class_context = ((TextView) view.findViewById(R.id.mText)).getText().toString();
+                final String class_name = ((TextView) view.findViewById(R.id.mTitle)).getText().toString(),
+                        class_context = ((TextView) view.findViewById(R.id.mText)).getText().toString();
                 final LinearLayout row = (LinearLayout) view.findViewById(R.id.row_layout);
                 ColorDrawable color = (ColorDrawable) row.getBackground();
                 if (color.getColor() == Color.rgb(255, 204, 204)) {
@@ -136,8 +134,8 @@ public class StudentMainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Toast.makeText(StudentMainActivity.this, id + "", Toast.LENGTH_SHORT).show();
-                final String class_name = ((TextView) v.findViewById(R.id.mTitle)).getText().toString();
-                final String date = ((TextView) v.findViewById(R.id.mDate)).getText().toString();
+                final String class_name = ((TextView) v.findViewById(R.id.mTitle)).getText().toString(),
+                        date = ((TextView) v.findViewById(R.id.mDate)).getText().toString();
                 Date curDAte = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date reqDate = new Date();
@@ -152,16 +150,14 @@ public class StudentMainActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                long curDateTime = curDAte.getTime();
-                long minute = (curDateTime - reqDateTime) / 60000;
+                long curDateTime = curDAte.getTime(), minute = (curDateTime - reqDateTime) / 60000;
                 if (minute > 0) {
                     minute = -1;
                 } else {
                     minute = Math.abs(minute);
                 }
-                long limit_day = minute / 1440; // 24 * 60
-                long limit_hour = (minute - (limit_day * 1440)) / 60;
-                long limit_minute = (minute - (limit_day * 1440 + limit_hour * 60));
+                long limit_day = minute / 1440, limit_hour = (minute - (limit_day * 1440)) / 60,
+                        limit_minute = (minute - (limit_day * 1440 + limit_hour * 60));
                 String left_time;
                 if (limit_day > 0) {
                     left_time = Long.toString(limit_day) + "일 " + Long.toString(limit_hour) + "시간 " + Long.toString(limit_minute) + "분 남았습니다.";
@@ -220,35 +216,35 @@ public class StudentMainActivity extends AppCompatActivity {
                     for (DataSnapshot find_me : snapshot.child("Student").getChildren()) {
                         if (find_me.getKey().equals(MyInfo.my_id)) {
                             for (DataSnapshot snapshot_child : snapshot.child("Homework").getChildren()) {
-                                SimpleDateFormat year_formatter = new SimpleDateFormat("yyyy", Locale.KOREA);
-                                SimpleDateFormat month_formatter = new SimpleDateFormat("MM", Locale.KOREA);
-                                SimpleDateFormat date_formatter = new SimpleDateFormat("dd", Locale.KOREA);
-                                SimpleDateFormat hour_formatter = new SimpleDateFormat("HH", Locale.KOREA);
-                                SimpleDateFormat minute_formatter = new SimpleDateFormat("mm", Locale.KOREA);
+                                SimpleDateFormat year_formatter = new SimpleDateFormat("yyyy", Locale.KOREA),
+                                        month_formatter = new SimpleDateFormat("MM", Locale.KOREA),
+                                        date_formatter = new SimpleDateFormat("dd", Locale.KOREA),
+                                        hour_formatter = new SimpleDateFormat("HH", Locale.KOREA),
+                                        minute_formatter = new SimpleDateFormat("mm", Locale.KOREA);
                                 Date currentTime = new Date();
 
-                                int year_now = Integer.parseInt(year_formatter.format(currentTime));
-                                int month_now = Integer.parseInt(month_formatter.format(currentTime));
-                                int date_now = Integer.parseInt(date_formatter.format(currentTime));
-                                int hour_now = Integer.parseInt(hour_formatter.format(currentTime));
-                                int minute_now = Integer.parseInt(minute_formatter.format(currentTime));
+                                int year_now = Integer.parseInt(year_formatter.format(currentTime)),
+                                        month_now = Integer.parseInt(month_formatter.format(currentTime)),
+                                        date_now = Integer.parseInt(date_formatter.format(currentTime)),
+                                        hour_now = Integer.parseInt(hour_formatter.format(currentTime)),
+                                        minute_now = Integer.parseInt(minute_formatter.format(currentTime));
 
-                                String title = snapshot_child.getRef().getParent().getParent().getKey();
-                                String text = snapshot_child.getKey();
-                                String date = snapshot_child.getValue().toString();
+                                String title = snapshot_child.getRef().getParent().getParent().getKey(),
+                                        text = snapshot_child.getKey(), date = snapshot_child.getValue().toString();
 
-                                int homework_year = -1;
-                                int homework_month = -1;
-                                int homework_date = -1;
-                                int homework_hour = -1;
-                                int homework_minute = -1;
+                                int homework_year = -1, homework_month = -1, homework_date = -1, homework_hour = -1, homework_minute = -1;
+                                //int homework_year = -1;
+                                //int homework_month = -1;
+                                //int homework_date = -1;
+                                //int homework_hour = -1;
+                                //int homework_minute = -1;
 
-                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                SimpleDateFormat year_only_format = new SimpleDateFormat("yyyy");
-                                SimpleDateFormat month_only_format = new SimpleDateFormat("MM");
-                                SimpleDateFormat date_only_format = new SimpleDateFormat("dd");
-                                SimpleDateFormat hour_only_format = new SimpleDateFormat("HH");
-                                SimpleDateFormat minute_only_format = new SimpleDateFormat("mm");
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm"),
+                                        year_only_format = new SimpleDateFormat("yyyy"),
+                                        month_only_format = new SimpleDateFormat("MM"),
+                                        date_only_format = new SimpleDateFormat("dd"),
+                                        hour_only_format = new SimpleDateFormat("HH"),
+                                        minute_only_format = new SimpleDateFormat("mm");
 
                                 Date date_detail = null;
                                 try {
@@ -302,9 +298,7 @@ public class StudentMainActivity extends AppCompatActivity {
     }
 
     private class ViewHolder {
-        public TextView mTitle;
-        public TextView mText;
-        public TextView mDate;
+        public TextView mTitle, mText, mDate;
     }
 
     private class ListViewAdapter extends BaseAdapter {

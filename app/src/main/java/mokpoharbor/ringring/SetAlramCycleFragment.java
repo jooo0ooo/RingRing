@@ -21,8 +21,7 @@ public class SetAlramCycleFragment extends DialogFragment implements TimePickerD
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
+        int hour = c.get(Calendar.HOUR_OF_DAY), minute = c.get(Calendar.MINUTE);
         TimePickerDialog tpd = new TimePickerDialog(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_DARK, this, hour, minute, true);
         TextView tvTitle = new TextView(getActivity());
         tvTitle.setText("알림 주기 설정");
