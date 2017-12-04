@@ -138,6 +138,11 @@ If you want to upgrade RingRing...
 
 ## Donation
 
+To bring the best app to the most people,
+RingRing is supported by voluntary patronage.
+
+Please consider becoming a patron to make continued development possible. Thank you :)
+
 | PayPal | <a href="https://paypal.me/pingrae" target="_blank"><img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" alt="Donate via PayPal!" title="Donate via PayPal!" /></a> |
 |:-------------------------------------------:|:-------------------------------------------------------------:|
 
