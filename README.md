@@ -4,20 +4,20 @@ The Subject Alarm Application
 
 ## Index
 
-- [Outline](https://github.com/pingrae/RingRing#Outline)
-  - [Birth_Background_of_'RingRing'](https://github.com/pingrae/RingRing#Birth_Background_of_'RingRing')
-- [Used_Technology](https://github.com/pingrae/RingRing#Used_Technology)
-  - [Android_Studio](https://github.com/pingrae/RingRing#Android_Studio)
-  - [Firebase](https://github.com/pingrae/RingRing#Firebase)
-- [Application_Features](https://github.com/pingrae/RingRing#Application_Features)
-  - [For_Student](https://github.com/pingrae/RingRing#For_Student)
-  - [For_Professor](https://github.com/pingrae/RingRing#For_Professor)
-- [Contributing](https://github.com/pingrae/RingRing#Contributing)
-  - [Now](https://github.com/pingrae/RingRing#Now)
-  - [TODO](https://github.com/pingrae/RingRing#TODO)
+- [Outline](https://github.com/pingrae/RingRing#outline)
+  - [Birth_Background_of_'RingRing'](https://github.com/pingrae/RingRing#birth_background_of_'RingRing')
+- [Used_Technology](https://github.com/pingrae/RingRing#used_technology)
+  - [Android_Studio](https://github.com/pingrae/RingRing#android_studio)
+  - [Firebase](https://github.com/pingrae/RingRing#firebase)
+- [Application_Features](https://github.com/pingrae/RingRing#application_features)
+  - [For_Student](https://github.com/pingrae/RingRing#for_student)
+  - [For_Professor](https://github.com/pingrae/RingRing#for_professor)
+- [Contributing](https://github.com/pingrae/RingRing#contributing)
+  - [Now](https://github.com/pingrae/RingRing#now)
+  - [TODO](https://github.com/pingrae/RingRing#todo)
   - [I_RingRing_You](https://github.com/pingrae/RingRing#I_RingRing_You)
-- [Issues](https://github.com/pingrae/RingRing#Issues)
-- [Donation](https://github.com/pingrae/RingRing#Donation)
+- [Issues](https://github.com/pingrae/RingRing#issues)
+- [Donation](https://github.com/pingrae/RingRing#donation)
 
 ## Outline
 
