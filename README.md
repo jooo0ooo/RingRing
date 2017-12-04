@@ -97,23 +97,25 @@ I need your help to become a good programmer. :)
 
 ### Now
 
-The student can set the alarm cycle.
+  The student can set the alarm cycle.
 
-RingRing give Student a push-alarm every alarm cycle.
+  RingRing give Student a push-alarm every alarm cycle.
 
-Student Can Check the tasks completed by Long click.
+  Student Can Check the tasks completed by Long click.
 
-====================================================================================
+=======================================================================
 
-Professor Will Receive an push-alarm when the homework period expires.
+  Professor Will Receive an push-alarm when the homework period expires.
 
-When the task period expires, the color changes automatically.
+  When the task period expires, the color changes automatically.
 
-Professor Can Delete the tasks by Long click.
+  Professor Can Delete the tasks by Long click.
 
-====================================================================================
+=======================================================================
 
-Now Only available on Android
+  Only available on Android Now
+
+  Only Korean language is supported Now
 
 
 ### TODO
