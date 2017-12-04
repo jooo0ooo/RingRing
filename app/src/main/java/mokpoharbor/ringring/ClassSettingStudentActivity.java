@@ -33,6 +33,7 @@ import mokpoharbor.ringring.GuideActivity.ClassSettingStudentGuide;
 /**
  * Created by pingrae on 2017. 10. 20..
  */
+
 public class ClassSettingStudentActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference classRef, userRef;

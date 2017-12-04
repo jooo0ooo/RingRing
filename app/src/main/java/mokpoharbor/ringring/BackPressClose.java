@@ -7,6 +7,9 @@ import android.widget.Toast;
 /**
  * Created by pingrae on 2017. 10. 17..
  */
+
+//WHAT is the FUNCTION of this class
+//If the User Press the 'BackButton', the Application will be terminated
 public class BackPressClose {
     private long backkey_pressed_time = 0;
     private Toast toast;
@@ -16,6 +19,8 @@ public class BackPressClose {
         this.activity = context;
     }
 
+    //If the User Press the 'BackButton', The User Can see the Toast Message
+    //And then If the User Press the 'BackButton' AGAIN within 2SECONDS, the Application will be terminated
     public void onBackPressed() {
         if (System.currentTimeMillis() > backkey_pressed_time + 2000) {
             backkey_pressed_time = System.currentTimeMillis();

@@ -10,6 +10,9 @@ import android.content.Intent;
 /**
  * Created by pingrae on 2017. 10. 28..
  */
+
+//WHAT is the FUNCTION of this class
+//Make Push-Alarm For Professor
 public class BroadcastClassForProfessor extends BroadcastReceiver {
     String INTENT_ACTION = Intent.ACTION_BOOT_COMPLETED;
 

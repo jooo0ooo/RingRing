@@ -19,31 +19,23 @@ public class SplashActivity extends Activity {
             Thread.sleep(1000);
             SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             user_flag = pref.getString("user_flag", "nothing");
+
+            user_id = pref.getString("my_id", "nothing");
+            user_name = pref.getString("my_name", "nothing");
+            user_picture_url = pref.getString("picture_url", "nothing");
+
+            MyInfo.my_name = user_name;
+            MyInfo.my_id = user_id;
+            MyInfo.user_flag = user_flag;
+            MyInfo.user_picture_url = user_picture_url;
+
             if(user_flag.equals("Student")){
-
-                user_id = pref.getString("my_id", "nothing");
-                user_name = pref.getString("my_name", "nothing");
-                user_picture_url = pref.getString("picture_url", "nothing");
-
-                MyInfo.my_name = user_name;
-                MyInfo.my_id = user_id;
-                MyInfo.user_flag = user_flag;
-                MyInfo.user_picture_url = user_picture_url;
 
                 Intent i = new Intent(SplashActivity.this, StudentMainActivity.class);
                 startActivity(i);
                 finish();
 
             }else if(user_flag.equals("Professor")){
-
-                user_id = pref.getString("my_id", "nothing");
-                user_name = pref.getString("my_name", "nothing");
-                user_picture_url = pref.getString("picture_url", "nothing");
-
-                MyInfo.my_name = user_name;
-                MyInfo.my_id = user_id;
-                MyInfo.user_flag = user_flag;
-                MyInfo.user_picture_url = user_picture_url;
 
                 Intent i = new Intent(SplashActivity.this, ProfessorMainActivity.class);
                 startActivity(i);
