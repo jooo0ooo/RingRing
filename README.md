@@ -139,6 +139,7 @@ If you want to upgrade RingRing...
 ## Donation
 
 To bring the best app to the most people,
+
 RingRing is supported by voluntary patronage.
 
 Please consider becoming a patron to make continued development possible. Thank you :)
