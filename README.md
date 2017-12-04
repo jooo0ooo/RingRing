@@ -1,21 +1,20 @@
 ## RingRing
 
-The Subject Alarm Application
+The Subject Alarm Application for `android`
 
 ## Index
 
 - [Outline](https://github.com/pingrae/RingRing#outline)
-  - [Birth_Background_of_'RingRing'](https://github.com/pingrae/RingRing#birth_background_of_'RingRing')
-- [Used_Technology](https://github.com/pingrae/RingRing#used_technology)
-  - [Android_Studio](https://github.com/pingrae/RingRing#android_studio)
+  - [Birth Background of 'RingRing'](https://github.com/pingrae/RingRing#birth-background-of-'RingRing')
+- [Used Technology](https://github.com/pingrae/RingRing#used-technology)
   - [Firebase](https://github.com/pingrae/RingRing#firebase)
-- [Application_Features](https://github.com/pingrae/RingRing#application_features)
-  - [For_Student](https://github.com/pingrae/RingRing#for_student)
-  - [For_Professor](https://github.com/pingrae/RingRing#for_professor)
+- [Application Features](https://github.com/pingrae/RingRing#application-features)
+  - [For Student](https://github.com/pingrae/RingRing#for-student)
+  - [For Professor](https://github.com/pingrae/RingRing#for-professor)
 - [Contributing](https://github.com/pingrae/RingRing#contributing)
   - [Now](https://github.com/pingrae/RingRing#now)
   - [TODO](https://github.com/pingrae/RingRing#todo)
-  - [I_RingRing_You](https://github.com/pingrae/RingRing#I_RingRing_You)
+  - [I RingRing You](https://github.com/pingrae/RingRing#I-RingRing-You)
 - [Issues](https://github.com/pingrae/RingRing#issues)
 - [Donation](https://github.com/pingrae/RingRing#donation)
 
@@ -27,7 +26,9 @@ AND THEN... Are there DIFFERENT SITES to check out homeworks?
 
 If you are with 'RingRing', You can see everything at ONCE
 
-### Birth_Background_of_'RingRing'
+![SplashActivity](https://imgur.com/fZ6C5U2.png)
+
+### Birth Background of 'RingRing'
 
 Most students take more than one class
 
@@ -41,7 +42,7 @@ I turned on the computer as soon as I finished thinking.
 
 And Then RingRing was born.
 
-## Used_Technology
+## Used Technology
 
 I mainly get information through Google
 
@@ -53,28 +54,91 @@ I've never learned a database before.
 
 But Firebase Make me very easy To Use Database
 
-## Application_Features
+![Firebase](https://i.imgur.com/uo67Dtm.png)
+
+## Application Features
 
 RingRing show you another view according to your status(Student/Professor)
 
-### For_Student
+You can easily sign up through Facebook
 
+| ![Regist](https://i.imgur.com/2TSGlPm.png) | ![SingupWithFacebook](https://i.imgur.com/67ITwSj.png) |
+|--------------------------------------------|--------------------------------------------------------|
+| ![MyInfo](https://i.imgur.com/zCw6EDp.png) | ![MyInfo2](https://i.imgur.com/CjtSDu2.png)            |
 
+### For Student
 
-### For_Professor
+You Can see All Homeworks At Once!
+
+All you have to do is JUST register your classes.
+
+| ![StuMain](https://i.imgur.com/hnPDugc.png)| ![StuClassSetting](https://i.imgur.com/HpUJ5LI.png)    |
+|--------------------------------------------|--------------------------------------------------------|
+| ![RegistC](https://i.imgur.com/MCjSUtA.png)|
+
+### For Professor
+
+Professors should spend some time for students.(The work will probably be done by the assistant professor...)
+
+Register your subject and announce homeworks of the subject once more through the application
+
+(A few efforts can make students more convenient.....Thank you.....)
+
+| ![ProMain](https://i.imgur.com/MffaeT5.png)| ![ProMakeHomework](https://i.imgur.com/cujBoiW.png)    |
+|--------------------------------------------|--------------------------------------------------------|
+| ![ProCS](https://i.imgur.com/l6w7BYy.png)  | ![ProRegistC](https://i.imgur.com/dpPeEKV.png)         |
 
 ## Contributing
 
+I just started coding.
+
+So I'm not good at programming, But I will be good at programming. :)
+
+I need your help to become a good programmer. :)
+
 ### Now
+
+The student can set the alarm cycle.
+
+RingRing give Student a push-alarm every alarm cycle.
+
+Student Can Check the tasks completed by Long click.
+
+====================================================================================
+
+Professor Will Receive an push-alarm when the homework period expires.
+
+When the task period expires, the color changes automatically.
+
+Professor Can Delete the tasks by Long click.
+
+====================================================================================
+
+Now Only available on Android
+
 
 ### TODO
 
-### I_RingRign_You
+- [ ] Make a function to read the web pages uploaded homeworks for professor's convenience.
+- [ ] Make an Application For ios
+- [ ] Make a Web-Sites for question board or communication
 
-## Issues
+### I RingRign You
 
+I really need your help.
+RingRing is For Everyone.
+Contact me Anytime
 
+If you want to upgrade RingRing...
+ 1. Fork RingRing
+ 2. Clone RingRing
+ 3. Make your own RingRing
 
 ## Donation
+
+| PayPal | <a href="https://paypal.me/pingrae" target="_blank"><img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" alt="Donate via PayPal!" title="Donate via PayPal!" /></a> |
+|:-------------------------------------------:|:-------------------------------------------------------------:|
+
+
 
 
