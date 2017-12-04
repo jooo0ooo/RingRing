@@ -123,6 +123,7 @@ I need your help to become a good programmer. :)
 - [ ] Make a function to read the web pages uploaded homeworks for professor's convenience.
 - [ ] Make an Application For ios
 - [ ] Make a Web-Sites for question board or communication
+- [ ] Support various languages
 
 ### I RingRign You
 
