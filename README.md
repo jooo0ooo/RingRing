@@ -5,7 +5,7 @@ The Subject Alarm Application for `android`
 ## Index
 
 - [Outline](https://github.com/pingrae/RingRing#outline)
-  - [Birth Background of 'RingRing'](https://github.com/pingrae/RingRing#birth-background-of-'RingRing')
+  - [Birth Background of 'RingRing'](https://github.com/pingrae/RingRing#birth-background-of-ringring)
 - [Used Technology](https://github.com/pingrae/RingRing#used-technology)
   - [Firebase](https://github.com/pingrae/RingRing#firebase)
 - [Application Features](https://github.com/pingrae/RingRing#application-features)
@@ -14,8 +14,7 @@ The Subject Alarm Application for `android`
 - [Contributing](https://github.com/pingrae/RingRing#contributing)
   - [Now](https://github.com/pingrae/RingRing#now)
   - [TODO](https://github.com/pingrae/RingRing#todo)
-  - [I RingRing You](https://github.com/pingrae/RingRing#I-RingRing-You)
-- [Issues](https://github.com/pingrae/RingRing#issues)
+  - [I RingRing You](https://github.com/pingrae/RingRing#i-ringring-you)
 - [Donation](https://github.com/pingrae/RingRing#donation)
 
 ## Outline
@@ -28,7 +27,7 @@ If you are with 'RingRing', You can see everything at ONCE
 
 ![SplashActivity](https://imgur.com/fZ6C5U2.png)
 
-### Birth Background of 'RingRing'
+### Birth Background of RingRing
 
 Most students take more than one class
 
